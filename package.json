@@ -1,0 +1,33 @@
+{
+  "name": "numbers",
+  "version": "1.0.0",
+  "description": "Board game based on numbers",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sosegon/numbers.git"
+  },
+  "keywords": [
+    "casual",
+    "game"
+  ],
+  "author": "Sebastian Velasquez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sosegon/numbers/issues"
+  },
+  "homepage": "https://github.com/sosegon/numbers#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^6.0.0",
+    "gulp-babel": "^7.0.0",
+    "gulp-react": "^3.1.0",
+    "gulp-sass": "^4.0.1"
+  }
+}
