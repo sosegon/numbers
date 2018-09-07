@@ -1,0 +1,19 @@
+.cell, .tile {
+  width: 50px;
+  height: 50px;
+  margin: 5px;
+  line-height: 90px;
+  display: inline-block;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  vertical-align: middle;
+  border-radius: 7px;
+  font-family: "Clear Sans";
+  color: #766;
+  background-color: #dcb;
+}
+
+.selectable {
+  background-color: #333;
+}
