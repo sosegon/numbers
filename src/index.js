@@ -34,6 +34,7 @@ class BoardView extends React.Component {
 		}
 
 		this.state.board.scoreA += this.state.board.moveWildCard(rowIndex, colIndex);
+		this.state.board.gameEnd = !this.state.board.canMoveWildCard(!this.state.direction);
 		this.setState({board: this.state.board, direction: this.state.direction});
 	}
 	updateForAgent() {
@@ -42,6 +43,7 @@ class BoardView extends React.Component {
 	}
 	runAgent() {
 		this.state.board.scoreB += this.state.board.runAgent(this.state.direction);
+		this.state.board.gameEnd = !this.state.board.canMoveWildCard(!this.state.direction);
 		this.state.board.agentPlaying = false;
 		this.setState({board: this.state.board, direction: !this.state.direction});
 	}
@@ -67,11 +69,13 @@ class BoardView extends React.Component {
 		let cells = this.state.board.cells.map((row, rowIndex) => {
 			return (
 				<div>
-					{row.map((col, colIndex) => <CellView value={col.value}
+					{row.map((col, colIndex) => <
+						CellView value={col.value}
 						rowIndex={rowIndex}
 						colIndex={colIndex}
 						boardView={currentBoard}
-						isSelectable={isSelectable(col.value, rowIndex, colIndex, wildRowIndex, wildColIndex, direction)}/>)}
+						isSelectable={isSelectable(col.value, rowIndex, colIndex, wildRowIndex, wildColIndex, direction)}
+					/>)}
 				</div>
 			)
 		});
@@ -83,11 +87,11 @@ class BoardView extends React.Component {
 		let scoreAgent = (
 			<ScoreView score={scoreB} />
 		);
-
 		return (
 			<div>
 				<div>
 					{cells}
+					<GameEndOverlay gameEnd={this.state.board.gameEnd} scoreA={scoreA} scoreB={scoreB} />
 				</div>
 				<div>
 					{scorePlayer} {scoreAgent}
@@ -102,12 +106,20 @@ class CellView extends React.Component {
 		let colIndex = this.props.colIndex;
 		let rowIndex = this.props.rowIndex;
 		let boardView = this.props.boardView;
-		if(this.props.isSelectable) {
+		let board = boardView.state.board;
+
+		if(this.props.isSelectable && !board.agentPlaying) {
 			boardView.selectCell(rowIndex, colIndex);
-			boardView.updateForAgent();
-			setTimeout(() => {
-				boardView.runAgent();
-			}, 500)
+
+			let direction = boardView.state.direction;
+			if(board.canMoveWildCard(!direction)){
+				boardView.updateForAgent();
+				setTimeout(() => {
+					boardView.runAgent();
+				}, 500)
+			} else {
+				// TODO: Add visual of game over
+			}
 		} else {
 			console.log("unselectable");
 			// TODO: Add visual message
@@ -145,5 +157,27 @@ class ScoreView extends React.Component {
 		)
 	}
 }
+
+var GameEndOverlay = ({gameEnd, scoreA, scoreB}) => {
+	let content = '';
+	if(gameEnd) {
+		if(scoreA > scoreB) {
+			content = 'You won';
+		} else if (scoreA < scoreB) {
+			content = 'You lose';
+		} else {
+			content = 'Draw';
+		}
+	}
+	if(!content) {
+		return null;
+	}
+
+	return(
+		<div>
+			<p>{content}</p>
+		</div>
+	);
+};
 
 var BoardViewRendered = ReactDOM.render(<BoardView />, document.getElementById('boardDiv'));

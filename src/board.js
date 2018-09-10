@@ -33,6 +33,8 @@ class Agent {
 				return board.moveWildCard(wildRowIndex, indexMaxValue);
 			}
 		}
+
+		return 0;
 	}
 }
 class Cell {
@@ -68,6 +70,7 @@ class Board {
 		this.scoreB = 0; // Agent
 		this.agent = new Agent();
 		this.agentPlaying = false;
+		this.gameEnd = false;
 	}
 	isCellSelectable(rowIndex, colIndex) {
 		return this.cells[rowIndex][colIndex].value > 0;
@@ -83,9 +86,23 @@ class Board {
 	runAgent(direction) {
 		return this.agent.play(direction, this);
 	}
+	canMoveWildCard(direction) {
+		if(direction) {
+			for(let i = 0; i < Board.size; i++) {
+				let cell = this.cells[i][this.wildColIndex];
+				if(cell.value > 0) return true;
+			}
+		} else {
+			for(let i = 0; i < Board.size; i++) {
+				let cell = this.cells[this.wildRowIndex][i];
+				if(cell.value > 0) return true;
+			}
+		}
+		return false;
+	}
 }
 
-Board.size = 8;
+Board.size = 3;
 
 function randomInteger(min, max) {
 	let r = Math.random();
