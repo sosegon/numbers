@@ -18,38 +18,53 @@ class BoardView extends React.Component {
 		this.setState({board: this.state.board, direction: this.state.direction});
 	}
 	componentDidMount() {
-    	window.addEventListener('keydown', this.handleKeyDown.bind(this));
-  	}
-  	componentWillUnmount() {
-   		window.removeEventListener('keydown', this.handleKeyDown.bind(this));
-  	}
+		window.addEventListener('keydown', this.handleKeyDown.bind(this));
+	}
+	componentWillUnmount() {
+		window.removeEventListener('keydown', this.handleKeyDown.bind(this));
+	}
+	selectCell(rowIndex, colIndex) {
+		// Define the direction if it is not set yet
+		if(this.state.direction === null) {
+			if(this.state.board.wildRowIndex === rowIndex) {
+				this.state.direction = false;
+			} else if(this.state.board.wildColIndex === colIndex) {
+				this.state.direction = true;
+			}
+		}
+
+		// Move the wildCard to the selected cell and update
+		// Update the value of the previous position of the wildCard
+		this.state.board.moveWildCard(rowIndex, colIndex);
+		this.setState({board: this.state.board, direction: this.state.direction});
+	}
 	render() {
-		let isSelectable = function(rowIndex, colIndex, wildRowIndex, wildColIndex, direction){
+		let isSelectable = function(cellValue, rowIndex, colIndex, wildRowIndex, wildColIndex, direction){
+			if(rowIndex === wildRowIndex && colIndex === wildColIndex) {
+				// wild card is not selectable
+				return false;
+			}
 			if(direction === null) {
-				return rowIndex === wildRowIndex || colIndex === wildColIndex;
+				return (rowIndex === wildRowIndex || colIndex === wildColIndex) && cellValue > 0
 			} else if(direction === true) {
-				return colIndex === wildColIndex;
+				return colIndex === wildColIndex && cellValue > 0;
 			} else if(direction === false) {
-				return rowIndex === wildRowIndex;
+				return rowIndex === wildRowIndex && cellValue > 0;
 			}
 			return false;
 		}
-		let wildRowIndex, wildColIndex;
-		for(let i = 0; i < Board.size; i++) {
-			for(let j = 0; j < Board.size; j++) {
-				if(this.state.board.cells[i][j].value === 0) {
-					wildColIndex = i;
-					wildRowIndex = j;
-					break;
-				}
-			}
-		}
+		let wildRowIndex = this.state.board.wildRowIndex;
+		let wildColIndex = this.state.board.wildColIndex;
+		let currentBoard = this;
 		let direction = this.state.direction;
 		let cells = this.state.board.cells.map((row, rowIndex) => {
 			return (
 				<div>
 					{row.map((col, colIndex) => <CellView value={col.value}
-						isSelectable={isSelectable(rowIndex, colIndex, wildColIndex, wildRowIndex, direction)}/>)}
+						rowIndex={rowIndex}
+						colIndex={colIndex}
+						board={currentBoard}
+						isSelectable={isSelectable(col.value, rowIndex, colIndex, wildRowIndex, wildColIndex, direction)}/>)}
 				</div>
 			)
 		});
@@ -65,11 +80,24 @@ class BoardView extends React.Component {
 }
 
 class CellView extends React.Component {
+	pick() {
+		let colIndex = this.props.colIndex;
+		let rowIndex = this.props.rowIndex;
+		if(this.props.isSelectable) {
+			this.props.board.selectCell(rowIndex, colIndex);
+		} else {
+			console.log("unselectable");
+			// TODO: Add visual message
+		}
+	}
 	shouldComponentUpdate() {
 		return true;
 	}
 	render() {
 		let value = this.props.value;
+		let col = this.props.colIndex;
+		let row = this.props.rowIndex;
+		let Board = this.props.board;
 		let isSelectable = this.props.isSelectable;
 		let generateClassName = function(isSelectable) {
 			let cellClass = 'cell';
@@ -79,7 +107,7 @@ class CellView extends React.Component {
 			return cellClass;
 		}
 		return (
-			<span className={generateClassName(isSelectable)}>{value}</span>
+			<span className={generateClassName(isSelectable)} onClick={this.pick.bind(this)}>{value}</span>
 		);
 	}
 }

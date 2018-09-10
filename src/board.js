@@ -22,10 +22,9 @@ class Board {
 			this.cells.push(row);
 		}
 		// randomly position the starting point
-		let rowIndex = randomInteger(0, Board.size - 1);
-		let colIndex = randomInteger(0, Board.size - 1);
-
-		this.cells[rowIndex][colIndex].value = 0;
+		this.wildRowIndex = randomInteger(0, Board.size - 1);
+		this.wildColIndex = randomInteger(0, Board.size - 1);
+		this.cells[this.wildRowIndex][this.wildColIndex].value = 0;
 
 		// score for the players A is the person
 		this.scoreA = 0;
@@ -43,16 +42,12 @@ class Board {
 		}
 		this.cells[rowIndex][colIndex].value = 0;
 	}
-	removeWildCard() {
-		this.cells.map(row => {
-			row.map(x => {
-				if(x.value === 0) {
-					x.value = -1;
-				}
-			});
-		});
+	moveWildCard(rowIndex, colIndex) {
+		this.cells[this.wildRowIndex][this.wildColIndex].value = -1;
+		this.cells[rowIndex][colIndex].value = 0;
+		this.wildRowIndex = rowIndex;
+		this.wildColIndex = colIndex;
 	}
-
 }
 
 Board.size = 8;
