@@ -17,7 +17,7 @@ class Agent {
 				}
 			}
 			if(maxValue > 0) {
-				board.moveWildCard(indexMaxValue, wildColIndex);
+				return board.moveWildCard(indexMaxValue, wildColIndex);
 			}
 		} else {
 			let indexMaxValue = -1;
@@ -30,7 +30,7 @@ class Agent {
 				}
 			}
 			if(maxValue > 0) {
-				board.moveWildCard(wildRowIndex, indexMaxValue);
+				return board.moveWildCard(wildRowIndex, indexMaxValue);
 			}
 		}
 	}
@@ -64,32 +64,24 @@ class Board {
 		this.wildColIndex = randomInteger(0, Board.size - 1);
 		this.cells[this.wildRowIndex][this.wildColIndex].value = 0;
 
-		// score for the players A is the person
-		this.scoreA = 0;
-		this.scoreB = 0;
+		this.scoreA = 0; // Person
+		this.scoreB = 0; // Agent
 		this.agent = new Agent();
 		this.agentPlaying = false;
 	}
 	isCellSelectable(rowIndex, colIndex) {
 		return this.cells[rowIndex][colIndex].value > 0;
 	}
-	selectCell(rowIndex, colIndex, player) {
-		this.removeWildCard();
-		if(player) {
-			this.scoreA += this.cells[rowIndex][colIndex].value;
-		} else {
-			this.scoreB += this.cells[rowIndex][colIndex].value;
-		}
-		this.cells[rowIndex][colIndex].value = 0;
-	}
 	moveWildCard(rowIndex, colIndex) {
+		let valueToTake = this.cells[rowIndex][colIndex].value;
 		this.cells[this.wildRowIndex][this.wildColIndex].value = -1;
 		this.cells[rowIndex][colIndex].value = 0;
 		this.wildRowIndex = rowIndex;
 		this.wildColIndex = colIndex;
+		return valueToTake;
 	}
 	runAgent(direction) {
-		this.agent.play(direction, this);
+		return this.agent.play(direction, this);
 	}
 }
 

@@ -33,7 +33,7 @@ class BoardView extends React.Component {
 			}
 		}
 
-		this.state.board.moveWildCard(rowIndex, colIndex);
+		this.state.board.scoreA += this.state.board.moveWildCard(rowIndex, colIndex);
 		this.setState({board: this.state.board, direction: this.state.direction});
 	}
 	updateForAgent() {
@@ -41,7 +41,7 @@ class BoardView extends React.Component {
 		this.setState({board: this.state.board, direction: !this.state.direction})
 	}
 	runAgent() {
-		this.state.board.runAgent(this.state.direction);
+		this.state.board.scoreB += this.state.board.runAgent(this.state.direction);
 		this.state.board.agentPlaying = false;
 		this.setState({board: this.state.board, direction: !this.state.direction});
 	}
@@ -75,11 +75,22 @@ class BoardView extends React.Component {
 				</div>
 			)
 		});
+		let scoreA = this.state.board.scoreA;
+		let scoreB = this.state.board.scoreB;
+		let scorePlayer = (
+			<ScoreView score={scoreA} />
+		);
+		let scoreAgent = (
+			<ScoreView score={scoreB} />
+		);
 
 		return (
 			<div>
 				<div>
 					{cells}
+				</div>
+				<div>
+					{scorePlayer} {scoreAgent}
 				</div>
 			</div>
 		);
@@ -126,8 +137,13 @@ class CellView extends React.Component {
 	}
 }
 
-class TileView extends React.Component {
-
+class ScoreView extends React.Component {
+	render() {
+		let score = this.props.score;
+		return(
+			<span>{score}</span>
+		)
+	}
 }
 
 var BoardViewRendered = ReactDOM.render(<BoardView />, document.getElementById('boardDiv'));
