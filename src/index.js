@@ -33,10 +33,17 @@ class BoardView extends React.Component {
 			}
 		}
 
-		// Move the wildCard to the selected cell and update
-		// Update the value of the previous position of the wildCard
 		this.state.board.moveWildCard(rowIndex, colIndex);
 		this.setState({board: this.state.board, direction: this.state.direction});
+	}
+	updateForAgent() {
+		this.state.board.agentPlaying = true;
+		this.setState({board: this.state.board, direction: !this.state.direction})
+	}
+	runAgent() {
+		this.state.board.runAgent(this.state.direction);
+		this.state.board.agentPlaying = false;
+		this.setState({board: this.state.board, direction: !this.state.direction});
 	}
 	render() {
 		let isSelectable = function(cellValue, rowIndex, colIndex, wildRowIndex, wildColIndex, direction){
@@ -63,7 +70,7 @@ class BoardView extends React.Component {
 					{row.map((col, colIndex) => <CellView value={col.value}
 						rowIndex={rowIndex}
 						colIndex={colIndex}
-						board={currentBoard}
+						boardView={currentBoard}
 						isSelectable={isSelectable(col.value, rowIndex, colIndex, wildRowIndex, wildColIndex, direction)}/>)}
 				</div>
 			)
@@ -83,8 +90,13 @@ class CellView extends React.Component {
 	pick() {
 		let colIndex = this.props.colIndex;
 		let rowIndex = this.props.rowIndex;
+		let boardView = this.props.boardView;
 		if(this.props.isSelectable) {
-			this.props.board.selectCell(rowIndex, colIndex);
+			boardView.selectCell(rowIndex, colIndex);
+			boardView.updateForAgent();
+			setTimeout(() => {
+				boardView.runAgent();
+			}, 500)
 		} else {
 			console.log("unselectable");
 			// TODO: Add visual message
@@ -97,12 +109,14 @@ class CellView extends React.Component {
 		let value = this.props.value;
 		let col = this.props.colIndex;
 		let row = this.props.rowIndex;
-		let Board = this.props.board;
+		let board = this.props.boardView.state.board;
 		let isSelectable = this.props.isSelectable;
 		let generateClassName = function(isSelectable) {
 			let cellClass = 'cell';
-			if(isSelectable)
+			if(isSelectable && !board.agentPlaying)
 				cellClass += ' selectable';
+			else if(isSelectable && board.agentPlaying)
+				cellClass += ' agent';
 
 			return cellClass;
 		}

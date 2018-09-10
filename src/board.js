@@ -1,10 +1,48 @@
+class Agent {
+	constructor() {
+	}
+	play(direction, board) {
+		// direction: true vertical, false horizontal
+		// Simply select the cell with the highest value
+		let wildRowIndex = board.wildRowIndex;
+		let wildColIndex = board.wildColIndex;
+		if(direction) {
+			let indexMaxValue = -1;
+			let maxValue = -1;
+			for(let i = 0; i < Board.size; i++) {
+				let cell = board.cells[i][wildColIndex];
+				if(cell.value > maxValue) {
+					maxValue = cell.value;
+					indexMaxValue = i;
+				}
+			}
+			if(maxValue > 0) {
+				board.moveWildCard(indexMaxValue, wildColIndex);
+			}
+		} else {
+			let indexMaxValue = -1;
+			let maxValue = -1;
+			for(let i = 0; i < Board.size; i++) {
+				let cell = board.cells[wildRowIndex][i];
+				if(cell.value > maxValue) {
+					maxValue = cell.value;
+					indexMaxValue = i;
+				}
+			}
+			if(maxValue > 0) {
+				board.moveWildCard(wildRowIndex, indexMaxValue);
+			}
+		}
+	}
+}
 class Cell {
 	// Value is a number between 1 and 9 when the cell
 	// has not been taken by a player yet
 	// Value is 0 if it the wildcard
 	// Value is -1 if it was taken in a previous turn
 	constructor(value)
-{		this.value = value || 0;
+	{
+		this.value = value || 0;
 	}
 
 	update(value) {
@@ -29,6 +67,8 @@ class Board {
 		// score for the players A is the person
 		this.scoreA = 0;
 		this.scoreB = 0;
+		this.agent = new Agent();
+		this.agentPlaying = false;
 	}
 	isCellSelectable(rowIndex, colIndex) {
 		return this.cells[rowIndex][colIndex].value > 0;
@@ -47,6 +87,9 @@ class Board {
 		this.cells[rowIndex][colIndex].value = 0;
 		this.wildRowIndex = rowIndex;
 		this.wildColIndex = colIndex;
+	}
+	runAgent(direction) {
+		this.agent.play(direction, this);
 	}
 }
 
