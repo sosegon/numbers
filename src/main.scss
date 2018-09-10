@@ -1,23 +1,101 @@
+$game-container-background: #bbada0;
+$section-space: 8px;
+$text-color: #776E65;
+$tile-color: #eee4da;
+
+.board .cell, .tile, #boardDiv {
+  user-select: none;
+  cursor: default;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  font-family: "Clear Sans", sans-serif;
+  font-size: 21px;
+}
+
 .cell, .tile {
   width: 50px;
   height: 50px;
-  margin: 5px;
-  line-height: 90px;
+  margin: 1px;
+  line-height: 50px;
   display: inline-block;
   font-size: 20px;
   font-weight: bold;
   text-align: center;
   vertical-align: middle;
-  border-radius: 7px;
+  border-radius: 2px;
   font-family: "Clear Sans";
-  color: #766;
+  color: #413434;
   background-color: #dcb;
 }
 
 .selectable {
-  background-color: #000;
+  background-color: #f69191;
 }
 
 .agent {
-  background-color: #fff !important;
+  background-color: #b4f691 !important;
+}
+
+.picked {
+  color: #fff0;
+}
+
+.wild-card {
+  background-color: #669dd4;
+}
+
+.score-container {
+  $height: 25px;
+
+  position: relative;
+  display: inline-block;
+  background: $game-container-background;
+  padding: 15px 25px;
+  font-size: $height;
+  height: $height;
+  line-height: $height + 22px;
+  font-weight: bold;
+  border-radius: 3px;
+  color: white;
+  text-align: center;
+
+  &:after {
+    position: absolute;
+    width: 100%;
+    top: 10px;
+    left: 0;
+    text-transform: uppercase;
+    font-size: 13px;
+    line-height: 13px;
+    text-align: center;
+    color: $tile-color;
+  }
+
+  .score-addition {
+    position: absolute;
+    right: 30px;
+    color: red;
+    font-size: $height;
+    line-height: $height;
+    font-weight: bold;
+    color: rgba($text-color, .9);
+    z-index: 100;
+    /*@include animation(move-up 600ms ease-in);
+    @include animation-fill-mode(both);*/
+  }
+}
+
+.score-container:after {
+  content: "Score";
+}
+
+.scores-container {
+  text-align: left;
+  margin-top: $section-space;
 }

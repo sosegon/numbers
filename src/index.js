@@ -75,6 +75,8 @@ class BoardView extends React.Component {
 						colIndex={colIndex}
 						boardView={currentBoard}
 						isSelectable={isSelectable(col.value, rowIndex, colIndex, wildRowIndex, wildColIndex, direction)}
+						picked={col.value < 0}
+						wildCard={col.value === 0}
 					/>)}
 				</div>
 			)
@@ -89,12 +91,12 @@ class BoardView extends React.Component {
 		);
 		return (
 			<div>
+				<div  className="scores-container">
+					{scorePlayer} {scoreAgent}
+				</div>
 				<div>
 					{cells}
 					<GameEndOverlay gameEnd={this.state.board.gameEnd} scoreA={scoreA} scoreB={scoreB} />
-				</div>
-				<div>
-					{scorePlayer} {scoreAgent}
 				</div>
 			</div>
 		);
@@ -134,17 +136,25 @@ class CellView extends React.Component {
 		let row = this.props.rowIndex;
 		let board = this.props.boardView.state.board;
 		let isSelectable = this.props.isSelectable;
-		let generateClassName = function(isSelectable) {
+		let picked = this.props.picked;
+		let wildCard = this.props.wildCard;
+		let generateClassName = function(isSelectable, picked, wildCard) {
 			let cellClass = 'cell';
 			if(isSelectable && !board.agentPlaying)
 				cellClass += ' selectable';
 			else if(isSelectable && board.agentPlaying)
 				cellClass += ' agent';
 
+			if(picked) {
+				cellClass += ' picked';
+			} else if(wildCard) {
+				cellClass += ' picked' + ' wild-card';
+			}
+
 			return cellClass;
 		}
 		return (
-			<span className={generateClassName(isSelectable)} onClick={this.pick.bind(this)}>{value}</span>
+			<span className={generateClassName(isSelectable, picked, wildCard)} onClick={this.pick.bind(this)}>{value}</span>
 		);
 	}
 }
@@ -153,7 +163,9 @@ class ScoreView extends React.Component {
 	render() {
 		let score = this.props.score;
 		return(
-			<span>{score}</span>
+			<div className="score-container">
+				<span>{score}</span>
+			</div>
 		)
 	}
 }
