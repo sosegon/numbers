@@ -81,6 +81,7 @@ class BoardView extends React.Component {
 				</div>
 			)
 		});
+		let wildCardCell = (<WildCardView cell={this.state.board.wildCardCell} />)
 		let scoreA = this.state.board.scoreA;
 		let scoreB = this.state.board.scoreB;
 		let scorePlayer = (
@@ -91,12 +92,13 @@ class BoardView extends React.Component {
 		);
 		return (
 			<div>
-				<div  className="scores-container">
-					{scorePlayer} {scoreAgent}
-				</div>
-				<div>
+				<div className='board'>
+					{wildCardCell}
 					{cells}
 					<GameEndOverlay gameEnd={this.state.board.gameEnd} scoreA={scoreA} scoreB={scoreB} />
+				</div>
+				<div className="scores-container">
+					{scorePlayer} {scoreAgent}
 				</div>
 			</div>
 		);
@@ -147,8 +149,6 @@ class CellView extends React.Component {
 
 			if(picked) {
 				cellClass += ' picked';
-			} else if(wildCard) {
-				cellClass += ' picked' + ' wild-card';
 			}
 
 			return cellClass;
@@ -166,6 +166,18 @@ class ScoreView extends React.Component {
 			<div className="score-container">
 				<span>{score}</span>
 			</div>
+		)
+	}
+}
+
+class WildCardView extends React.Component {
+	render() {
+		var cell = this.props.cell;
+		var classArray = ['wild-card'];
+		classArray.push('position_' + cell.rowIndex + '_' + cell.colIndex);
+		var classes = classArray.join(' ');
+		return (
+			<span className={classes}>★</span>
 		)
 	}
 }
