@@ -1,11 +1,67 @@
-/*
-	50 (size of cell) + 2 x 1(margin size) * column + padding
-*/
-@for $row from 0 through 10 {
-  @for $column from 0 through 10 {
-    .position_#{$row}_#{$column}:not(.isMoving) {
-      top: 52 * $row + 5;
-      left: 52 * $column + 5;
-    }
-  }
+$boardSize: 10;
+$cellSize: 50;
+$marginSize: 1;
+$paddingSize: 5;
+
+@for $row from 0 through $boardSize {
+	@for $column from 0 through $boardSize {
+		.position_#{$row}_#{$column}:not(.isMoving) {
+			top: ($cellSize + 2 * $marginSize) * $row + $paddingSize;
+			left: ($cellSize + 2 * $marginSize) * $column + $paddingSize;
+		}
+	}
+}
+
+@for $fromRow from 0 through $boardSize {
+	@for $toRow from 0 through $boardSize {
+		$name: row_from_#{$fromRow}_to_#{$toRow};
+
+		@if $fromRow == $toRow {
+			.#{$name} {
+				top: ($cellSize + 2 * $marginSize) * $toRow + $paddingSize;
+			}
+		} @else {
+			.#{$name} {
+				animation-duration: 0.20s;
+				animation-name: $name;
+				animation-fill-mode: forwards;
+			}
+
+			@keyframes #{$name} {
+				from {
+					top: ($cellSize + 2 * $marginSize) * $fromRow + $paddingSize;
+				}
+				to {
+					top: ($cellSize + 2 * $marginSize) * $toRow + $paddingSize;
+				}
+			}
+		}
+	}
+}
+
+@for $fromColumn from 0 through $boardSize {
+	@for $toColumn from 0 through $boardSize {
+		$name: column_from_#{$fromColumn}_to_#{$toColumn};
+
+		@if $fromColumn == $toColumn {
+			.#{$name} {
+				left: ($cellSize + 2 * $marginSize) * $toColumn + $paddingSize;
+			}
+		} @else {
+			.#{$name} {
+				animation-duration: 0.20s;
+				animation-name: $name;
+				animation-fill-mode: forwards;
+			}
+
+			@keyframes #{$name} {
+				from {
+					left: ($cellSize + 2 * $marginSize) * $fromColumn + $paddingSize;
+				}
+				to {
+					left: ($cellSize + 2 * $marginSize) * $toColumn + $paddingSize;
+				}
+			}
+		}
+	}
 }

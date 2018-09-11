@@ -41,6 +41,8 @@ class WildCardCell {
 	constructor(rowIndex, colIndex) {
 		this.rowIndex = rowIndex;
 		this.colIndex = colIndex;
+		this.oldRowIndex = this.rowIndex;
+		this.oldColIndex = this.colIndex;
 	}
 	moveTo(rowIndex, colIndex) {
 		this.oldRowIndex = this.rowIndex;
