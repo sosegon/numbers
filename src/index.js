@@ -26,9 +26,9 @@ class BoardView extends React.Component {
 	selectCell(rowIndex, colIndex) {
 		// Define the direction if it is not set yet
 		if(this.state.direction === null) {
-			if(this.state.board.wildRowIndex === rowIndex) {
+			if(this.state.board.wildCardCell.rowIndex === rowIndex) {
 				this.state.direction = false;
-			} else if(this.state.board.wildColIndex === colIndex) {
+			} else if(this.state.board.wildCardCell.colIndex === colIndex) {
 				this.state.direction = true;
 			}
 		}
@@ -62,8 +62,8 @@ class BoardView extends React.Component {
 			}
 			return false;
 		}
-		let wildRowIndex = this.state.board.wildRowIndex;
-		let wildColIndex = this.state.board.wildColIndex;
+		let wildRowIndex = this.state.board.wildCardCell.rowIndex;
+		let wildColIndex = this.state.board.wildCardCell.colIndex;
 		let currentBoard = this;
 		let direction = this.state.direction;
 		let cells = this.state.board.cells.map((row, rowIndex) => {

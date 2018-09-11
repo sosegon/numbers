@@ -4,8 +4,8 @@ class Agent {
 	play(direction, board) {
 		// direction: true vertical, false horizontal
 		// Simply select the cell with the highest value
-		let wildRowIndex = board.wildRowIndex;
-		let wildColIndex = board.wildColIndex;
+		let wildRowIndex = board.wildCardCell.rowIndex;
+		let wildColIndex = board.wildCardCell.colIndex;
 		if(direction) {
 			let indexMaxValue = -1;
 			let maxValue = -1;
@@ -37,6 +37,18 @@ class Agent {
 		return 0;
 	}
 }
+class WildCardCell {
+	constructor(rowIndex, colIndex) {
+		this.rowIndex = rowIndex;
+		this.colIndex = colIndex;
+	}
+	moveTo(rowIndex, colIndex) {
+		this.oldRowIndex = this.rowIndex;
+		this.oldColIndex = this.colIndex;
+		this.rowIndex = rowIndex;
+		this.colIndex = colIndex;
+	}
+}
 class Cell {
 	// Value is a number between 1 and 9 when the cell
 	// has not been taken by a player yet
@@ -62,9 +74,10 @@ class Board {
 			this.cells.push(row);
 		}
 		// randomly position the starting point
-		this.wildRowIndex = randomInteger(0, Board.size - 1);
-		this.wildColIndex = randomInteger(0, Board.size - 1);
-		this.cells[this.wildRowIndex][this.wildColIndex].value = 0;
+		let wildRowIndex = randomInteger(0, Board.size - 1);
+		let wildColIndex = randomInteger(0, Board.size - 1);
+		this.cells[wildRowIndex][wildColIndex].value = 0;
+		this.wildCardCell = new WildCardCell(wildRowIndex, wildColIndex);
 
 		this.scoreA = 0; // Person
 		this.scoreB = 0; // Agent
@@ -77,24 +90,27 @@ class Board {
 	}
 	moveWildCard(rowIndex, colIndex) {
 		let valueToTake = this.cells[rowIndex][colIndex].value;
-		this.cells[this.wildRowIndex][this.wildColIndex].value = -1;
+		let wildRowIndex = this.wildCardCell.rowIndex;
+		let wildColIndex = this.wildCardCell.colIndex;
+		this.cells[wildRowIndex][wildColIndex].value = -1;
 		this.cells[rowIndex][colIndex].value = 0;
-		this.wildRowIndex = rowIndex;
-		this.wildColIndex = colIndex;
+		this.wildCardCell.moveTo(rowIndex, colIndex);
 		return valueToTake;
 	}
 	runAgent(direction) {
 		return this.agent.play(direction, this);
 	}
 	canMoveWildCard(direction) {
+		let wildRowIndex = this.wildCardCell.rowIndex;
+		let wildColIndex = this.wildCardCell.colIndex;
 		if(direction) {
 			for(let i = 0; i < Board.size; i++) {
-				let cell = this.cells[i][this.wildColIndex];
+				let cell = this.cells[i][wildColIndex];
 				if(cell.value > 0) return true;
 			}
 		} else {
 			for(let i = 0; i < Board.size; i++) {
-				let cell = this.cells[this.wildRowIndex][i];
+				let cell = this.cells[wildRowIndex][i];
 				if(cell.value > 0) return true;
 			}
 		}
@@ -102,7 +118,7 @@ class Board {
 	}
 }
 
-Board.size = 5;
+Board.size = 6;
 
 function randomInteger(min, max) {
 	let r = Math.random();
