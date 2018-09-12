@@ -62,15 +62,12 @@ body {
 
 .score-container {
   $height: 25px;
+  $width: 60px;
 
   position: relative;
   display: inline-block;
   background: $game-container-background;
-  padding: 15px 25px;
-  font-size: $height;
-  height: $height;
-  line-height: $height + 22px;
-  font-weight: bold;
+  width: $width;
   border-radius: 3px;
   color: white;
   text-align: center;
@@ -101,13 +98,17 @@ body {
   }
 }
 
-.score-container:after {
-  content: "Score";
-}
-
 .scores-container {
   margin-top: $section-space;
-  text-align: center;
+  text-align: left;
+}
+
+.player-name, .player-score {
+  display: block
+}
+
+.player-score {
+  font-weight: bold;
 }
 
 .buttons-container {

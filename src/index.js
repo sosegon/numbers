@@ -58,10 +58,10 @@ class GameView extends React.Component {
 		let scoreA = this.state.game.player1.score;
 		let scoreB = this.state.game.player2.score;
 		let scorePlayer = (
-			<ScoreView score={scoreA} />
+			<ScoreView score={scoreA} name="You"/>
 		);
 		let scoreAgent = (
-			<ScoreView score={scoreB} />
+			<ScoreView score={scoreB} name="AI"/>
 		);
 		let isOver = this.state.game.isOver;
 		return (
@@ -82,7 +82,7 @@ class GameView extends React.Component {
 	}
 }
 
-let delay = 200;
+const delay = 200;
 class CellView extends React.Component {
 	isSelectable() {
 		let rowIndex = this.props.cell.rowIndex;
@@ -181,9 +181,11 @@ class CellView extends React.Component {
 class ScoreView extends React.Component {
 	render() {
 		let score = this.props.score;
+		let name = this.props.name;
 		return(
 			<div className="score-container">
-				<span>{score}</span>
+				<span className="player-name">{name}</span>
+				<span className="player-score">{score}</span>
 			</div>
 		)
 	}
