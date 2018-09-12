@@ -7,6 +7,7 @@ class GameView extends React.Component {
 		let game = new Game(Board.size);
 		game.board.update(game.token);
 		this.state = {game: game};
+		this.setState({game: this.state.game}); // to allow rendering
 	}
 	handleKeyDown(event) {
 		if(this.state.direction !== null) return;
@@ -65,10 +66,13 @@ class GameView extends React.Component {
 		let isOver = this.state.game.isOver;
 		return (
 			<div>
+				<div className="buttons-container">
+					<button className="tryAgain" onClick={this.setup.bind(this)}>Restart</button>
+				</div>
 				<div className='board'>
 					{wildCardCell}
 					{cells}
-					<GameEndOverlay gameEnd={isOver} scoreA={scoreA} scoreB={scoreB} />
+					<GameEndOverlay game={this.state.game} />
 				</div>
 				<div className="scores-container">
 					{scorePlayer} {scoreAgent}
@@ -157,17 +161,16 @@ class CellView extends React.Component {
 		let game = this.props.game;
 
 		let generateClassName = function(isSelectable, hid) {
-			let cellClass = 'cell';
+			let classArray = ['cell'];
 			if(isSelectable && game.turn)
-				cellClass += ' selectable';
+				classArray.push('selectable');
 			else if(isSelectable && !game.turn)
-				cellClass += ' agent';
+				classArray.push('agent');
 
-			if(hid) {
-				cellClass += ' hid';
-			}
+			if(hid)
+				classArray.push('hid');
 
-			return cellClass;
+			return classArray.join(' ');
 		}
 		return (
 			<span className={generateClassName(isSelectable, hid)} onClick={this.pick.bind(this)}>{value}</span>
@@ -200,8 +203,11 @@ class WildCardView extends React.Component {
 	}
 }
 
-var GameEndOverlay = ({gameEnd, scoreA, scoreB}) => {
+var GameEndOverlay = ({game}) => {
 	let content = '';
+	let scoreA = game.player1.score;
+	let scoreB = game.player2.score;
+	let gameEnd = game.isOver;
 	if(gameEnd) {
 		if(scoreA > scoreB) {
 			content = 'You won';
@@ -216,8 +222,8 @@ var GameEndOverlay = ({gameEnd, scoreA, scoreB}) => {
 	}
 
 	return(
-		<div>
-			<p>{content}</p>
+		<div className='overlay'>
+			<p className='message'>{content}</p>
 		</div>
 	);
 };

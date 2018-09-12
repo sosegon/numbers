@@ -180,7 +180,7 @@ class Board {
 	}
 }
 
-Board.size = 6;
+Board.size = 3;
 
 function randomInteger(min, max) {
 	let r = Math.random();
