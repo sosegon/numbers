@@ -1,46 +1,114 @@
-class Agent {
-	constructor() {
+class Game {
+	constructor(boardSize) {
+		this.board = new Board(boardSize);
+		this.token = new Token(boardSize);
+		this.player1 = new Player();
+		this.player2 = new Agent();
+		this.lastValue = 0;
+		this.turn = true; // player 1
+		this.started = false;
+		this.state = 0; //0: resting, 1: moving token
 	}
-	play(direction, board) {
+	moveToken(rowIndex, colIndex) {
+		this.token.moveTo(rowIndex, colIndex);
+		if(!this.started) {
+			let direction;
+			if(this.token.oldRowIndex === this.token.rowIndex)
+				direction = false;
+			else if(this.token.oldColIndex === this.token.colIndex)
+				direction = true;
+
+			if(this.turn){
+				this.player1.direction = direction;
+				this.player2.direction = !direction;
+			}
+			else {
+				this.player2.direction = direction;
+				this.player1.direction = !direction;
+			}
+			this.started = !this.started;
+		}
+	}
+	takeCell() {
+		this.lastValue = this.board.takeCurrentValue(this.token);
+	}
+	updateBoard() {
+		this.board.update(this.token);
+	}
+	updateScores() {
+		if(this.turn) {
+			this.player1.incrementScore(this.lastValue);
+		} else {
+			this.player2.incrementScore(this.lastValue);
+		}
+	}
+	passToken() {
+		this.turn = !this.turn;
+	}
+	canContinue() {
+		return this.board.isNextTurnPossible(this.turn ? this.player1 : this.player2, this.token);
+	}
+	getCurrentPlayer() {
+		return this.turn ? this.player1 : this.player2;
+	}
+	getNextPlayer() {
+		return this.turn ? this.player2 : this.player1;
+	}
+}
+class Player {
+	constructor() {
+		this.score = 0;
+		this.direction = null; // Direction is set once the game starts
+	}
+	incrementScore(value) {
+		this.score += value;
+	}
+}
+class Agent extends Player{
+	constructor(direction) {
+		super(direction);
+	}
+	maxCell(token, board) {
 		// direction: true vertical, false horizontal
 		// Simply select the cell with the highest value
-		let wildRowIndex = board.wildCardCell.rowIndex;
-		let wildColIndex = board.wildCardCell.colIndex;
-		if(direction) {
+		let tokenRowIndex = token.rowIndex;
+		let tokenColIndex = token.colIndex;
+		if(this.direction) {
 			let indexMaxValue = -1;
 			let maxValue = -1;
 			for(let i = 0; i < Board.size; i++) {
-				let cell = board.cells[i][wildColIndex];
+				let cell = board.cells[i][tokenColIndex];
 				if(cell.value > maxValue) {
 					maxValue = cell.value;
 					indexMaxValue = i;
 				}
 			}
 			if(maxValue > 0) {
-				return board.moveWildCard(indexMaxValue, wildColIndex);
+				return [indexMaxValue, tokenColIndex];
 			}
 		} else {
 			let indexMaxValue = -1;
 			let maxValue = -1;
 			for(let i = 0; i < Board.size; i++) {
-				let cell = board.cells[wildRowIndex][i];
+				let cell = board.cells[tokenRowIndex][i];
 				if(cell.value > maxValue) {
 					maxValue = cell.value;
 					indexMaxValue = i;
 				}
 			}
 			if(maxValue > 0) {
-				return board.moveWildCard(wildRowIndex, indexMaxValue);
+				return [tokenRowIndex, indexMaxValue];
 			}
 		}
 
-		return 0;
+		return [-1, -1];
 	}
 }
-class WildCardCell {
-	constructor(rowIndex, colIndex) {
-		this.rowIndex = rowIndex;
-		this.colIndex = colIndex;
+class Token {
+	constructor(boardSize) {
+		// random position
+		this.rowIndex = randomInteger(0, boardSize - 1);
+		this.colIndex = randomInteger(0, boardSize - 1);
 		this.oldRowIndex = this.rowIndex;
 		this.oldColIndex = this.colIndex;
 	}
@@ -54,65 +122,56 @@ class WildCardCell {
 class Cell {
 	// Value is a number between 1 and 9 when the cell
 	// has not been taken by a player yet
-	// Value is 0 if it the wildcard
+	// Value is 0 if it is the wildcard
 	// Value is -1 if it was taken in a previous turn
-	constructor(value)
+	constructor(value, rowIndex, colIndex)
 	{
 		this.value = value || 0;
+		this.rowIndex = rowIndex;
+		this.colIndex = colIndex;
 	}
-
 	update(value) {
 		this.value = value;
 	}
+	isSelectable() {
+		return this.value > 0;
+	}
 }
 class Board {
-	constructor() {
+	constructor(boardSize) {
 		this.cells = [];
-		for(let i = 0; i < Board.size; i++) {
+		for(let i = 0; i < boardSize; i++) {
 			let row = [];
-			for(let j = 0; j < Board.size; j++) {
-				row.push(new Cell(randomInteger(1, 9)));
+			for(let j = 0; j < boardSize; j++) {
+				row.push(new Cell(randomInteger(1, 9), i, j));
 			}
 			this.cells.push(row);
 		}
-		// randomly position the starting point
-		let wildRowIndex = randomInteger(0, Board.size - 1);
-		let wildColIndex = randomInteger(0, Board.size - 1);
-		this.cells[wildRowIndex][wildColIndex].value = 0;
-		this.wildCardCell = new WildCardCell(wildRowIndex, wildColIndex);
-
-		this.scoreA = 0; // Person
-		this.scoreB = 0; // Agent
-		this.agent = new Agent();
-		this.agentPlaying = false;
-		this.gameEnd = false;
 	}
 	isCellSelectable(rowIndex, colIndex) {
-		return this.cells[rowIndex][colIndex].value > 0;
+		return this.cells[rowIndex][colIndex].isSelectable();
 	}
-	moveWildCard(rowIndex, colIndex) {
-		let valueToTake = this.cells[rowIndex][colIndex].value;
-		let wildRowIndex = this.wildCardCell.rowIndex;
-		let wildColIndex = this.wildCardCell.colIndex;
-		this.cells[wildRowIndex][wildColIndex].value = -1;
-		this.cells[rowIndex][colIndex].value = 0;
-		this.wildCardCell.moveTo(rowIndex, colIndex);
-		return valueToTake;
+	update(token) {
+		// The old position has to be set to -1
+		this.cells[token.oldRowIndex][token.oldColIndex].update(-1);
+		// The current position has to be set to 0
+		this.cells[token.rowIndex][token.colIndex].update(0);
 	}
-	runAgent(direction) {
-		return this.agent.play(direction, this);
+	takeCurrentValue(token) {
+		return this.cells[token.rowIndex][token.colIndex].value;
 	}
-	canMoveWildCard(direction) {
-		let wildRowIndex = this.wildCardCell.rowIndex;
-		let wildColIndex = this.wildCardCell.colIndex;
+	isNextTurnPossible(player, token) {
+		let tokenRowIndex = token.rowIndex;
+		let tokenColIndex = token.colIndex;
+		let direction = player.direction;
 		if(direction) {
 			for(let i = 0; i < Board.size; i++) {
-				let cell = this.cells[i][wildColIndex];
+				let cell = this.cells[i][tokenColIndex];
 				if(cell.value > 0) return true;
 			}
 		} else {
 			for(let i = 0; i < Board.size; i++) {
-				let cell = this.cells[wildRowIndex][i];
+				let cell = this.cells[tokenRowIndex][i];
 				if(cell.value > 0) return true;
 			}
 		}
