@@ -36,6 +36,10 @@ class GameView extends React.Component {
 		this.state.game.state = 0;
 		this.setState({game: this.state.game});
 	}
+	finishGame() {
+		this.state.game.isOver = true;
+		this.setState({game: this.state.game});
+	}
 	render() {
 		let currentGame = this.state.game;
 		let gameView = this;
@@ -58,12 +62,13 @@ class GameView extends React.Component {
 		let scoreAgent = (
 			<ScoreView score={scoreB} />
 		);
+		let isOver = this.state.game.isOver;
 		return (
 			<div>
 				<div className='board'>
 					{wildCardCell}
 					{cells}
-					<GameEndOverlay gameEnd={false} scoreA={scoreA} scoreB={scoreB} />
+					<GameEndOverlay gameEnd={isOver} scoreA={scoreA} scoreB={scoreB} />
 				</div>
 				<div className="scores-container">
 					{scorePlayer} {scoreAgent}
@@ -106,11 +111,10 @@ class CellView extends React.Component {
 		this.props.gameView.updateScores();
 		let game = this.props.game;
 		return new Promise((resolve, reject) => {
-			let cont = game.canContinue();
-			if(cont) {
+			if(game.canContinue()) {
 				setTimeout(() => resolve(), 250);
 			} else {
-				// TODO:
+				this.props.gameView.finishGame();
 			}
 		});
 	}
@@ -136,8 +140,6 @@ class CellView extends React.Component {
 				let position = agent.maxCell(game.token, game.board);
 				if(position[0] >= 0 && position[1] >= 0) {
 					setTimeout(() => resolve(position), 250);
-				} else {
-					// TODO: game over
 				}
 			});
 		})

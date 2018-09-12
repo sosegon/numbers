@@ -7,6 +7,7 @@ class Game {
 		this.lastValue = 0;
 		this.turn = true; // player 1
 		this.started = false;
+		this.isOver = false;
 		this.state = 0; //0: resting, 1: moving token
 	}
 	moveToken(rowIndex, colIndex) {
