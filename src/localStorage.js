@@ -21,7 +21,7 @@ window.fakeStorage = {
 };
 
 function LocalStorageManager() {
-  this.gameStateKey     = "gameState";
+  this.gameStateKey     = "gameNumbersState";
 
   var supported = this.localStorageSupported();
   this.storage = supported ? window.localStorage : window.fakeStorage;
