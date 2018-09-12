@@ -78,6 +78,7 @@ class GameView extends React.Component {
 	}
 }
 
+let delay = 200;
 class CellView extends React.Component {
 	isSelectable() {
 		let rowIndex = this.props.cell.rowIndex;
@@ -104,7 +105,7 @@ class CellView extends React.Component {
 	moveToken(position) {
 		this.props.gameView.moveToken(position[0], position[1]);
 		return new Promise((resolve, reject) => {
-			setTimeout(() => resolve(), 250);
+			setTimeout(() => resolve(), delay);
 		});
 	}
 	updateScores() {
@@ -112,7 +113,7 @@ class CellView extends React.Component {
 		let game = this.props.game;
 		return new Promise((resolve, reject) => {
 			if(game.canContinue()) {
-				setTimeout(() => resolve(), 250);
+				setTimeout(() => resolve(), delay);
 			} else {
 				this.props.gameView.finishGame();
 			}
@@ -139,7 +140,7 @@ class CellView extends React.Component {
 			return new Promise((resolve, reject) => {
 				let position = agent.maxCell(game.token, game.board);
 				if(position[0] >= 0 && position[1] >= 0) {
-					setTimeout(() => resolve(position), 250);
+					setTimeout(() => resolve(position), delay);
 				}
 			});
 		})
