@@ -4,10 +4,14 @@ class GameView extends React.Component {
 		this.setup();
 	}
 	setup() {
-		let game = new Game(Board.size);
-		game.board.update(game.token);
+		this.storageManager = new LocalStorageManager;
+		let previousState = this.storageManager.getGameState();
+		let game = new Game(previousState);
 		this.state = {game: game};
-		this.setState({game: this.state.game}); // to allow rendering
+	}
+	reset() {
+		let game = new Game();
+		this.setState({game: game});
 	}
 	handleKeyDown(event) {
 		if(this.state.direction !== null) return;
@@ -27,21 +31,28 @@ class GameView extends React.Component {
 	moveToken(rowIndex, colIndex) {
 		this.state.game.moveToken(rowIndex, colIndex);
 		this.state.game.takeCell();
-		this.state.game.state = 1;
+		this.state.game.status = 1;
 		this.setState({game: this.state.game});
 	}
 	updateScores() {
 		this.state.game.updateScores();
 		this.state.game.updateBoard();
 		this.state.game.passToken();
-		this.state.game.state = 0;
+		this.state.game.status = 0;
 		this.setState({game: this.state.game});
 	}
 	finishGame() {
 		this.state.game.isOver = true;
 		this.setState({game: this.state.game});
 	}
+	saveGameState() {
+		this.storageManager.setGameState(this.state.game.serialize());
+	}
 	render() {
+		if((this.state.game.status === 0 && this.state.game.turn)
+			|| this.state.game.isOver) { // not moving token and human turn or game is over
+			this.saveGameState();
+		}
 		let currentGame = this.state.game;
 		let gameView = this;
 		let cells = this.state.game.board.cells.map((row, rowIndex) => {
@@ -67,7 +78,7 @@ class GameView extends React.Component {
 		return (
 			<div>
 				<div className="buttons-container">
-					<button className="tryAgain" onClick={this.setup.bind(this)}>Restart</button>
+					<button className="tryAgain" onClick={this.reset.bind(this)}>Restart</button>
 				</div>
 				<div className='board'>
 					{wildCardCell}

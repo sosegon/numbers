@@ -1,14 +1,37 @@
 class Game {
-	constructor(boardSize) {
+	constructor(state) {
+		let boardSize = Board.size
+		if(state) {
+			boardSize = Math.sqrt(state.board.length);
+			this.reset(boardSize);
+
+			this.board.setCellValues(state.board);
+			let tokenPos = this.board.findTokenPosition();
+			this.token.set(tokenPos[0], tokenPos[1]);
+
+			this.player1.direction = state.direction1;
+			this.player2.direction = !state.direction1;
+			this.player1.score = state.score1;
+			this.player2.score = state.score2;
+
+			this.turn = state.turn;
+			this.started = state.started;
+			this.isOver = state.isOver;
+		} else {
+			this.reset(boardSize);
+		}
+	}
+	reset(boardSize) {
 		this.board = new Board(boardSize);
 		this.token = new Token(boardSize);
+		this.board.update(this.token);
 		this.player1 = new Player();
 		this.player2 = new Agent();
 		this.lastValue = 0;
 		this.turn = true; // player 1
 		this.started = false;
 		this.isOver = false;
-		this.state = 0; //0: resting, 1: moving token
+		this.status = 0; //0: resting, 1: moving token
 	}
 	moveToken(rowIndex, colIndex) {
 		this.token.moveTo(rowIndex, colIndex);
@@ -54,6 +77,17 @@ class Game {
 	}
 	getNextPlayer() {
 		return this.turn ? this.player2 : this.player1;
+	}
+	serialize() {
+		return {
+			isOver: this.isOver,
+			score1: this.player1.score,
+			score2: this.player2.score,
+			turn: this.turn,
+			started: this.started,
+			direction1: this.player1.direction,
+			board: this.board.serialize()
+		}
 	}
 }
 class Player {
@@ -119,6 +153,12 @@ class Token {
 		this.rowIndex = rowIndex;
 		this.colIndex = colIndex;
 	}
+	set(rowIndex, colIndex) {
+		this.rowIndex = rowIndex;
+		this.colIndex = colIndex;
+		this.oldRowIndex = this.rowIndex;
+		this.oldColIndex = this.colIndex;
+	}
 }
 class Cell {
 	// Value is a number between 1 and 9 when the cell
@@ -178,9 +218,37 @@ class Board {
 		}
 		return false;
 	}
+	setCellValues(values) {
+		let size = Math.sqrt(values.length);
+		this.cells.forEach((row, rowIndex) => {
+			row.forEach((cell, columnIndex) => {
+				cell.update(values[rowIndex * size + columnIndex]);
+			});
+		});
+	}
+	findTokenPosition() {
+		for(let i = 0; i < this.cells.length; i++) {
+			for(let j = 0; j < this.cells.length; j++) {
+				if (this.cells[i][j].value === 0) {
+					return [i, j];
+				}
+			}
+		}
+		return [-1, -1];
+	}
+	serialize() {
+		let values = []
+		this.cells.forEach(row => {
+			row.forEach(cell => {
+				values.push(cell.value);
+			});
+		});
+
+		return values;
+	}
 }
 
-Board.size = 3;
+Board.size = 6;
 
 function randomInteger(min, max) {
 	let r = Math.random();
