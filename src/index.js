@@ -153,9 +153,11 @@ class CellView extends React.Component {
 		.then(() => {
 			let agent = game.getCurrentPlayer();
 			return new Promise((resolve, reject) => {
-				let position = agent.maxCell(game.token, game.board);
+				let position = agent.maxGain(game.token, game.board.asMatrix());
 				if(position[0] >= 0 && position[1] >= 0) {
 					setTimeout(() => resolve(position), delay);
+				} else {
+					console.loge("Error in agent");
 				}
 			});
 		})
@@ -251,7 +253,7 @@ var rescale = function(screenHeight, screenWidth) {
   // var screenWidth = window.innerWidth;
   // var screenHeight = window.innerHeight * window.devicePixelRatio;
   // var screenWidth = window.innerWidth * window.devicePixelRatio;
-  // var screenRatio = screenWidth / screenHeight;
+  var screenRatio = screenWidth / screenHeight;
 
   // Scrolling on the following devices
   // PIXEL 2XL landscape
