@@ -1,4 +1,11 @@
-class GameView extends React.Component {
+require('../style/style.scss');
+require('../style/main.scss');
+const {Component} = require('react');
+const ReactDOM = require('react-dom');
+const {LocalStorageManager} = require('./localStorage.js');
+const {Game} = require('./board.js');
+
+class GameView extends Component {
 	constructor(props) {
 		super(props);
 		this.setup();
@@ -94,7 +101,7 @@ class GameView extends React.Component {
 }
 
 const delay = 200;
-class CellView extends React.Component {
+class CellView extends Component {
 	isSelectable() {
 		let rowIndex = this.props.cell.rowIndex;
 		let colIndex = this.props.cell.colIndex;
@@ -191,7 +198,7 @@ class CellView extends React.Component {
 	}
 }
 
-class ScoreView extends React.Component {
+class ScoreView extends Component {
 	render() {
 		let score = this.props.score;
 		let name = this.props.name;
@@ -204,7 +211,7 @@ class ScoreView extends React.Component {
 	}
 }
 
-class WildCardView extends React.Component {
+class WildCardView extends Component {
 	render() {
 		var cell = this.props.cell;
 		var classArray = ['wild-card'];

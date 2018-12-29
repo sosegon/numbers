@@ -288,7 +288,7 @@ class Board {
 	}
 }
 
-Board.size = 6;
+Board.size = 9;
 
 function randomInteger(min, max) {
 	let r = Math.random();
@@ -389,3 +389,12 @@ function getBestGain(tokenRowIndex, tokenColIndex, gainsMatrix, boardMatrix) {
 
 	return rowIndex;
 }
+
+module.exports = {
+	Game: Game,
+	Player: Player,
+	Agent: Agent,
+	Token: Token,
+	Cell: Cell,
+	Board: Board
+};
