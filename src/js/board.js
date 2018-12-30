@@ -21,7 +21,7 @@ class Game {
 			this.reset(boardSize);
 		}
 	}
-	reset(boardSize) {
+	reset = (boardSize) => {
 		this.board = new Board(boardSize);
 		this.token = new Token(boardSize);
 		this.board.update(this.token);
@@ -32,8 +32,8 @@ class Game {
 		this.started = false;
 		this.isOver = false;
 		this.status = 0; //0: resting, 1: moving token
-	}
-	moveToken(rowIndex, colIndex) {
+	};
+	moveToken = (rowIndex, colIndex) => {
 		this.token.moveTo(rowIndex, colIndex);
 		if(!this.started) {
 			let direction;
@@ -52,33 +52,33 @@ class Game {
 			}
 			this.started = !this.started;
 		}
-	}
-	takeCell() {
+	};
+	takeCell = () => {
 		this.lastValue = this.board.takeCurrentValue(this.token);
-	}
-	updateBoard() {
+	};
+	updateBoard = () => {
 		this.board.update(this.token);
-	}
-	updateScores() {
+	};
+	updateScores = () => {
 		if(this.turn) {
 			this.player1.incrementScore(this.lastValue);
 		} else {
 			this.player2.incrementScore(this.lastValue);
 		}
-	}
-	passToken() {
+	};
+	passToken = () => {
 		this.turn = !this.turn;
-	}
-	canContinue() {
+	};
+	canContinue = () => {
 		return this.board.isNextTurnPossible(this.turn ? this.player1 : this.player2, this.token);
-	}
-	getCurrentPlayer() {
+	};
+	getCurrentPlayer = () => {
 		return this.turn ? this.player1 : this.player2;
-	}
-	getNextPlayer() {
+	};
+	getNextPlayer = () => {
 		return this.turn ? this.player2 : this.player1;
-	}
-	serialize() {
+	};
+	serialize = () => {
 		return {
 			isOver: this.isOver,
 			score1: this.player1.score,
@@ -95,15 +95,15 @@ class Player {
 		this.score = 0;
 		this.direction = null; // Direction is set once the game starts
 	}
-	incrementScore(value) {
+	incrementScore = (value) => {
 		this.score += value;
-	}
+	};
 }
 class Agent extends Player{
 	constructor() {
 		super();
 	}
-	maxCell(token, boardMatrix) {
+	maxCell = (token, boardMatrix) => {
 		// direction: true vertical, false horizontal
 		// Simply select the cell with the highest value
 		let nBoardMatrix = boardMatrix;
@@ -134,7 +134,7 @@ class Agent extends Player{
 
 		return [-1, -1];
 	}
-	maxGain(token, boardMatrix) {
+	maxGain = (token, boardMatrix) => {
 		// direction: true vertical, false horizontal
 		// Get the cell with highest gain with respect to next turn
 		let nBoardMatrix = boardMatrix;
@@ -165,7 +165,7 @@ class Agent extends Player{
 		// }
 
 		return position;
-	}
+	};
 }
 class Token {
 	constructor(boardSize) {
@@ -175,7 +175,7 @@ class Token {
 		this.oldRowIndex = this.rowIndex;
 		this.oldColIndex = this.colIndex;
 	}
-	moveTo(rowIndex, colIndex) {
+	moveTo = (rowIndex, colIndex) => {
 		this.oldRowIndex = this.rowIndex;
 		this.oldColIndex = this.colIndex;
 		this.rowIndex = rowIndex;
@@ -199,10 +199,10 @@ class Cell {
 		this.rowIndex = rowIndex;
 		this.colIndex = colIndex;
 	}
-	update(value) {
+	update = (value) => {
 		this.value = value;
 	}
-	isSelectable() {
+	isSelectable = () => {
 		return this.value > 0;
 	}
 }
@@ -217,19 +217,19 @@ class Board {
 			this.cells.push(row);
 		}
 	}
-	isCellSelectable(rowIndex, colIndex) {
+	isCellSelectable = (rowIndex, colIndex) => {
 		return this.cells[rowIndex][colIndex].isSelectable();
-	}
-	update(token) {
+	};
+	update = (token) => {
 		// The old position has to be set to -1
 		this.cells[token.oldRowIndex][token.oldColIndex].update(-1);
 		// The current position has to be set to 0
 		this.cells[token.rowIndex][token.colIndex].update(0);
-	}
-	takeCurrentValue(token) {
+	};
+	takeCurrentValue = (token) => {
 		return this.cells[token.rowIndex][token.colIndex].value;
-	}
-	isNextTurnPossible(player, token) {
+	};
+	isNextTurnPossible = (player, token) => {
 		let tokenRowIndex = token.rowIndex;
 		let tokenColIndex = token.colIndex;
 		let direction = player.direction;
@@ -245,16 +245,16 @@ class Board {
 			}
 		}
 		return false;
-	}
-	setCellValues(values) {
+	};
+	setCellValues = (values) => {
 		let size = Math.sqrt(values.length);
 		this.cells.forEach((row, rowIndex) => {
 			row.forEach((cell, columnIndex) => {
 				cell.update(values[rowIndex * size + columnIndex]);
 			});
 		});
-	}
-	findTokenPosition() {
+	};
+	findTokenPosition = () => {
 		for(let i = 0; i < this.cells.length; i++) {
 			for(let j = 0; j < this.cells.length; j++) {
 				if (this.cells[i][j].value === 0) {
@@ -263,8 +263,8 @@ class Board {
 			}
 		}
 		return [-1, -1];
-	}
-	serialize() {
+	};
+	serialize = () => {
 		let values = []
 		this.cells.forEach(row => {
 			row.forEach(cell => {
@@ -273,8 +273,8 @@ class Board {
 		});
 
 		return values;
-	}
-	asMatrix() {
+	};
+	asMatrix = () => {
 		let size = this.cells.length;
 		let matrix = [];
 		for(let i = 0; i < size; i++) {
@@ -285,7 +285,7 @@ class Board {
 			matrix.push(row);
 		}
 		return matrix;
-	}
+	};
 }
 
 Board.size = 9;
