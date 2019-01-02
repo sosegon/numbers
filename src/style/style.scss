@@ -6,8 +6,8 @@ $paddingSize: 5;
 @for $row from 0 through $boardSize {
 	@for $column from 0 through $boardSize {
 		.position_#{$row}_#{$column}:not(.isMoving) {
-			top: ($cellSize + 2 * $marginSize) * $row + $paddingSize;
-			left: ($cellSize + 2 * $marginSize) * $column + $paddingSize;
+			top: (($cellSize + 2 * $marginSize) * $row + $paddingSize) * 1px;
+			left: (($cellSize + 2 * $marginSize) * $column + $paddingSize) * 1px;
 		}
 	}
 }
@@ -18,7 +18,7 @@ $paddingSize: 5;
 
 		@if $fromRow == $toRow {
 			.#{$name} {
-				top: ($cellSize + 2 * $marginSize) * $toRow + $paddingSize;
+				top: (($cellSize + 2 * $marginSize) * $toRow + $paddingSize) * 1px;
 			}
 		} @else {
 			.#{$name} {
@@ -29,10 +29,10 @@ $paddingSize: 5;
 
 			@keyframes #{$name} {
 				from {
-					top: ($cellSize + 2 * $marginSize) * $fromRow + $paddingSize;
+					top: (($cellSize + 2 * $marginSize) * $fromRow + $paddingSize) * 1px;
 				}
 				to {
-					top: ($cellSize + 2 * $marginSize) * $toRow + $paddingSize;
+					top: (($cellSize + 2 * $marginSize) * $toRow + $paddingSize) * 1px;
 				}
 			}
 		}
@@ -45,7 +45,7 @@ $paddingSize: 5;
 
 		@if $fromColumn == $toColumn {
 			.#{$name} {
-				left: ($cellSize + 2 * $marginSize) * $toColumn + $paddingSize;
+				left: (($cellSize + 2 * $marginSize) * $toColumn + $paddingSize) * 1px;
 			}
 		} @else {
 			.#{$name} {
@@ -56,10 +56,10 @@ $paddingSize: 5;
 
 			@keyframes #{$name} {
 				from {
-					left: ($cellSize + 2 * $marginSize) * $fromColumn + $paddingSize;
+					left: (($cellSize + 2 * $marginSize) * $fromColumn + $paddingSize) * 1px;
 				}
 				to {
-					left: ($cellSize + 2 * $marginSize) * $toColumn + $paddingSize;
+					left: (($cellSize + 2 * $marginSize) * $toColumn + $paddingSize) * 1px;
 				}
 			}
 		}
