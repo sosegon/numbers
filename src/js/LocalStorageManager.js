@@ -55,5 +55,5 @@ class LocalStorageManager {
 }
 
 module.exports = {
-  LocalStorageManager: LocalStorageManager
+  LocalStorageManager
 };
