@@ -168,7 +168,7 @@ describe("Utils", () => {
             }
         };
 
-        updateObjectFromJsonString(jsonString, object);
+        updateObjectFromJsonString(object, jsonString);
         expect(object).toEqual(expected);
     });
 
@@ -205,7 +205,7 @@ describe("Utils", () => {
             }
         };
 
-        updateObjectFromLiteral(literal, object);
+        updateObjectFromLiteral(object, literal);
         expect(object).toEqual(expected);
     });
 });

@@ -113,12 +113,12 @@ const randomInteger = (min, max) => {
     return min + Math.round(r * (max - min));
 };
 
-const updateObjectFromJsonString = (jsonString, object) => {
+const updateObjectFromJsonString = (object, jsonString) => {
     const literal = JSON.parse(jsonString);
-    updateObjectFromLiteral(literal, object);
+    updateObjectFromLiteral(object, literal);
 };
 
-const updateObjectFromLiteral = (literal, object) => {
+const updateObjectFromLiteral = (object, literal) => {
     for (const key of Object.keys(literal)) {
         if (object.hasOwnProperty(key)) {
             object[key] = literal[key];
