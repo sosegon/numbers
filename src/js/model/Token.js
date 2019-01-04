@@ -1,4 +1,4 @@
-const { randomInteger } = require('./Utils.js');
+const { randomInteger } = require('./utils.js');
 
 class Token {
     constructor(boardSize) {

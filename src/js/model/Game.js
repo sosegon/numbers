@@ -2,7 +2,7 @@ const { Board } = require('./Board.js');
 const { Token } = require('./Token.js');
 const { Player } = require('./Player.js');
 const { Agent } = require('./Agent.js');
-const { updateObjectFromJsonString } = require('./Utils.js');
+const { updateObjectFromJsonString } = require('./utils.js');
 const { GAME_STATUSES, TURNS, PLAYER_DIRECTIONS } = require('./constants.js');
 
 class Game {

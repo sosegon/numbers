@@ -6,7 +6,7 @@ const {
     rotateIndicesCounterClockwise,
     getGainsMatrix,
     getBestGain
-} = require('./Utils.js');
+} = require('./utils.js');
 
 class Agent extends Player {
     constructor() {

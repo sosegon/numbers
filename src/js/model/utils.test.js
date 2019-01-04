@@ -8,7 +8,7 @@ const {
     randomInteger,
     updateObjectFromJsonString,
     updateObjectFromLiteral
-} = require('./Utils.js');
+} = require('./utils.js');
 
 const setup = () => {
     const matrix = [

@@ -1,5 +1,5 @@
 const { Cell } = require('./Cell.js');
-const { randomInteger } = require('./Utils.js');
+const { randomInteger } = require('./utils.js');
 
 class Board {
     constructor(boardSize, matrix) {
