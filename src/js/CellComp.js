@@ -1,6 +1,5 @@
 const { Component } = require('react');
-const { DIRECTIONS } = require('./model/Player.js');
-const { STATUSES, TURNS } = require('./model/Game.js');
+const { GAME_STATUSES, TURNS, PLAYER_DIRECTIONS } = require('./model/constants.js');
 
 const delay = 200;
 class CellComp extends Component {
@@ -17,11 +16,11 @@ class CellComp extends Component {
 
         let direction = this.props.game.getCurrentPlayer().direction;
         let cellValue = this.props.cell.value;
-        if (direction === DIRECTIONS.NONE) {
+        if (direction === PLAYER_DIRECTIONS.NONE) {
             return (rowIndex === tokenRowIndex || colIndex === tokenColIndex) && cellValue > 0
-        } else if (direction === DIRECTIONS.VERTICAL) {
+        } else if (direction === PLAYER_DIRECTIONS.VERTICAL) {
             return colIndex === tokenColIndex && cellValue > 0;
-        } else if (direction === DIRECTIONS.HORIZONTAL) {
+        } else if (direction === PLAYER_DIRECTIONS.HORIZONTAL) {
             return rowIndex === tokenRowIndex && cellValue > 0;
         } else {
             return false;
@@ -74,7 +73,7 @@ class CellComp extends Component {
             .then(() => self.updateScores());
     }
     shouldComponentUpdate() {
-        return this.props.game.snap.status !== STATUSES.MOVING_TOKEN;
+        return this.props.game.snap.status !== GAME_STATUSES.MOVING_TOKEN;
     }
     render() {
         let value = this.props.cell.value;

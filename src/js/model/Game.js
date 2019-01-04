@@ -1,18 +1,9 @@
 const { Board } = require('./Board.js');
 const { Token } = require('./Token.js');
-const { Player, DIRECTIONS } = require('./Player.js');
+const { Player } = require('./Player.js');
 const { Agent } = require('./Agent.js');
 const { updateObjectFromJsonString } = require('./Utils.js');
-
-const STATUSES = {
-    RESTING: 0,
-    MOVING_TOKEN: 1
-};
-
-const TURNS = {
-    PLAYER1: 0,
-    PLAYER2: 1
-};
+const { GAME_STATUSES, TURNS, PLAYER_DIRECTIONS } = require('./constants.js');
 
 class Game {
     constructor(boardSize) {
@@ -31,38 +22,38 @@ class Game {
             lastValue: 0,
             isOver: false,
             turn: TURNS.PLAYER1,
-            status: STATUSES.RESTING
+            status: GAME_STATUSES.RESTING
         };
     };
     moveToken = (rowIndex, colIndex) => {
         this.token.moveTo(rowIndex, colIndex);
         // Define the direction for the players
-        if (this.player1.direction === DIRECTIONS.NONE || this.player2.direction === DIRECTIONS.NONE) {
-            let direction = DIRECTIONS.NONE;
+        if (this.player1.direction === PLAYER_DIRECTIONS.NONE || this.player2.direction === PLAYER_DIRECTIONS.NONE) {
+            let direction = PLAYER_DIRECTIONS.NONE;
 
             if (this.token.oldRowIndex === this.token.rowIndex) {
                 if (this.snap.turn === TURNS.PLAYER1) {
-                    this.player1.direction = DIRECTIONS.HORIZONTAL;
-                    this.player2.direction = DIRECTIONS.VERTICAL;
+                    this.player1.direction = PLAYER_DIRECTIONS.HORIZONTAL;
+                    this.player2.direction = PLAYER_DIRECTIONS.VERTICAL;
                 } else if (this.snap.turn === TURNS.PLAYER2) {
-                    this.player1.direction = DIRECTIONS.VERTICAL;
-                    this.player2.direction = DIRECTIONS.HORIZONTAL;
+                    this.player1.direction = PLAYER_DIRECTIONS.VERTICAL;
+                    this.player2.direction = PLAYER_DIRECTIONS.HORIZONTAL;
                 } else {
-                    throw new Error("Error setting directions for players");
+                    throw new Error("Error setting PLAYER_directions for players");
                 }
 
             } else if (this.token.oldColIndex === this.token.colIndex) {
                 if (this.snap.turn === TURNS.PLAYER1) {
-                    this.player1.direction = DIRECTIONS.VERTICAL;
-                    this.player2.direction = DIRECTIONS.HORIZONTAL;
+                    this.player1.direction = PLAYER_DIRECTIONS.VERTICAL;
+                    this.player2.direction = PLAYER_DIRECTIONS.HORIZONTAL;
                 } else if (this.snap.turn === TURNS.PLAYER2) {
-                    this.player1.direction = DIRECTIONS.HORIZONTAL;
-                    this.player2.direction = DIRECTIONS.VERTICAL;
+                    this.player1.direction = PLAYER_DIRECTIONS.HORIZONTAL;
+                    this.player2.direction = PLAYER_DIRECTIONS.VERTICAL;
                 } else {
-                    throw new Error("Error setting directions for players");
+                    throw new Error("Error setting PLAYER_directions for players");
                 }
             } else {
-                throw new Error("Error setting directions for players");
+                throw new Error("Error setting PLAYER_directions for players");
             }
         }
     };
@@ -129,7 +120,5 @@ class Game {
 }
 
 module.exports = {
-    Game,
-    STATUSES,
-    TURNS
+    Game
 };

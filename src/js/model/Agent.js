@@ -1,4 +1,5 @@
-const { Player, DIRECTIONS } = require('./Player.js');
+const { Player } = require('./Player.js');
+const { PLAYER_DIRECTIONS } = require('./constants.js');
 const {
     rotateClockwise,
     rotateIndicesClockwise,
@@ -16,7 +17,7 @@ class Agent extends Player {
         let nBoardMatrix = boardMatrix;
         let nTokenColIndex = token.colIndex;
 
-        if (this.direction === DIRECTIONS.HORIZONTAL) {
+        if (this.direction === PLAYER_DIRECTIONS.HORIZONTAL) {
             nBoardMatrix = rotateClockwise(boardMatrix);
             let indices = rotateIndicesClockwise(token.rowIndex, token.colIndex, nBoardMatrix.length);
             nTokenColIndex = indices[1];
@@ -33,7 +34,7 @@ class Agent extends Player {
         }
 
         if (maxValue > 0) {
-            if (this.direction === DIRECTIONS.HORIZONTAL) {
+            if (this.direction === PLAYER_DIRECTIONS.HORIZONTAL) {
                 return rotateIndicesCounterClockwise(indexMaxValue, nTokenColIndex, nBoardMatrix.length);
             }
             return [indexMaxValue, nTokenColIndex];
@@ -47,7 +48,7 @@ class Agent extends Player {
         let nTokenColIndex = token.colIndex;
         let nTokenRowIndex = token.rowIndex;
 
-        if (this.direction === DIRECTIONS.HORIZONTAL) {
+        if (this.direction === PLAYER_DIRECTIONS.HORIZONTAL) {
             nBoardMatrix = rotateClockwise(nBoardMatrix);
             let indices = rotateIndicesClockwise(token.rowIndex, token.colIndex, nBoardMatrix.length);
             nTokenRowIndex = indices[0];
@@ -59,7 +60,7 @@ class Agent extends Player {
 
         let position = [-1, -1];
         if (indexBestGain >= 0) {
-            if (this.direction === DIRECTIONS.HORIZONTAL) {
+            if (this.direction === PLAYER_DIRECTIONS.HORIZONTAL) {
                 position = rotateIndicesCounterClockwise(indexBestGain, nTokenColIndex, nBoardMatrix.length);
             } else {
                 position = [indexBestGain, nTokenColIndex];

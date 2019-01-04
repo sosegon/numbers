@@ -1,4 +1,5 @@
-const { Player, DIRECTIONS } = require('./Player.js');
+const { Player } = require('./Player.js');
+const { PLAYER_DIRECTIONS } = require('./constants.js');
 
 const setup = () => {
     const player = new Player();
@@ -10,7 +11,7 @@ describe("Player", () => {
     it("should create player correctly", () => {
         const { player } = setup();
         expect(player.score).toEqual(0);
-        expect(player.direction).toEqual(DIRECTIONS.NONE);
+        expect(player.direction).toEqual(PLAYER_DIRECTIONS.NONE);
     });
 
     it("should increment score", () => {
@@ -23,7 +24,7 @@ describe("Player", () => {
         const { player } = setup();
         expect(player.serialize()).toEqual({
             score: 0,
-            direction: DIRECTIONS.NONE
+            direction: PLAYER_DIRECTIONS.NONE
         });
     });
 

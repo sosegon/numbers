@@ -3,7 +3,8 @@ const { CellComp } = require('./CellComp.js');
 const { ScoreComp } = require('./ScoreComp.js');
 const { WildCardComp } = require('./WildCardComp.js');
 const { GameEndComp } = require('./GameEndComp.js');
-const { Game, STATUSES } = require('./model/Game.js');
+const { Game } = require('./model/Game.js');
+const { GAME_STATUSES } = require('./model/constants.js');
 const { LocalStorageManager } = require('./LocalStorageManager.js');
 
 class GameComp extends Component {
@@ -39,14 +40,14 @@ class GameComp extends Component {
     moveToken(rowIndex, colIndex) {
         this.state.game.moveToken(rowIndex, colIndex);
         this.state.game.takeCell();
-        this.state.game.snap.status = STATUSES.MOVING_TOKEN;
+        this.state.game.snap.status = GAME_STATUSES.MOVING_TOKEN;
         this.setState({ game: this.state.game });
     }
     updateScores() {
         this.state.game.updateScores();
         this.state.game.updateBoard();
         this.state.game.passToken();
-        this.state.game.snap.status = STATUSES.RESTING;
+        this.state.game.snap.status = GAME_STATUSES.RESTING;
         this.setState({ game: this.state.game });
     }
     finishGame() {

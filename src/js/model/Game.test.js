@@ -1,7 +1,8 @@
-const { Game, STATUSES, TURNS } = require('./Game.js');
+const { Game } = require('./Game.js');
 const { Board } = require('./Board.js');
 const { Token } = require('./Token.js');
-const { Player, DIRECTIONS } = require('./Player.js');
+const { Player } = require('./Player.js');
+const { PLAYER_DIRECTIONS, GAME_STATUSES, TURNS } = require('./constants.js');
 
 const setup = () => {
     const matrix = [
@@ -34,37 +35,37 @@ describe("Game", () => {
         expect(game.snap.lastValue).toEqual(0);
         expect(game.snap.isOver).toEqual(false);
         expect(game.snap.turn).toEqual(TURNS.PLAYER1);
-        expect(game.snap.status).toEqual(STATUSES.RESTING);
+        expect(game.snap.status).toEqual(GAME_STATUSES.RESTING);
     });
 
-    it("should define directions of players (player1 | vertical)", () => {
+    it("should define direction of players (player1 | vertical)", () => {
         const { game } = setup();
         game.moveToken(0, 3);
-        expect(game.player1.direction).toEqual(DIRECTIONS.VERTICAL);
-        expect(game.player2.direction).toEqual(DIRECTIONS.HORIZONTAL);
+        expect(game.player1.direction).toEqual(PLAYER_DIRECTIONS.VERTICAL);
+        expect(game.player2.direction).toEqual(PLAYER_DIRECTIONS.HORIZONTAL);
     });
 
-    it("should define directions of players (player1 | horizontal)", () => {
+    it("should define direction of players (player1 | horizontal)", () => {
         const { game } = setup();
         game.moveToken(3, 0);
-        expect(game.player1.direction).toEqual(DIRECTIONS.HORIZONTAL);
-        expect(game.player2.direction).toEqual(DIRECTIONS.VERTICAL);
+        expect(game.player1.direction).toEqual(PLAYER_DIRECTIONS.HORIZONTAL);
+        expect(game.player2.direction).toEqual(PLAYER_DIRECTIONS.VERTICAL);
     });
 
-    it("should define directions of players (player2 | vertical)", () => {
+    it("should define direction of players (player2 | vertical)", () => {
         const { game } = setup();
         game.passToken();
         game.moveToken(0, 3);
-        expect(game.player1.direction).toEqual(DIRECTIONS.HORIZONTAL);
-        expect(game.player2.direction).toEqual(DIRECTIONS.VERTICAL);
+        expect(game.player1.direction).toEqual(PLAYER_DIRECTIONS.HORIZONTAL);
+        expect(game.player2.direction).toEqual(PLAYER_DIRECTIONS.VERTICAL);
     });
 
-    it("should define directions of players (player2 | horizontal)", () => {
+    it("should define direction of players (player2 | horizontal)", () => {
         const { game } = setup();
         game.passToken();
         game.moveToken(3, 0);
-        expect(game.player1.direction).toEqual(DIRECTIONS.VERTICAL);
-        expect(game.player2.direction).toEqual(DIRECTIONS.HORIZONTAL);
+        expect(game.player1.direction).toEqual(PLAYER_DIRECTIONS.VERTICAL);
+        expect(game.player2.direction).toEqual(PLAYER_DIRECTIONS.HORIZONTAL);
     });
 
     it("should take value of cell", () => {

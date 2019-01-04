@@ -1,13 +1,9 @@
-const DIRECTIONS = {
-    NONE: 0,
-    HORIZONTAL: 1,
-    VERTICAL: 2
-};
+const { PLAYER_DIRECTIONS } = require('./constants.js');
 
 class Player {
     constructor() {
         this.score = 0;
-        this.direction = DIRECTIONS.NONE;
+        this.direction = PLAYER_DIRECTIONS.NONE;
     }
     incrementScore = (value) => {
         this.score += value;
@@ -24,6 +20,5 @@ class Player {
 }
 
 module.exports = {
-    DIRECTIONS,
     Player
 };
