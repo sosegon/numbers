@@ -6,7 +6,8 @@ const {
     getGainsMatrix,
     getBestGain,
     randomInteger,
-    updateObjectFromJsonString
+    updateObjectFromJsonString,
+    updateObjectFromLiteral
 } = require('./Utils.js');
 
 const setup = () => {
@@ -168,6 +169,43 @@ describe("Utils", () => {
         };
 
         updateObjectFromJsonString(jsonString, object);
+        expect(object).toEqual(expected);
+    });
+
+    it("should update object from literal", () => {
+        const object = {
+            a: 1,
+            b: "2",
+            c: true,
+            d: [1, 2],
+            e: {
+                a: 2,
+                b: "3"
+            }
+        };
+
+        const literal = {
+            a: "1",
+            b: 2,
+            c: {
+                a: 3
+            }
+        };
+
+        const expected = {
+            a: "1",
+            b: 2,
+            c: {
+                a: 3
+            },
+            d: [1, 2],
+            e: {
+                a: 2,
+                b: "3"
+            }
+        };
+
+        updateObjectFromLiteral(literal, object);
         expect(object).toEqual(expected);
     });
 });

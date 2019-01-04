@@ -115,12 +115,16 @@ const randomInteger = (min, max) => {
 
 const updateObjectFromJsonString = (jsonString, object) => {
     const literal = JSON.parse(jsonString);
+    updateObjectFromLiteral(literal, object);
+};
+
+const updateObjectFromLiteral = (literal, object) => {
     for (const key of Object.keys(literal)) {
         if (object.hasOwnProperty(key)) {
             object[key] = literal[key];
         }
     }
-}
+};
 
 module.exports = {
     rotateClockwise,
@@ -130,5 +134,6 @@ module.exports = {
     getGainsMatrix,
     getBestGain,
     randomInteger,
-    updateObjectFromJsonString
+    updateObjectFromJsonString,
+    updateObjectFromLiteral
 };
