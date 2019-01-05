@@ -15,7 +15,7 @@ const PLAYER_DIRECTIONS = {
 };
 
 module.exports = {
-	GAME_STATUSES,
-	TURNS,
-	PLAYER_DIRECTIONS
+    GAME_STATUSES,
+    TURNS,
+    PLAYER_DIRECTIONS
 };

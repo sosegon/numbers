@@ -1,4 +1,4 @@
-const { randomInteger } = require('./utils.js');
+const { randomInteger, updateObjectFromLiteral } = require('./utils.js');
 
 class Token {
     constructor(boardSize) {
@@ -30,6 +30,9 @@ class Token {
     };
     toString = () => {
         return JSON.stringify(this.serialize());
+    };
+    updateFromObject = (token) => {
+        updateObjectFromLiteral(this, token);
     };
 }
 

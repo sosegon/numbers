@@ -36,4 +36,52 @@ describe("Player", () => {
             "}"
         );
     });
+
+    it("should update from object (ideal)", () => {
+        const { player } = setup();
+        const object = {
+            score: 10,
+            direction: PLAYER_DIRECTIONS.HORIZONTAL
+        };
+        player.updateFromObject(object);
+        expect(player.score).toEqual(10);
+        expect(player.direction).toEqual(PLAYER_DIRECTIONS.HORIZONTAL);
+    });
+
+    it("should update from object (empty)", () => {
+        const { player } = setup();
+        const object = {};
+        player.updateFromObject(object);
+        expect(player.score).toEqual(0);
+        expect(player.direction).toEqual(PLAYER_DIRECTIONS.NONE);
+    });
+
+    it("should update from object (undefined)", () => {
+        const { player } = setup();
+        let object;
+        const update = () => { player.updateFromObject(object); };
+        expect(update).toThrowError(/Undefined/);
+    });
+
+    it("should update from object (invalid keys)", () => {
+        const { player } = setup();
+        const object = {
+            sCore: 10,
+            dIrection: PLAYER_DIRECTIONS.HORIZONTAL
+        };
+        player.updateFromObject(object);
+        expect(player.score).toEqual(0);
+        expect(player.direction).toEqual(PLAYER_DIRECTIONS.NONE);
+    });
+
+    it("should update from object (invalid types)", () => {
+        const { player } = setup();
+        const object = {
+            score: "10",
+            direction: true
+        };
+        player.updateFromObject(object);
+        expect(player.score).toEqual(0);
+        expect(player.direction).toEqual(PLAYER_DIRECTIONS.NONE);
+    });
 });

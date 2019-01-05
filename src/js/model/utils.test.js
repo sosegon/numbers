@@ -156,11 +156,9 @@ describe("Utils", () => {
             "}";
 
         const expected = {
-            a: "1",
-            b: 2,
-            c: {
-                a: 3
-            },
+            a: 1,
+            b: "2",
+            c: true,
             d: [1, 2],
             e: {
                 a: 2,
@@ -193,11 +191,9 @@ describe("Utils", () => {
         };
 
         const expected = {
-            a: "1",
-            b: 2,
-            c: {
-                a: 3
-            },
+            a: 1,
+            b: "2",
+            c: true,
             d: [1, 2],
             e: {
                 a: 2,

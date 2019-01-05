@@ -119,8 +119,13 @@ const updateObjectFromJsonString = (object, jsonString) => {
 };
 
 const updateObjectFromLiteral = (object, literal) => {
+    if (literal === undefined) {
+        throw new Error("Undefined object");
+    }
+
     for (const key of Object.keys(literal)) {
-        if (object.hasOwnProperty(key)) {
+        if (object.hasOwnProperty(key) &&
+            object[key].constructor.name === literal[key].constructor.name) {
             object[key] = literal[key];
         }
     }

@@ -1,16 +1,16 @@
 const { Cell } = require('./Cell.js');
-const { randomInteger } = require('./utils.js');
+const { randomInteger, updateObjectFromLiteral } = require('./utils.js');
 
 class Board {
     constructor(boardSize, matrix) {
         if (arguments.length == 2) {
-            this.createFromMatrix(matrix);
+            this.updateFromMatrix(matrix);
             return;
         }
 
-        this.createFromScratch(boardSize);
+        this.updateFromScratch(boardSize);
     }
-    createFromMatrix = (matrix) => {
+    updateFromMatrix = (matrix) => {
         this.cells = [];
         for (const i in matrix) {
             let row = [];
@@ -20,7 +20,23 @@ class Board {
             this.cells.push(row);
         }
     };
-    createFromScratch = (boardSize) => {
+    updateFromVector = (vector) => {
+        const size = Math.sqrt(vector.length);
+        if (size > 0 && Number.isInteger(size)) {
+            let matrix = [];
+            for (let i = 0; i < size; i++) {
+                let row = [];
+                for (let j = 0; j < size; j++) {
+                    row.push(vector[size * i + j]);
+                }
+                matrix.push(row);
+            }
+            this.updateFromMatrix(matrix);
+        } else {
+            throw new Error("Invalid vector size");
+        }
+    };
+    updateFromScratch = (boardSize) => {
         this.cells = [];
         for (let i = 0; i < boardSize; i++) {
             let row = [];

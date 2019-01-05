@@ -2,7 +2,7 @@ const { Board } = require('./Board.js');
 const { Token } = require('./Token.js');
 const { Player } = require('./Player.js');
 const { Agent } = require('./Agent.js');
-const { updateObjectFromJsonString } = require('./utils.js');
+const { updateObjectFromLiteral } = require('./utils.js');
 const { GAME_STATUSES, TURNS, PLAYER_DIRECTIONS } = require('./constants.js');
 
 class Game {
@@ -116,7 +116,30 @@ class Game {
             player2: this.player2.serialize(),
             snap: this.snap
         };
-    }
+    };
+    updateFromObject = (object) => {
+        for (const key of Object.keys(object)) {
+            switch (key) {
+                case "token":
+                    this.token.updateFromObject(object[key]);
+                    continue;
+                case "board":
+                    this.board.updateFromVector(object[key]);
+                    continue;
+                case "player1":
+                    this.player1.updateFromObject(object[key]);
+                    continue;
+                case "player2":
+                    this.player2.updateFromObject(object[key]);
+                    continue;
+                case "snap":
+                    updateObjectFromLiteral(this.snap, object[key]);
+                    continue;
+                default:
+                    continue;
+            }
+        }
+    };
 }
 
 module.exports = {

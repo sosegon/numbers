@@ -223,4 +223,41 @@ describe("Board", () => {
 
         expect(board.asMatrix()).toEqual(matrix);
     });
+
+    it("should update from vector", () => {
+        const board = new Board(2);
+        const vector = [
+            1, 2, 3, 4, 5,
+            6, 7, 8, 9, 10,
+            11, 12, 13, 14, 15,
+            16, 17, 18, 19, 20,
+            21, 22, 23, 24, 25
+        ];
+        board.updateFromVector(vector);
+        expect(board.serialize()).toEqual(vector);
+    });
+
+    it("should update from vector (invalid vector size)", () => {
+        const board = new Board(100, [
+            [1, 2, 3, 4, 5],
+            [6, 7, 8, 9, 10],
+            [11, 12, 13, 14, 15],
+            [16, 17, 18, 19, 20],
+            [21, 22, 23, 24, 25]
+        ]);
+
+        const vector = [
+            1, 2, 3, 4, 5,
+            6, 7, 8, 9, 10,
+            11, 12, 13, 14, 15,
+            16, 17, 18, 19, 20,
+            21, 22, 23, 24
+        ];
+
+        const update = () => {
+            board.updateFromVector(vector);
+        }
+
+        expect(update).toThrowError(/Invalid/);
+    });
 });

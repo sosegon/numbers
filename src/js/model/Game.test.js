@@ -20,7 +20,36 @@ const setup = () => {
     game.board = board;
     game.token = token;
 
-    return { game };
+    const literal = {
+        token: {
+            rowIndex: 2,
+            colIndex: 2,
+            oldRowIndex: 1,
+            oldColIndex: 1
+        },
+        board: [
+            2, 3, 4, -1,
+            1, 1, 3, -1,
+            2, 7, 6, -1,
+            5, 2, 9, 0
+        ],
+        player1: {
+            score: 10,
+            direction: PLAYER_DIRECTIONS.VERTICAL
+        },
+        player2: {
+            score: 20,
+            direction: PLAYER_DIRECTIONS.HORIZONTAL
+        },
+        snap: {
+            lastValue: 5,
+            isOver: false,
+            turn: TURNS.PLAYER2,
+            status: GAME_STATUSES.MOVING_TOKEN
+        }
+    };
+
+    return { game, literal };
 };
 
 describe("Game", () => {
@@ -127,5 +156,19 @@ describe("Game", () => {
     it("shoud get next player (player2)", () => {
         const { game } = setup();
         expect(game.getNextPlayer()).toEqual(game.player2);
+    });
+
+    it("should update from object", () => {
+        const { game, literal } = setup();
+        game.updateFromObject(literal);
+        const serialized = game.serialize();
+
+        expect(serialized["token"]).toEqual(literal["token"]);
+        expect(serialized["board"]).toEqual(literal["board"]);
+        expect(serialized["player1"]).toEqual(literal["player1"]);
+        expect(serialized["player2"]).toEqual(literal["player2"]);
+        expect(serialized["snap"]).toEqual(literal["snap"]);
+        expect(serialized).toEqual(literal);
+
     });
 });

@@ -1,3 +1,4 @@
+const { updateObjectFromLiteral } = require('./utils.js');
 const { PLAYER_DIRECTIONS } = require('./constants.js');
 
 class Player {
@@ -16,6 +17,9 @@ class Player {
     };
     toString = () => {
         return JSON.stringify(this.serialize());
+    };
+    updateFromObject = (token) => {
+        updateObjectFromLiteral(this, token);
     };
 }
 

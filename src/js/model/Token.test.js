@@ -57,5 +57,70 @@ describe("Token", () => {
         );
     });
 
+    it("should update from object (ideal)", () => {
+        const { token } = setup();
+        token.set(1, 2);
+        const object = {
+            rowIndex: 10,
+            colIndex: 20,
+            oldRowIndex: 100,
+            oldColIndex: 200
+        };
+        token.updateFromObject(object);
+        expect(token.rowIndex).toEqual(10);
+        expect(token.colIndex).toEqual(20);
+        expect(token.oldRowIndex).toEqual(100);
+        expect(token.oldColIndex).toEqual(200);
+    });
 
+    it("should update from object (empty)", () => {
+        const { token } = setup();
+        token.set(1, 2);
+        const object = {};
+        token.updateFromObject(object);
+        expect(token.rowIndex).toEqual(1);
+        expect(token.colIndex).toEqual(2);
+        expect(token.oldRowIndex).toEqual(1);
+        expect(token.oldColIndex).toEqual(2);
+    });
+
+    it("should update from object (undefined)", () => {
+        const { token } = setup();
+        token.set(1, 2);
+        let object;
+        const update = () => { token.updateFromObject(object); };
+        expect(update).toThrowError(/Undefined/);
+    });
+
+    it("should update from object (invalid keys)", () => {
+        const { token } = setup();
+        token.set(1, 2);
+        const object = {
+            rowINdex: 10,
+            colINdex: 20,
+            oldRowINdex: 100,
+            oldColINdex: 200
+        };
+        token.updateFromObject(object);
+        expect(token.rowIndex).toEqual(1);
+        expect(token.colIndex).toEqual(2);
+        expect(token.oldRowIndex).toEqual(1);
+        expect(token.oldColIndex).toEqual(2);
+    });
+
+    it("should update from object (invalid types)", () => {
+        const { token } = setup();
+        token.set(1, 2);
+        const object = {
+            rowIndex: "10",
+            colIndex: true,
+            oldRowIndex: [],
+            oldColIndex: {}
+        };
+        token.updateFromObject(object);
+        expect(token.rowIndex).toEqual(1);
+        expect(token.colIndex).toEqual(2);
+        expect(token.oldRowIndex).toEqual(1);
+        expect(token.oldColIndex).toEqual(2);
+    });
 });
