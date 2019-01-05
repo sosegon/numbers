@@ -101,7 +101,7 @@ describe("Game", () => {
         const { game } = setup();
         game.moveToken(3, 0);
         game.takeCell();
-        expect(game.lastValue).toEqual(5);
+        expect(game.snap.lastValue).toEqual(5);
     });
 
     it("should update scores (player1)", () => {

@@ -58,16 +58,19 @@ class Game {
         }
     };
     takeCell = () => {
-        this.lastValue = this.board.takeCurrentValue(this.token);
+        this.snap.lastValue = this.board.takeCurrentValue(this.token);
     };
+    setStatus = (status) => {
+        this.snap.status = status;
+    }
     updateBoard = () => {
         this.board.update(this.token);
     };
     updateScores = () => {
         if (this.snap.turn === TURNS.PLAYER1) {
-            this.player1.incrementScore(this.lastValue);
+            this.player1.incrementScore(this.snap.lastValue);
         } else if (this.snap.turn === TURNS.PLAYER2) {
-            this.player2.incrementScore(this.lastValue);
+            this.player2.incrementScore(this.snap.lastValue);
         } else {
             throw new Error("Error updating scores");
         }

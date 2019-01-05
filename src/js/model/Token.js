@@ -9,12 +9,18 @@ class Token {
         this.oldColIndex = this.colIndex;
     }
     moveTo = (rowIndex, colIndex) => {
+        if(rowIndex < 0 || colIndex < 0) {
+            throw new Error("Invalid position");
+        }
         this.oldRowIndex = this.rowIndex;
         this.oldColIndex = this.colIndex;
         this.rowIndex = rowIndex;
         this.colIndex = colIndex;
     };
     set(rowIndex, colIndex) {
+        if(rowIndex < 0 || colIndex < 0) {
+            throw new Error("Invalid position");
+        }
         this.rowIndex = rowIndex;
         this.colIndex = colIndex;
         this.oldRowIndex = this.rowIndex;

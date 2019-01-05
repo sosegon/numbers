@@ -60,6 +60,28 @@ describe("Board", () => {
         expect(board.cells[token.rowIndex][token.colIndex].value).toEqual(0);
     });
 
+    it("should take value from token position", () => {
+        const board = new Board(100, [
+            [1, 2, 3, 4, 5],
+            [6, 7, 8, 9, 10],
+            [11, 12, 13, 14, 15],
+            [16, 17, 18, 19, 20],
+            [21, 22, 23, 24, 25]
+        ]);
+        const token = new Token();
+        token.set(2,2);
+        expect(board.takeCurrentValue(token)).toEqual(13);
+
+        token.moveTo(4, 4);
+        expect(board.takeCurrentValue(token)).toEqual(25);
+
+        token.moveTo(5, 4);
+        const take = () => {
+            board.takeCurrentValue(token);
+        };
+        expect(take).toThrowError(/Invalid/);
+    });
+
     it("should check next vertical turn is not possible", () => {
         const player = new Player();
         player.direction = true;

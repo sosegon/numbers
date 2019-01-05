@@ -56,6 +56,10 @@ class Board {
         this.cells[token.rowIndex][token.colIndex].update(0);
     };
     takeCurrentValue = (token) => {
+        if(token.rowIndex >= this.cells.length ||
+            token.colIndex >= this.cells.length) {
+            throw new Error("Invalid token position");
+        }
         return this.cells[token.rowIndex][token.colIndex].value;
     };
     isNextTurnPossible = (player, token) => {

@@ -6,7 +6,7 @@ const setup = () => {
 };
 
 describe("Token", () => {
-    it('should create token correctly', () => {
+    it('should create token', () => {
         const { token } = setup();
         expect(token.rowIndex).toBeGreaterThanOrEqual(0);
         expect(token.colIndex).toBeGreaterThanOrEqual(0);
@@ -14,7 +14,7 @@ describe("Token", () => {
         expect(token.oldColIndex).toBeGreaterThanOrEqual(0);
     });
 
-    it('should set token correctly', () => {
+    it('should set token', () => {
         const { token } = setup();
         token.set(1, 2);
 
@@ -22,9 +22,14 @@ describe("Token", () => {
         expect(token.colIndex).toEqual(2);
         expect(token.oldRowIndex).toEqual(1);
         expect(token.oldColIndex).toEqual(2);
+
+        const _set = () => {
+            token.set(-1, 0);
+        };
+        expect(_set).toThrowError(/Invalid/);
     });
 
-    it('should move token correctly', () => {
+    it('should move token', () => {
         const { token } = setup();
         token.set(1, 2);
         token.moveTo(3, 4);
@@ -33,6 +38,11 @@ describe("Token", () => {
         expect(token.colIndex).toEqual(4);
         expect(token.oldRowIndex).toEqual(1);
         expect(token.oldColIndex).toEqual(2);
+
+        const moveTo = () => {
+            token.moveTo(-1, 0);
+        };
+        expect(moveTo).toThrowError(/Invalid/);
     });
 
     it('should serialize', () => {
