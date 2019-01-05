@@ -3,7 +3,7 @@ const { shallow, mount } = require('enzyme');
 const { Provider } = require('react-redux');
 const { CellComp } = require('../components/CellComp.js');
 const { CellCont } = require('./CellCont.js')
-const { storeFake, initialState } = require('../utilsTests.js');
+const { storeFake, initialState } = require('../../test/utilsTests.js');
 
 describe("CellCont", () => {
     let wrapper;

@@ -1,4 +1,4 @@
-const { PLAYER_DIRECTIONS, TURNS, GAME_STATUSES } = require('./model/constants.js');
+const { PLAYER_DIRECTIONS, TURNS, GAME_STATUSES } = require('../js/model/constants.js');
 
 const storeFake = (state) => {
     return {
