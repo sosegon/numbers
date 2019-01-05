@@ -1,7 +1,7 @@
 require('../style/style.scss');
 require('../style/main.scss');
 const ReactDOM = require('react-dom');
-const { GameComp } = require('./GameComp.js');
+const { GameComp } = require('./components/GameComp.js');
 
 var GameViewRendered = ReactDOM.render(<GameComp />, document.getElementById('boardDiv'));
 
