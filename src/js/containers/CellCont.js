@@ -20,11 +20,11 @@ const isCellSelectable = (state, ownProps) => {
         state.player2.direction;
 
     if (direction === PLAYER_DIRECTIONS.NONE) {
-        return (rowIndex === tokenRowIndex || colIndex === tokenColIndex) && cellValue > 0
+        return (rowIndex === tokenRowIndex || colIndex === tokenColIndex) && value > 0
     } else if (direction === PLAYER_DIRECTIONS.VERTICAL) {
-        return colIndex === tokenColIndex && cellValue > 0;
+        return colIndex === tokenColIndex && value > 0;
     } else if (direction === PLAYER_DIRECTIONS.HORIZONTAL) {
-        return rowIndex === tokenRowIndex && cellValue > 0;
+        return rowIndex === tokenRowIndex && value > 0;
     } else {
         return false;
     }
@@ -99,7 +99,7 @@ const mergeProps = (propsFromState, propFromDispatch) => {
     return {
         ...propsFromState,
         onClick: () => propFromDispatch.onClick(propsFromState.isSelectable)
-    }
+    };
 };
 
 const CellCont = connect(mapStateToProps, mapDispatchToProps, mergeProps)(CellComp);
