@@ -50,8 +50,13 @@ const makeMove = (ownProps, isSelectable) => {
         if (!isSelectable) {
             return;
         }
+
         const { rowIndex, colIndex } = ownProps;
-        dispatch(actions.moveToken(rowIndex, colIndex));
+        new Promise((resolve, reject) => {
+            resolve([rowIndex, colIndex]);
+        }).then(position => {
+            dispatch(actions.moveToken(position[0], position[1]));
+        });
 
         // const { rowIndex, colIndex } = ownProps;
         // new Promise((resolve, reject) => {

@@ -174,31 +174,31 @@ describe("CellCont", () => {
         expect(componentOtherHid.props().value).toEqual(otherPositionHid.value);
     });
 
-    it("should dispatch moveToken action when clicked", () => {
+    it("should dispatch moveToken action when clicked", async () => {
 
         expect(store.getActions()).toEqual([]);
 
-        componentVertical.find('span').at(0).simulate('click');
+        await componentVertical.find('span').at(0).simulate('click');
         expect(store.getActions()).toEqual([moveToken(0, 3)]);
         store.clearActions();
 
-        componentHorizontal.find('span').at(0).simulate('click');
+        await componentHorizontal.find('span').at(0).simulate('click');
         expect(store.getActions()).toEqual([moveToken(3, 0)]);
         store.clearActions();
 
-        componentOther.find('span').at(0).simulate('click');
+        await componentOther.find('span').at(0).simulate('click');
         expect(store.getActions()).toEqual([]);
         store.clearActions();
 
-        componentVerticalHid.find('span').at(0).simulate('click');
+        await componentVerticalHid.find('span').at(0).simulate('click');
         expect(store.getActions()).toEqual([]);
         store.clearActions();
 
-        componentHorizontalHid.find('span').at(0).simulate('click');
+        await componentHorizontalHid.find('span').at(0).simulate('click');
         expect(store.getActions()).toEqual([]);
         store.clearActions();
 
-        componentOtherHid.find('span').at(0).simulate('click');
+        await componentOtherHid.find('span').at(0).simulate('click');
         expect(store.getActions()).toEqual([]);
         store.clearActions();
     });
