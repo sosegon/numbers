@@ -1,6 +1,7 @@
 const React = require('react');
 const { shallow, mount } = require('enzyme');
 const { Provider } = require('react-redux');
+const thunk = require('redux-thunk').default;
 const configureStore = require('redux-mock-store').default;
 const { CellComp } = require('../components/CellComp.js');
 const { CellCont } = require('./CellCont.js')
@@ -16,7 +17,7 @@ const {
     otherPositionHid
 } = require('../../test/utilsTests.js');
 
-const middlewares = [];
+const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
 
 describe("CellCont", () => {
@@ -30,7 +31,6 @@ describe("CellCont", () => {
         jest.resetAllMocks();
 
         store = mockStore(initialState);
-        store.dispatch = jest.fn();
 
         wrapper = mount(
             <Provider store={store}>
@@ -172,5 +172,34 @@ describe("CellCont", () => {
         expect(componentOtherHid.props().isSelectable).toEqual(false);
         expect(componentOtherHid.props().gameStatus).toEqual(GAME_STATUSES.RESTING);
         expect(componentOtherHid.props().value).toEqual(otherPositionHid.value);
+    });
+
+    it("should dispatch moveToken action when clicked", () => {
+
+        expect(store.getActions()).toEqual([]);
+
+        componentVertical.find('span').at(0).simulate('click');
+        expect(store.getActions()).toEqual([moveToken(0, 3)]);
+        store.clearActions();
+
+        componentHorizontal.find('span').at(0).simulate('click');
+        expect(store.getActions()).toEqual([moveToken(3, 0)]);
+        store.clearActions();
+
+        componentOther.find('span').at(0).simulate('click');
+        expect(store.getActions()).toEqual([]);
+        store.clearActions();
+
+        componentVerticalHid.find('span').at(0).simulate('click');
+        expect(store.getActions()).toEqual([]);
+        store.clearActions();
+
+        componentHorizontalHid.find('span').at(0).simulate('click');
+        expect(store.getActions()).toEqual([]);
+        store.clearActions();
+
+        componentOtherHid.find('span').at(0).simulate('click');
+        expect(store.getActions()).toEqual([]);
+        store.clearActions();
     });
 });

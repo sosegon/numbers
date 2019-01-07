@@ -50,22 +50,24 @@ const makeMove = (ownProps, isSelectable) => {
         if (!isSelectable) {
             return;
         }
-
         const { rowIndex, colIndex } = ownProps;
-        new Promise((resolve, reject) => {
-            resolve(rowIndex, colIndex);
-        }).then((rowIndex, colIndex) => {
-            dispatch(actions.moveToken(rowIndex, colIndex));
+        dispatch(actions.moveToken(rowIndex, colIndex));
 
-            return new Promise((resolve, reject) => {
-                setTimeout(resolve.delay);
-            });
-        }).then(() => {
-            dispatch(actions.updateScores());
-            // TODO: Add the logic for:
-            // - check game continuity
-            // - agent move
-        });
+        // const { rowIndex, colIndex } = ownProps;
+        // new Promise((resolve, reject) => {
+        //     resolve(rowIndex, colIndex);
+        // }).then((rowIndex, colIndex) => {
+        //     dispatch(actions.moveToken(rowIndex, colIndex));
+
+        //     return new Promise((resolve, reject) => {
+        //         setTimeout(resolve.delay);
+        //     });
+        // }).then(() => {
+        //     dispatch(actions.updateScores());
+        //     // TODO: Add the logic for:
+        //     // - check game continuity
+        //     // - agent move
+        // });
     };
 };
 
