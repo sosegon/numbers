@@ -1,26 +1,20 @@
-const GameEndComp = ({ game }) => {
-    let content = '';
-    let scoreA = game.player1.score;
-    let scoreB = game.player2.score;
-    let gameEnd = game.isOver;
-    if (gameEnd) {
-        if (scoreA > scoreB) {
-            content = 'You won';
-        } else if (scoreA < scoreB) {
-            content = 'You lose';
-        } else {
-            content = 'Draw';
-        }
-    }
-    if (!content) {
-        return null;
-    }
+const React = require('react');
+const PropTypes = require('prop-types');
 
+const GameEndComp = ({
+    style,
+    message
+}) => {
     return (
-        <div className='overlay'>
-			<p className='message'>{content}</p>
-		</div>
+        <div className={style}>
+            <p className='message'>{message}</p>
+        </div>
     );
+};
+
+GameEndComp.propTypes = {
+    style: PropTypes.string.isRequired,
+    message: PropTypes.string.isRequired
 };
 
 module.exports = {
