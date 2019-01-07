@@ -14,7 +14,7 @@ const middlewares = [];
 const mockStore = configureStore(middlewares);
 
 describe('ScoreCont', () => {
-    let wrapper, store, container, component1, component2;
+    let wrapper, store, container1, container2, component1, component2;
 
     beforeEach(() => {
         jest.resetAllMocks();
