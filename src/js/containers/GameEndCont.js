@@ -3,7 +3,7 @@ const { GameEndComp } = require('../components/GameEndComp.js');
 const { GAME_CONTINUITY } = require('../model/constants.js');
 
 const getStyle = (isOver) => {
-    return isOver ? 'overlay' : 'hid';
+    return isOver ? 'overlay' : 'invisible';
 };
 
 const getMessage = (score1, score2) => {

@@ -46,7 +46,7 @@ describe('GameEndCont', () => {
     });
 
     it("should have props with correct values", () => {
-        expect(component.props().style).toEqual('hid');
+        expect(component.props().style).toEqual('invisible');
         expect(component.props().message).toEqual('Draw');
     });
 });
