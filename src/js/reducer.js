@@ -3,7 +3,7 @@ const { GAME_STATUSES } = require('./model/constants.js');
 const { updateObjectFromLiteral } = require('./model/utils.js');
 const types = require('./actionTypes.js');
 
-const boardSize = 3;
+const boardSize = 5;
 const game = new Game(boardSize);
 const initialState = game.serialize();
 
@@ -19,8 +19,10 @@ const reduce = (state = initialState, action) => {
         case types.SCORES_UPDATED:
             game.updateFromObject(state);
             game.updateScores();
+            game.updateBoard();
             game.passToken();
             game.setStatus(GAME_STATUSES.RESTING);
+            game.updateContinuity();
             return game.serialize();
 
         case types.GAME_RESET:

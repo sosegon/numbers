@@ -1,7 +1,11 @@
+const PropTypes = require('prop-types');
 const { connect } = require('react-redux');
 const { CellComp } = require('../components/CellComp.js');
 const actions = require('../actions.js');
-const { TURNS, PLAYER_DIRECTIONS } = require('../model/constants.js');
+const { Token } = require('../model/Token.js');
+const { Agent } = require('../model/Agent.js');
+const { vectorToMatrix } = require('../model/utils.js');
+const { TURNS, PLAYER_DIRECTIONS, GAME_CONTINUITY } = require('../model/constants.js');
 
 const delay = 200;
 
@@ -45,6 +49,48 @@ const generateStyle = (isSelectable, hid, turn) => {
     return classArray.join(' ');
 };
 
+const moveToken = (object) => {
+    const { dispatch, getState, position } = object;
+
+    dispatch(actions.moveToken(position.rowIndex, position.colIndex));
+    return new Promise((resolve, reject) => {
+        setTimeout(() => resolve({ dispatch, getState }), delay);
+    });
+};
+
+const updateScores = (object) => {
+    const { dispatch, getState } = object;
+    dispatch(actions.updateScores());
+    return new Promise((resolve, reject) => {
+        if (getState().snap.continuity === GAME_CONTINUITY.CONTINUE) {
+            setTimeout(() => resolve({ dispatch, getState }), delay);
+        } else {
+            // TODO: This is still unclear
+            console.log("TODO: This is still unclear");
+        }
+    });
+};
+
+const execAgent = (object) => {
+    const { dispatch, getState } = object;
+    const agent = new Agent();
+    const token = new Token(9); // Argument does not matter
+
+    const boardMatrix = vectorToMatrix(getState().board)
+    agent.updateFromObject(getState().player2);
+    token.updateFromObject(getState().token);
+
+    return new Promise((resolve, reject) => {
+        const bestPosition = agent.maxGainCell(token, boardMatrix);
+        if (bestPosition[0] >= 0 && bestPosition[1] >= 0) {
+            const position = { rowIndex: bestPosition[0], colIndex: bestPosition[1] };
+            setTimeout(() => resolve({ dispatch, getState, position }), delay);
+        } else {
+            console.log("Error in agent");
+        }
+    });
+};
+
 const makeMove = (ownProps, isSelectable) => {
     return (dispatch, getState) => {
         if (!isSelectable) {
@@ -52,27 +98,15 @@ const makeMove = (ownProps, isSelectable) => {
         }
 
         const { rowIndex, colIndex } = ownProps;
+        const position = { rowIndex, colIndex };
         new Promise((resolve, reject) => {
-            resolve([rowIndex, colIndex]);
-        }).then(position => {
-            dispatch(actions.moveToken(position[0], position[1]));
-        });
-
-        // const { rowIndex, colIndex } = ownProps;
-        // new Promise((resolve, reject) => {
-        //     resolve(rowIndex, colIndex);
-        // }).then((rowIndex, colIndex) => {
-        //     dispatch(actions.moveToken(rowIndex, colIndex));
-
-        //     return new Promise((resolve, reject) => {
-        //         setTimeout(resolve.delay);
-        //     });
-        // }).then(() => {
-        //     dispatch(actions.updateScores());
-        //     // TODO: Add the logic for:
-        //     // - check game continuity
-        //     // - agent move
-        // });
+                resolve({ dispatch, getState, position });
+            })
+            .then(object => moveToken(object))
+            .then(object => updateScores(object))
+            .then(object => execAgent(object))
+            .then(object => moveToken(object))
+            .then(object => updateScores(object));
     };
 };
 
@@ -81,8 +115,8 @@ const mapStateToProps = (state, ownProps) => {
     const isSelectable = isCellSelectable(state, ownProps);
     const hid = value <= 0;
     const turn = state.snap.turn;
-    const style = generateStyle(isSelectable, hid, turn)
-    const gameStatus = state.snap.status
+    const style = generateStyle(isSelectable, hid, turn);
+    const gameStatus = state.snap.status;
 
     return {
         rowIndex,
@@ -110,6 +144,12 @@ const mergeProps = (propsFromState, propFromDispatch) => {
 };
 
 const CellCont = connect(mapStateToProps, mapDispatchToProps, mergeProps)(CellComp);
+
+CellCont.propTypes = {
+    rowIndex: PropTypes.number.isRequired,
+    colIndex: PropTypes.number.isRequired,
+    value: PropTypes.number.isRequired
+};
 
 module.exports = {
     CellCont

@@ -5,9 +5,10 @@ const { GAME_STATUSES } = require('../model/constants.js');
 const { Component } = React;
 
 class CellComp extends Component {
-    shouldComponentUpdate() {
-        return this.props.gameStatus !== GAME_STATUSES.MOVING_TOKEN;
-    }
+    // TODO: Check how to use this. However, it is working well now
+    // shouldComponentUpdate() {
+    //     return this.props.gameStatus !== GAME_STATUSES.RESTING;
+    // }
     render() {
         const props = this.props;
 
@@ -18,13 +19,13 @@ class CellComp extends Component {
 }
 
 CellComp.propTypes = {
-    rowIndex: PropTypes.number,
-    colIndex: PropTypes.number,
-    style: PropTypes.string,
-    isSelectable: PropTypes.bool,
-    gameStatus: PropTypes.number,
-    value: PropTypes.number,
-    onClick: PropTypes.func
+    rowIndex: PropTypes.number.isRequired,
+    colIndex: PropTypes.number.isRequired,
+    style: PropTypes.string.isRequired,
+    isSelectable: PropTypes.bool.isRequired,
+    gameStatus: PropTypes.number.isRequired,
+    value: PropTypes.number.isRequired,
+    onClick: PropTypes.func.isRequired
 };
 
 module.exports = {
