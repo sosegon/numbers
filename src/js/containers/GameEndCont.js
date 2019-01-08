@@ -1,5 +1,6 @@
 const { connect } = require('react-redux');
 const { GameEndComp } = require('../components/GameEndComp.js');
+const { GAME_CONTINUITY } = require('../model/constants.js');
 
 const getStyle = (isOver) => {
     return isOver ? 'overlay' : 'hid';
@@ -17,7 +18,7 @@ const getMessage = (score1, score2) => {
 
 const mapStateToProps = (state) => {
     return {
-        style: getStyle(state.snap.isOver),
+        style: getStyle(state.snap.continuity === GAME_CONTINUITY.OVER),
         message: getMessage(state.player1.score, state.player2.score)
     };
 };

@@ -14,8 +14,14 @@ const PLAYER_DIRECTIONS = {
     VERTICAL: 2
 };
 
+const GAME_CONTINUITY = {
+    CONTINUE: 0,
+    OVER: 1
+};
+
 module.exports = {
     GAME_STATUSES,
     TURNS,
-    PLAYER_DIRECTIONS
+    PLAYER_DIRECTIONS,
+    GAME_CONTINUITY
 };

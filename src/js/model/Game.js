@@ -3,7 +3,7 @@ const { Token } = require('./Token.js');
 const { Player } = require('./Player.js');
 const { Agent } = require('./Agent.js');
 const { updateObjectFromLiteral } = require('./utils.js');
-const { GAME_STATUSES, TURNS, PLAYER_DIRECTIONS } = require('./constants.js');
+const { GAME_STATUSES, TURNS, PLAYER_DIRECTIONS, GAME_CONTINUITY } = require('./constants.js');
 
 class Game {
     constructor(boardSize) {
@@ -20,7 +20,7 @@ class Game {
 
         this.snap = {
             lastValue: 0,
-            isOver: false,
+            continuity: GAME_CONTINUITY.CONTINUE,
             turn: TURNS.PLAYER1,
             status: GAME_STATUSES.RESTING
         };
@@ -84,11 +84,15 @@ class Game {
             throw new Error("Error passing token");
         }
     };
-    canContinue = () => {
+    updateContinuity = () => {
         if (this.snap.turn === TURNS.PLAYER1) {
-            return this.board.isNextTurnPossible(this.player1, this.token);
+            if (!this.board.isNextTurnPossible(this.player1, this.token)) {
+                this.snap.continuity = GAME_CONTINUITY.OVER;
+            }
         } else if (this.snap.turn === TURNS.PLAYER2) {
-            return this.board.isNextTurnPossible(this.player2, this.token);
+            if (!this.board.isNextTurnPossible(this.player2, this.token)) {
+                this.snap.continuity = GAME_CONTINUITY.OVER;
+            }
         } else {
             throw new Error("Error checking continuity of game");
         }
