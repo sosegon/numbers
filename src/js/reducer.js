@@ -1,6 +1,6 @@
 const { Game } = require('./model/Game.js');
 const { LocalStorageManager } = require('./data/LocalStorageManager.js');
-const { GAME_STATUSES, TURNS } = require('./model/constants.js');
+const { GAME_STATUSES, TURNS, GAME_CONTINUITY } = require('./model/constants.js');
 const { updateObjectFromLiteral } = require('./model/utils.js');
 const types = require('./actionTypes.js');
 
@@ -32,7 +32,8 @@ const doUpdateScores = state => {
     game.setStatus(GAME_STATUSES.RESTING);
     game.updateContinuity();
     const serialized = game.serialize();
-    if (game.snap.turn === TURNS.PLAYER1) { // Save when player is human
+    if (game.snap.turn === TURNS.PLAYER1 ||
+        game.snap.continuity === GAME_CONTINUITY.OVER) { // Player is human or game is over
         localStorageManager.setGameState(serialized)
     }
     return serialized;
