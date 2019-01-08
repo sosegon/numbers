@@ -14,7 +14,16 @@ const updateScores = () => {
     return { type };
 };
 
+const resetGame = (boardSize) => {
+    const type = types.GAME_RESET;
+    return {
+        type,
+        boardSize
+    };
+}
+
 module.exports = {
     moveToken,
-    updateScores
+    updateScores,
+    resetGame
 };

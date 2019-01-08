@@ -151,4 +151,43 @@ describe('reducer', () => {
 
         expect(expectedState).toEqual(actualState);
     });
+
+    it("should reset the game", () => {
+        const boardSize = 9;
+        const { initialState } = setup();
+        const store = redux.createStore(reduce, initialState);
+        const action = actions.resetGame(boardSize);
+
+        deepFreeze(initialState);
+        deepFreeze(action);
+
+        store.dispatch(action);
+        const actualState = store.getState();
+
+        const expectedState = {
+            player1: {
+                score: 0,
+                direction: PLAYER_DIRECTIONS.NONE
+            },
+            player2: {
+                score: 0,
+                direction: PLAYER_DIRECTIONS.NONE
+            },
+            snap: {
+                lastValue: 0,
+                isOver: false,
+                turn: TURNS.PLAYER1,
+                status: GAME_STATUSES.RESTING
+            }
+        };
+
+        expect(actualState.player1).toEqual(expectedState.player1);
+        expect(actualState.player2).toEqual(expectedState.player2);
+        expect(actualState.snap).toEqual(expectedState.snap);
+        expect(actualState.token.rowIndex).toBeGreaterThanOrEqual(0);
+        expect(actualState.token.colIndex).toBeGreaterThanOrEqual(0);
+        expect(actualState.token.oldRowIndex).toBeGreaterThanOrEqual(0);
+        expect(actualState.token.oldColIndex).toBeGreaterThanOrEqual(0);
+        expect(actualState.board.length).toEqual(boardSize * boardSize);
+    });
 });

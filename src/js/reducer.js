@@ -23,6 +23,10 @@ const reduce = (state = initialState, action) => {
             game.setStatus(GAME_STATUSES.RESTING);
             return game.serialize();
 
+        case types.GAME_RESET:
+            const newGame = new Game(action.boardSize);
+            return newGame.serialize();
+
         default:
             return state;
     }
