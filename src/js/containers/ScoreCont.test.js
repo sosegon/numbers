@@ -65,7 +65,7 @@ describe('ScoreCont', () => {
         expect(component1.props().name).toEqual('You');
         expect(component1.props().score).toEqual(0);
 
-        expect(component2.props().name).toEqual('Agent');
+        expect(component2.props().name).toEqual('AI');
         expect(component2.props().score).toEqual(0);
     });
 });
