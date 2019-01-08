@@ -1,19 +1,9 @@
 const { Game } = require('./model/Game.js');
-const { LocalStorageManager } = require('./data/LocalStorageManager.js');
-const { GAME_STATUSES, TURNS, GAME_CONTINUITY } = require('./model/constants.js');
+const { GAME_STATUSES } = require('./model/constants.js');
 const { updateObjectFromLiteral } = require('./model/utils.js');
 const types = require('./actionTypes.js');
 
-const boardSize = 9;
-const game = new Game(boardSize);
-
-const localStorageManager = new LocalStorageManager();
-const previousState = localStorageManager.getGameState();
-if (previousState !== null) {
-    game.updateFromObject(previousState);
-} else {
-    localStorageManager.setGameState(game.serialize());
-}
+const game = new Game(9);
 const initialState = game.serialize();
 
 const doMoveToken = (state, action) => {
@@ -31,19 +21,12 @@ const doUpdateScores = state => {
     game.passToken();
     game.setStatus(GAME_STATUSES.RESTING);
     game.updateContinuity();
-    const serialized = game.serialize();
-    if (game.snap.turn === TURNS.PLAYER1 ||
-        game.snap.continuity === GAME_CONTINUITY.OVER) { // Player is human or game is over
-        localStorageManager.setGameState(serialized)
-    }
-    return serialized;
+    return game.serialize();
 };
 
 const doResetGame = (state, action) => {
     const newGame = new Game(action.boardSize);
-    const serialized = newGame.serialize();
-    localStorageManager.setGameState(serialized);
-    return serialized;
+    return newGame.serialize();
 };
 
 const reduce = (state = initialState, action) => {
