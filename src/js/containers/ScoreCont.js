@@ -4,7 +4,7 @@ const { TURNS } = require('../model/constants.js');
 
 const mapStatToProps = (state, ownProps) => {
     const { playerName } = ownProps;
-    const name = playerName === TURNS.PLAYER1 ? 'You' : 'Agent';
+    const name = playerName === TURNS.PLAYER1 ? 'You' : 'AI';
     const score = playerName === TURNS.PLAYER1 ?
         state.player1.score :
         state.player2.score;
