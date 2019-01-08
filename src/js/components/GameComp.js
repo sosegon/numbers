@@ -34,7 +34,7 @@ const GameComp = ({
                 <GameEndCont />
             </div>
             <div className="scores-container">
-                <ScoreCont playerName={TURNS.PLAYER1}/>
+                <ScoreCont playerName={TURNS.PLAYER1}/>&nbsp;
                 <ScoreCont playerName={TURNS.PLAYER2}/>
             </div>
         </div>
