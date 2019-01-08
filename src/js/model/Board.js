@@ -1,5 +1,6 @@
 const { Cell } = require('./Cell.js');
 const { randomInteger, updateObjectFromLiteral, vectorToMatrix } = require('./utils.js');
+const { PLAYER_DIRECTIONS } = require('../model/constants.js');
 
 class Board {
     constructor(boardSize, matrix) {
@@ -24,7 +25,7 @@ class Board {
         try {
             const matrix = vectorToMatrix(vector);
             this.updateFromMatrix(matrix);
-        } catch(err) {
+        } catch (err) {
             throw err
         }
     };
@@ -48,7 +49,7 @@ class Board {
         this.cells[token.rowIndex][token.colIndex].update(0);
     };
     takeCurrentValue = (token) => {
-        if(token.rowIndex >= this.cells.length ||
+        if (token.rowIndex >= this.cells.length ||
             token.colIndex >= this.cells.length) {
             throw new Error("Invalid token position");
         }
@@ -57,17 +58,18 @@ class Board {
     isNextTurnPossible = (player, token) => {
         let tokenRowIndex = token.rowIndex;
         let tokenColIndex = token.colIndex;
-        let direction = player.direction;
-        if (direction) {
+        if (player.direction === PLAYER_DIRECTIONS.VERTICAL) {
             for (let i = 0; i < this.cells.length; i++) {
                 let cell = this.cells[i][tokenColIndex];
                 if (cell.value > 0) return true;
             }
-        } else {
+        } else if (player.direction === PLAYER_DIRECTIONS.HORIZONTAL) {
             for (let i = 0; i < this.cells.length; i++) {
                 let cell = this.cells[tokenRowIndex][i];
                 if (cell.value > 0) return true;
             }
+        } else {
+            throw new Error('Invalid player direction');
         }
         return false;
     };

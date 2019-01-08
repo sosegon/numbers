@@ -1,7 +1,7 @@
 const { Board } = require('./Board.js');
 const { Token } = require('./Token.js');
 const { Player } = require('./Player.js');
-
+const { PLAYER_DIRECTIONS } = require('../model/constants.js');
 const setup = () => {
     const board = new Board(9);
     const token = new Token(9);
@@ -69,7 +69,7 @@ describe("Board", () => {
             [21, 22, 23, 24, 25]
         ]);
         const token = new Token();
-        token.set(2,2);
+        token.set(2, 2);
         expect(board.takeCurrentValue(token)).toEqual(13);
 
         token.moveTo(4, 4);
@@ -84,7 +84,7 @@ describe("Board", () => {
 
     it("should check next vertical turn is not possible", () => {
         const player = new Player();
-        player.direction = true;
+        player.direction = PLAYER_DIRECTIONS.VERTICAL;
 
         const token = new Token(5);
         token.set(3, 3);
@@ -103,7 +103,7 @@ describe("Board", () => {
 
     it("should check next vertical turn is possible", () => {
         const player = new Player();
-        player.direction = true;
+        player.direction = PLAYER_DIRECTIONS.VERTICAL;
 
         const token = new Token(5);
         token.set(3, 3);
@@ -122,7 +122,7 @@ describe("Board", () => {
 
     it("should check next horizontal turn is not possible", () => {
         const player = new Player();
-        player.direction = false;
+        player.direction = PLAYER_DIRECTIONS.HORIZONTAL;
 
         const token = new Token(5);
         token.set(3, 3);
@@ -141,7 +141,7 @@ describe("Board", () => {
 
     it("should check next horizontal turn is possible", () => {
         const player = new Player();
-        player.direction = false;
+        player.direction = PLAYER_DIRECTIONS.HORIZONTAL;
 
         const token = new Token(5);
         token.set(3, 3);

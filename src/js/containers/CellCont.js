@@ -63,6 +63,7 @@ const updateScores = (object) => {
     dispatch(actions.updateScores());
     return new Promise((resolve, reject) => {
         if (getState().snap.continuity === GAME_CONTINUITY.CONTINUE) {
+            console.log(getState().snap.continuity);
             setTimeout(() => resolve({ dispatch, getState }), delay);
         } else {
             // TODO: This is still unclear
