@@ -74,7 +74,7 @@ describe('reducer', () => {
         store.dispatch(action);
         const actualState = store.getState();
 
-        expect(expectedState).toEqual(actualState);
+        expect(actualState).toEqual(expectedState);
     });
 
     it('should move token (start game vertical)', () => {
@@ -110,7 +110,7 @@ describe('reducer', () => {
         store.dispatch(action);
         const actualState = store.getState();
 
-        expect(expectedState).toEqual(actualState);
+        expect(actualState).toEqual(expectedState);
     });
 
     it("should update scores", () => {
@@ -149,7 +149,7 @@ describe('reducer', () => {
         store.dispatch(action);
         const actualState = store.getState();
 
-        expect(expectedState).toEqual(actualState);
+        expect(actualState).toEqual(expectedState);
     });
 
     it("should reset the game", () => {
