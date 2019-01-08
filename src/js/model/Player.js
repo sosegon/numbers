@@ -18,8 +18,8 @@ class Player {
     toString = () => {
         return JSON.stringify(this.serialize());
     };
-    updateFromObject = (token) => {
-        updateObjectFromLiteral(this, token);
+    updateFromObject = (player) => {
+        updateObjectFromLiteral(this, player);
     };
 }
 
