@@ -1,3 +1,4 @@
+const PropTypes = require('prop-types');
 const { connect } = require('react-redux');
 const { GameComp } = require('../components/GameComp.js');
 const actions = require('../actions.js');
@@ -17,6 +18,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 };
 
 const GameCont = connect(mapStateToProps, mapDispatchToProps)(GameComp);
+
+GameCont.propTypes = {
+    boardSize: PropTypes.number.isRequired
+};
 
 module.exports = {
     GameCont

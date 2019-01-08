@@ -1,3 +1,4 @@
+const PropTypes = require('prop-types');
 const { connect } = require('react-redux');
 const { ScoreComp } = require('../components/ScoreComp.js');
 const { TURNS } = require('../model/constants.js');
@@ -16,6 +17,10 @@ const mapStatToProps = (state, ownProps) => {
 };
 
 const ScoreCont = connect(mapStatToProps)(ScoreComp);
+
+ScoreCont.propTypes = {
+    playerName: PropTypes.number.isRequired
+};
 
 module.exports = {
     ScoreCont
