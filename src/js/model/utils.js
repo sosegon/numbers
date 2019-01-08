@@ -131,6 +131,23 @@ const updateObjectFromLiteral = (object, literal) => {
     }
 };
 
+const vectorToMatrix = (vector) => {
+    const size = Math.sqrt(vector.length);
+    if (size > 0 && Number.isInteger(size)) {
+        let matrix = [];
+        for (let i = 0; i < size; i++) {
+            let row = [];
+            for (let j = 0; j < size; j++) {
+                row.push(vector[size * i + j]);
+            }
+            matrix.push(row);
+        }
+        return matrix;
+    } else {
+        throw new Error("Invalid vector size");
+    }
+};
+
 module.exports = {
     rotateClockwise,
     rotateCounterClockwise,
@@ -140,5 +157,6 @@ module.exports = {
     getBestGain,
     randomInteger,
     updateObjectFromJsonString,
-    updateObjectFromLiteral
+    updateObjectFromLiteral,
+    vectorToMatrix
 };

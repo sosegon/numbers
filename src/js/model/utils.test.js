@@ -7,7 +7,8 @@ const {
     getBestGain,
     randomInteger,
     updateObjectFromJsonString,
-    updateObjectFromLiteral
+    updateObjectFromLiteral,
+    vectorToMatrix
 } = require('./utils.js');
 
 const setup = () => {
@@ -203,5 +204,38 @@ describe("Utils", () => {
 
         updateObjectFromLiteral(object, literal);
         expect(object).toEqual(expected);
+    });
+
+    it("should convert vector to matrix", () => {
+        const vector = [
+            1, 2, 3, 4, 5,
+            6, 7, 8, 9, 10,
+            11, 12, 13, 14, 15,
+            16, 17, 18, 19, 20,
+            21, 22, 23, 24, 25
+        ];
+        const matrix = [
+            [1, 2, 3, 4, 5],
+            [6, 7, 8, 9, 10],
+            [11, 12, 13, 14, 15],
+            [16, 17, 18, 19, 20],
+            [21, 22, 23, 24, 25]
+        ];
+
+        expect(vectorToMatrix(vector)).toEqual(matrix);
+    });
+
+    it("should convert vector to matrix (invalid vector size)", () => {
+        const vector = [
+            1, 2, 3, 4, 5,
+            6, 7, 8, 9, 10,
+            11, 12, 13, 14, 15,
+            16, 17, 18, 19, 20,
+            21, 22, 23, 24
+        ];
+
+        const convert = () => { vectorToMatrix(vector) };
+
+        expect(convert).toThrowError(/Invalid/);
     });
 });

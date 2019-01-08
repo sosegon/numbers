@@ -1,5 +1,5 @@
 const { Cell } = require('./Cell.js');
-const { randomInteger, updateObjectFromLiteral } = require('./utils.js');
+const { randomInteger, updateObjectFromLiteral, vectorToMatrix } = require('./utils.js');
 
 class Board {
     constructor(boardSize, matrix) {
@@ -21,19 +21,11 @@ class Board {
         }
     };
     updateFromVector = (vector) => {
-        const size = Math.sqrt(vector.length);
-        if (size > 0 && Number.isInteger(size)) {
-            let matrix = [];
-            for (let i = 0; i < size; i++) {
-                let row = [];
-                for (let j = 0; j < size; j++) {
-                    row.push(vector[size * i + j]);
-                }
-                matrix.push(row);
-            }
+        try {
+            const matrix = vectorToMatrix(vector);
             this.updateFromMatrix(matrix);
-        } else {
-            throw new Error("Invalid vector size");
+        } catch(err) {
+            throw err
         }
     };
     updateFromScratch = (boardSize) => {
