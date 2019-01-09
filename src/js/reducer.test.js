@@ -1,6 +1,6 @@
 const deepFreeze = require('deep-freeze');
 const { reduce } = require('./reducer.js');
-const { PLAYER_DIRECTIONS, TURNS, GAME_STATUSES, GAME_CONTINUITY } = require('./model/constants.js');
+const { PLAYER_DIRECTIONS, TURNS, GAME_STATUSES, GAME_CONTINUITY } = require('./model/flags.js');
 const actions = require('./actions.js');
 const redux = require('redux');
 

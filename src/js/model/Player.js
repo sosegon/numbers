@@ -1,5 +1,5 @@
 const { updateObjectFromLiteral } = require('./utils.js');
-const { PLAYER_DIRECTIONS } = require('./constants.js');
+const { PLAYER_DIRECTIONS } = require('./flags.js');
 
 /**
  * Class representing a player. A player has a direction of playing

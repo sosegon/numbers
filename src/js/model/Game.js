@@ -3,7 +3,7 @@ const { Token } = require('./Token.js');
 const { Player } = require('./Player.js');
 const { Agent } = require('./Agent.js');
 const { updateObjectFromLiteral } = require('./utils.js');
-const { GAME_STATUSES, TURNS, PLAYER_DIRECTIONS, GAME_CONTINUITY } = require('./constants.js');
+const { GAME_STATUSES, TURNS, PLAYER_DIRECTIONS, GAME_CONTINUITY } = require('./flags.js');
 
 /**
  * Class representing a game. A game is made of a {@link Board} a
@@ -107,7 +107,7 @@ class Game {
         this.snap.lastValue = this.board.takeCurrentValue(this.token);
     }
     /**
-     * Set the status of the game. For possible values see {@link constants.GAME_STATUSES}.
+     * Set the status of the game. For possible values see {@link flags.GAME_STATUSES}.
      *
      * @param {number} status
      */
@@ -125,7 +125,7 @@ class Game {
     /**
      * Update the score of the current {@link Player}.
      *
-     * @throws {Error} if the turn set in the game is not a value from {@link constants.TURNS}.
+     * @throws {Error} if the turn set in the game is not a value from {@link flags.TURNS}.
      */
     updateScores() {
         if (this.snap.turn === TURNS.PLAYER1) {
@@ -139,7 +139,7 @@ class Game {
     /**
      * Pass the token to the other {@link Player}.
      *
-     * @throws {Error} if the turn set in the game is not a value from {@link constants.TURNS}.
+     * @throws {Error} if the turn set in the game is not a value from {@link flags.TURNS}.
      */
     passToken() {
         if (this.snap.turn === TURNS.PLAYER1) {
@@ -151,9 +151,9 @@ class Game {
         }
     }
     /**
-     * Update the continuity of the game. For possible values see {@link constants.GAME_CONTINUITY}.
+     * Update the continuity of the game. For possible values see {@link flags.GAME_CONTINUITY}.
      *
-     * @throws {Error} if the turn set in the game is not a value from {@link constants.TURNS}.
+     * @throws {Error} if the turn set in the game is not a value from {@link flags.TURNS}.
      */
     updateContinuity() {
         if (this.snap.turn === TURNS.PLAYER1) {
@@ -171,7 +171,7 @@ class Game {
     /**
      * Get the current {@link Player}, the one that has to move the {@link Token}.
      *
-     * @throws {Error} if the turn set in the game is not a value from {@link constants.TURNS}.
+     * @throws {Error} if the turn set in the game is not a value from {@link flags.TURNS}.
      */
     getCurrentPlayer() {
         if (this.snap.turn === TURNS.PLAYER1) {
@@ -185,7 +185,7 @@ class Game {
     /**
      * Get the next {@link Player}, the one that does not have to move the {@link Token}.
      *
-     * @throws {Error} if the turn set in the game is not a value from {@link constants.TURNS}.
+     * @throws {Error} if the turn set in the game is not a value from {@link flags.TURNS}.
      */
     getNextPlayer() {
         if (this.snap.turn === TURNS.PLAYER1) {

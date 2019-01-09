@@ -21,7 +21,7 @@ const GAME_CONTINUITY = {
 
 /**
  * Flags used in the logic's game.
- * @module constants
+ * @module flags
  */
 module.exports = {
     /**

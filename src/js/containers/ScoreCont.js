@@ -1,7 +1,7 @@
 const PropTypes = require('prop-types');
 const { connect } = require('react-redux');
 const { ScoreComp } = require('../components/ScoreComp.js');
-const { TURNS } = require('../model/constants.js');
+const { TURNS } = require('../model/flags.js');
 
 const mapStatToProps = (state, ownProps) => {
     const { playerName } = ownProps;

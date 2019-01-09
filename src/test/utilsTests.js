@@ -1,4 +1,4 @@
-const { PLAYER_DIRECTIONS, TURNS, GAME_STATUSES } = require('../js/model/constants.js');
+const { PLAYER_DIRECTIONS, TURNS, GAME_STATUSES } = require('../js/model/flags.js');
 
 const initialState = {
     token: {

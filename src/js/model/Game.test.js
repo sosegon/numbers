@@ -2,7 +2,7 @@ const { Game } = require('./Game.js');
 const { Board } = require('./Board.js');
 const { Token } = require('./Token.js');
 const { Player } = require('./Player.js');
-const { PLAYER_DIRECTIONS, GAME_STATUSES, TURNS, GAME_CONTINUITY } = require('./constants.js');
+const { PLAYER_DIRECTIONS, GAME_STATUSES, TURNS, GAME_CONTINUITY } = require('./flags.js');
 
 describe("Game", () => {
     let game, literal;

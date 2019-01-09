@@ -6,7 +6,7 @@ const configureStore = require('redux-mock-store').default;
 const { CellComp } = require('../components/CellComp.js');
 const { CellCont } = require('./CellCont.js')
 const { moveToken, updateScores } = require('../actions.js');
-const { GAME_STATUSES } = require('../model/constants.js');
+const { GAME_STATUSES } = require('../model/flags.js');
 const {
     initialState,
     verticalPosition,

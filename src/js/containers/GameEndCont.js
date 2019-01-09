@@ -1,6 +1,6 @@
 const { connect } = require('react-redux');
 const { GameEndComp } = require('../components/GameEndComp.js');
-const { GAME_CONTINUITY } = require('../model/constants.js');
+const { GAME_CONTINUITY } = require('../model/flags.js');
 
 const getStyle = (isOver) => {
     return isOver ? 'overlay' : 'invisible';

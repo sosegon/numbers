@@ -1,6 +1,6 @@
 const { Cell } = require('./Cell.js');
 const { randomInteger, updateObjectFromLiteral, vectorToMatrix } = require('./utils.js');
-const { PLAYER_DIRECTIONS } = require('../model/constants.js');
+const { PLAYER_DIRECTIONS } = require('../model/flags.js');
 /**
  * Class representing a board. A board has a matrix of {@link Cell}s.
  */

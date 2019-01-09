@@ -1,5 +1,5 @@
 const { Game } = require('./model/Game.js');
-const { GAME_STATUSES } = require('./model/constants.js');
+const { GAME_STATUSES } = require('./model/flags.js');
 const { updateObjectFromLiteral } = require('./model/utils.js');
 const types = require('./actionTypes.js');
 

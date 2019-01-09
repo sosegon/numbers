@@ -1,6 +1,6 @@
 const React = require('react');
 const PropTypes = require('prop-types');
-const { GAME_STATUSES } = require('../model/constants.js');
+const { GAME_STATUSES } = require('../model/flags.js');
 
 const { Component } = React;
 

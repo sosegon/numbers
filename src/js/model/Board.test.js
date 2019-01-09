@@ -1,7 +1,7 @@
 const { Board } = require('./Board.js');
 const { Token } = require('./Token.js');
 const { Player } = require('./Player.js');
-const { PLAYER_DIRECTIONS } = require('../model/constants.js');
+const { PLAYER_DIRECTIONS } = require('../model/flags.js');
 const setup = () => {
     const board = new Board(9);
     const token = new Token(9);

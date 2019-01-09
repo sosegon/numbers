@@ -1,6 +1,6 @@
 const { Agent } = require('./Agent.js');
 const { Token } = require('./Token.js');
-const { PLAYER_DIRECTIONS } = require('./constants.js');
+const { PLAYER_DIRECTIONS } = require('./flags.js');
 
 const setup = () => {
     const matrix = [

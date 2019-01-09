@@ -4,7 +4,7 @@ const { mount } = require('enzyme');
 const configureStore = require('redux-mock-store').default;
 const { GameEndCont } = require('./GameEndCont.js');
 const { GameEndComp } = require('../components/GameEndComp.js');
-const { TURNS } = require('../model/constants.js');
+const { TURNS } = require('../model/flags.js');
 
 const {
     initialState

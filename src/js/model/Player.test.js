@@ -1,5 +1,5 @@
 const { Player } = require('./Player.js');
-const { PLAYER_DIRECTIONS } = require('./constants.js');
+const { PLAYER_DIRECTIONS } = require('./flags.js');
 
 const setup = () => {
     const player = new Player();

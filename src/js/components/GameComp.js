@@ -1,6 +1,6 @@
 const React = require('react');
 const PropTypes = require('prop-types');
-const { TURNS } = require('../model/constants.js');
+const { TURNS } = require('../model/flags.js');
 const { CellCont } = require('../containers/CellCont.js');
 const { WildCardCont } = require('../containers/WildCardCont.js');
 const { GameEndCont } = require('../containers/GameEndCont.js');

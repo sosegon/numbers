@@ -5,7 +5,7 @@ const actions = require('../actions.js');
 const { Token } = require('../model/Token.js');
 const { Agent } = require('../model/Agent.js');
 const { vectorToMatrix } = require('../model/utils.js');
-const { TURNS, PLAYER_DIRECTIONS, GAME_CONTINUITY } = require('../model/constants.js');
+const { TURNS, PLAYER_DIRECTIONS, GAME_CONTINUITY } = require('../model/flags.js');
 
 const delay = 200;
 
