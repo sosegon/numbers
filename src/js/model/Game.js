@@ -5,11 +5,25 @@ const { Agent } = require('./Agent.js');
 const { updateObjectFromLiteral } = require('./utils.js');
 const { GAME_STATUSES, TURNS, PLAYER_DIRECTIONS, GAME_CONTINUITY } = require('./constants.js');
 
+/**
+ * Class representing a game. A game is made of a {@link Board} a
+ * {@link Token} and 2 {@link Player}s, one of them is an {@link Agent}.
+ */
 class Game {
+    /**
+     * Create a Game.
+     *
+     * @param {number} boardSize - Defines a square {@link Board}.
+     */
     constructor(boardSize) {
         this.createFromScratch(boardSize);
     }
-    createFromScratch = (boardSize) => {
+    /**
+     * Create a game given the size of the board.
+     *
+     * @param {number} boardSize - Defines a square {@link Board}.
+     */
+    createFromScratch(boardSize) {
         this.token = new Token(boardSize);
 
         this.board = new Board(boardSize);
@@ -24,8 +38,36 @@ class Game {
             turn: TURNS.PLAYER1,
             status: GAME_STATUSES.RESTING
         };
-    };
-    moveToken = (rowIndex, colIndex) => {
+    }
+    /**
+     * Move the {@link Token} to the given position. If the {@link Player}s'
+     * directions have not been set yet, the function defines them.
+     *
+     * In the following board, the token is located at position <code>[3, 3]</code>
+     *
+     * <pre><code>
+     * | 2  3  4  7  8 |
+     * | 1 -1  3  5  6 |
+     * | 2  7  6  4  1 |
+     * | 5  2  9  0  2 |
+     * | 8  7  9  2  1 |
+     * </code></pre>
+     *
+     * When the directions are not set yet, the {@link Player} that makes the first move
+     * can move the {@link Token} along its row or column.
+     *
+     * If the move is along the row,
+     * the direction of the {@link Player} is set to **HORIZONTAL**; therefore, the
+     * direction of the other {@link Player} is set to **VERTICAL**.
+     *
+     * If the move is along the column,
+     * the direction of the {@link Player} is set to **VERTICAL**; therefore, the
+     * direction of the other {@link Player} is set to **HORIZONTAL**.
+     *
+     * @param {number} rowIndex
+     * @param {number} colIndex
+     */
+    moveToken(rowIndex, colIndex) {
         this.token.moveTo(rowIndex, colIndex);
         // Define the direction for the players
         if (this.player1.direction === PLAYER_DIRECTIONS.NONE || this.player2.direction === PLAYER_DIRECTIONS.NONE) {
@@ -56,17 +98,36 @@ class Game {
                 throw new Error("Error setting PLAYER_directions for players");
             }
         }
-    };
-    takeCell = () => {
+    }
+    /**
+     * Take the value of the {@link Cell} located in the token's position.
+     * The corresponding field in the game is updated.
+     */
+    takeCell() {
         this.snap.lastValue = this.board.takeCurrentValue(this.token);
-    };
-    setStatus = (status) => {
+    }
+    /**
+     * Set the status of the game. For possible values see {@link constants.GAME_STATUSES}.
+     *
+     * @param {number} status
+     */
+    setStatus(status) {
+        // TODO: Check is status is valid.
         this.snap.status = status;
     }
-    updateBoard = () => {
+    /**
+     * Use the {@link Token} to update the values of the {@link Cell}s in the {@link Board}.
+     * See {@link Board#update}.
+     */
+    updateBoard() {
         this.board.update(this.token);
-    };
-    updateScores = () => {
+    }
+    /**
+     * Update the score of the current {@link Player}.
+     *
+     * @throws {Error} if the turn set in the game is not a value from {@link constants.TURNS}.
+     */
+    updateScores() {
         if (this.snap.turn === TURNS.PLAYER1) {
             this.player1.incrementScore(this.snap.lastValue);
         } else if (this.snap.turn === TURNS.PLAYER2) {
@@ -74,8 +135,13 @@ class Game {
         } else {
             throw new Error("Error updating scores");
         }
-    };
-    passToken = () => {
+    }
+    /**
+     * Pass the token to the other {@link Player}.
+     *
+     * @throws {Error} if the turn set in the game is not a value from {@link constants.TURNS}.
+     */
+    passToken() {
         if (this.snap.turn === TURNS.PLAYER1) {
             this.snap.turn = TURNS.PLAYER2;
         } else if (this.snap.turn === TURNS.PLAYER2) {
@@ -83,8 +149,13 @@ class Game {
         } else {
             throw new Error("Error passing token");
         }
-    };
-    updateContinuity = () => {
+    }
+    /**
+     * Update the continuity of the game. For possible values see {@link constants.GAME_CONTINUITY}.
+     *
+     * @throws {Error} if the turn set in the game is not a value from {@link constants.TURNS}.
+     */
+    updateContinuity() {
         if (this.snap.turn === TURNS.PLAYER1) {
             if (!this.board.isNextTurnPossible(this.player1, this.token)) {
                 this.snap.continuity = GAME_CONTINUITY.OVER;
@@ -96,8 +167,13 @@ class Game {
         } else {
             throw new Error("Error checking continuity of game");
         }
-    };
-    getCurrentPlayer = () => {
+    }
+    /**
+     * Get the current {@link Player}, the one that has to move the {@link Token}.
+     *
+     * @throws {Error} if the turn set in the game is not a value from {@link constants.TURNS}.
+     */
+    getCurrentPlayer() {
         if (this.snap.turn === TURNS.PLAYER1) {
             return this.player1;
         } else if (this.snap.turn === TURNS.PLAYER2) {
@@ -105,8 +181,13 @@ class Game {
         } else {
             throw new Error("Error getting current player");
         }
-    };
-    getNextPlayer = () => {
+    }
+    /**
+     * Get the next {@link Player}, the one that does not have to move the {@link Token}.
+     *
+     * @throws {Error} if the turn set in the game is not a value from {@link constants.TURNS}.
+     */
+    getNextPlayer() {
         if (this.snap.turn === TURNS.PLAYER1) {
             return this.player2;
         } else if (this.snap.turn === TURNS.PLAYER2) {
@@ -114,8 +195,16 @@ class Game {
         } else {
             throw new Error("Error getting next player");
         }
-    };
-    serialize = () => {
+    }
+    /**
+     * Serialize game. See
+     * {@link Token#serialize}
+     * {@link Board#serialize}
+     * {@link Player#serialize}
+     *
+     * @returns {object} Serialized game.
+     */
+    serialize() {
         return {
             token: this.token.serialize(),
             board: this.board.serialize(),
@@ -123,30 +212,38 @@ class Game {
             player2: this.player2.serialize(),
             snap: this.snap
         };
-    };
-    updateFromObject = (object) => {
-        for (const key of Object.keys(object)) {
+    }
+    /**
+     * Update game from literal. See
+     * {@link Token#updateFromObject}
+     * {@link Board#updateFromVector}
+     * {@link Player#updateFromObject}
+     *
+     * @param {object} game
+     */
+    updateFromObject(game) {
+        for (const key of Object.keys(game)) {
             switch (key) {
                 case "token":
-                    this.token.updateFromObject(object[key]);
+                    this.token.updateFromObject(game[key]);
                     continue;
                 case "board":
-                    this.board.updateFromVector(object[key]);
+                    this.board.updateFromVector(game[key]);
                     continue;
                 case "player1":
-                    this.player1.updateFromObject(object[key]);
+                    this.player1.updateFromObject(game[key]);
                     continue;
                 case "player2":
-                    this.player2.updateFromObject(object[key]);
+                    this.player2.updateFromObject(game[key]);
                     continue;
                 case "snap":
-                    updateObjectFromLiteral(this.snap, object[key]);
+                    updateObjectFromLiteral(this.snap, game[key]);
                     continue;
                 default:
                     continue;
             }
         }
-    };
+    }
 }
 
 module.exports = {

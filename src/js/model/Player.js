@@ -1,24 +1,52 @@
 const { updateObjectFromLiteral } = require('./utils.js');
 const { PLAYER_DIRECTIONS } = require('./constants.js');
 
+/**
+ * Class representing a player. A player has a direction of playing
+ * and a score.
+ */
 class Player {
+    /**
+     * Create a player.
+     *
+     */
     constructor() {
         this.score = 0;
         this.direction = PLAYER_DIRECTIONS.NONE;
     }
-    incrementScore = (value) => {
+    /**
+     * Increment player's score.
+     *
+     * @param {number} value - The value to be added to the score.
+     */
+    incrementScore(value) {
         this.score += value;
-    };
-    serialize = () => {
+    }
+    /**
+     * Serialize player.
+     *
+     * @returns {object} Serialized player.
+     */
+    serialize() {
         return {
             score: this.score,
             direction: this.direction
         };
-    };
-    toString = () => {
+    }
+    /**
+     * Convert serialized player to string.
+     *
+     * @returns {string} Stringified player.
+     */
+    toString() {
         return JSON.stringify(this.serialize());
-    };
-    updateFromObject = (player) => {
+    }
+    /**
+     * Update player from literal.
+     *
+     * @param {object} player
+     */
+    updateFromObject(player) {
         updateObjectFromLiteral(this, player);
     };
 }

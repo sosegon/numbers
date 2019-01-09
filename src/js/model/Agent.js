@@ -8,12 +8,51 @@ const {
     getBestGain
 } = require('./utils.js');
 
+/**
+ * Class representing an agent. An agent is a {@link Player}
+ * that plays the game following a certain criteria. It is considered
+ * a type of AI.
+ */
 class Agent extends Player {
+    /**
+     * Create an agent.
+     */
     constructor() {
         super();
     }
-    maxCell = (token, boardMatrix) => {
-        // Simply select the cell with the highest value
+    /**
+     * Get the position of the highest value in a matrix.
+     * The position is either in the column or row of the {@link Token},
+     * depending on the agent's direction.
+     *
+     * In the following matrix, the token is located at position <code>[3, 3]</code>
+     *
+     * <pre><code>
+     * | 2  3  4  7  8 |
+     * | 1 -1  3  5  6 |
+     * | 2  7  6  4  1 |
+     * | 5  2  9  0  2 |
+     * | 8  7  9  2  1 |
+     * </code></pre>
+     *
+     * If the direction of the agent is **HORIZONTAL**, the algorithm determines the
+     * highest value in the row where the {@link Token} is located. Only the values greater
+     * than 0 are considered. The highest value is 9; therefore, the output of the
+     * will be the position of that value: <code>[3, 2]</code>.
+     *
+     * If the direction of the agent is **VERTICAL**, the algorithm determines the
+     * highest value in the column where the {@link Token} is located. Only the values greater
+     * than 0 are considered. The highest value is 7; therefore, the output of the
+     * will be the position of that value: <code>[0, 3]</code>.
+     *
+     * If all the values of the row or column are lower than 0, the output will be
+     * <code>[-1, -1]</code>.
+     *
+     * @param {Token} token
+     * @param {array} boardMatrix - 2 dimensional array of numbers.
+     * @returns {array} Array with two numbers defining the row and column of the highest value.
+     */
+    maxCell(token, boardMatrix) {
         let nBoardMatrix = boardMatrix;
         let nTokenColIndex = token.colIndex;
 
@@ -22,6 +61,8 @@ class Agent extends Player {
             let indices = rotateIndicesClockwise(token.rowIndex, token.colIndex, nBoardMatrix.length);
             nTokenColIndex = indices[1];
         }
+
+        // TODO: add exception when directions is not HORIZONTAL nor VERTICAL
 
         let indexMaxValue = -1;
         let maxValue = -1;
@@ -41,8 +82,20 @@ class Agent extends Player {
         }
 
         return [-1, -1];
-    };
-    maxGainCell = (token, boardMatrix) => {
+    }
+    /**
+     * Get the position of the value with the best gain in a matrix.
+     * The position is either in the column or row of the {@link Token},
+     * depending on the agent's direction.
+     *
+     * The algorithm relies on the {@link utils.getBestGain} function.
+     *
+     * @param {Token} token
+     * @param {array} boardMatrix
+     * @returns {array} Array with two numbers defining the row and column of the value
+     * with best gain.
+     */
+    maxGainCell(token, boardMatrix) {
         // Get the cell with highest gain with respect to next turn
         let nBoardMatrix = boardMatrix;
         let nTokenColIndex = token.colIndex;
@@ -68,7 +121,7 @@ class Agent extends Player {
         }
 
         return position;
-    };
+    }
 }
 
 module.exports = {
