@@ -1,7 +1,7 @@
 {
-  "name": "numbers",
+  "name": "Numbers",
   "version": "1.0.0",
-  "description": "Board game based on numbers",
+  "description": "Board game with numbers",
   "main": "index.js",
   "scripts": {
     "test": "jest"
@@ -20,9 +20,10 @@
   },
   "keywords": [
     "casual",
-    "game"
+    "game",
+    "numbers"
   ],
-  "author": "Sebastian Velasquez",
+  "author": "sosegon <anse23@hotmail.com> (https://github.com/sosegon)",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/sosegon/numbers/issues"
