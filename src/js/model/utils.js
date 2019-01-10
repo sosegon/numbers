@@ -1,159 +1,8 @@
-const rotateClockwise = (matrix) => {
-    let size = matrix.length;
-    let newMatrix = [];
-    for (let i = 0; i < size; i++) {
-        let row = [];
-        for (let j = 0; j < size; j++) {
-            row.push(matrix[size - j - 1][i])
-        }
-        newMatrix.push(row);
-    }
-
-    return newMatrix;
-};
-
-const rotateCounterClockwise = (matrix) => {
-    let size = matrix.length;
-    let newMatrix = [];
-    for (let i = 0; i < size; i++) {
-        let row = [];
-        for (let j = 0; j < size; j++) {
-            row.push(matrix[j][size - i - 1])
-        }
-        newMatrix.push(row);
-    }
-
-    return newMatrix;
-};
-
-const rotateIndicesClockwise = (rowIndex, colIndex, size) => {
-    if (size <= 0) {
-        throw new Error("Size of matrix has to be greater than 0");
-    }
-
-    if (rowIndex >= size || colIndex >= size) {
-        throw new Error("Indices has to be less than size of matrix");
-    }
-
-    return [colIndex, size - rowIndex - 1];
-};
-
-const rotateIndicesCounterClockwise = (rowIndex, colIndex, size) => {
-    if (size <= 0) {
-        throw new Error("Size of matrix has to be greater than 0");
-    }
-
-    if (rowIndex >= size || colIndex >= size) {
-        throw new Error("Indices has to be less than size of matrix");
-    }
-
-    return [size - colIndex - 1, rowIndex];
-};
-
-const getGainsMatrix = (tokenColIndex, gameMatrix) => {
-    // Assume the direction is vertical, so the agent
-    // selects over a column
-    let size = gameMatrix.length;
-    let gainsMatrix = [];
-    let nGameMatrix = gameMatrix;
-    let nTokenColIndex = tokenColIndex;
-
-    for (let i = 0; i < size; i++) {
-        let row = [];
-        for (let j = 0; j < size; j++) {
-            if (nGameMatrix[i][nTokenColIndex] <= 0) {
-                row.push(0);
-            } else {
-                row.push(nGameMatrix[i][nTokenColIndex] - nGameMatrix[i][j]);
-            }
-        }
-        gainsMatrix.push(row);
-    }
-
-    return gainsMatrix;
-};
-
-const getBestGain = (tokenRowIndex, tokenColIndex, gainsMatrix, boardMatrix) => {
-    // assume the direction is vertical
-    let size = gainsMatrix.length;
-    let minGains = [];
-
-    // get the min gains in every row
-    for (let i = 0; i < size; i++) {
-        let minGain = null;
-        for (let j = 0; j < size; j++) {
-            if (j === tokenColIndex) { // avoid the column of the token
-                continue;
-            }
-            if (minGain === null || minGain > gainsMatrix[i][j]) {
-                minGain = gainsMatrix[i][j];
-            }
-        }
-        minGains.push(minGain);
-    }
-
-    // obtain the index of the max gain
-    let rowIndex = -1;
-    let maxGain = null;
-    for (let i = 0; i < size; i++) {
-        // The token has to move to other position: tokenRowIndex !== i
-        // Also, a cell has to be in the position: boardMatrix[i][tokenColIndex] > 0
-        if ((maxGain === null || maxGain < minGains[i]) &&
-            tokenRowIndex !== i &&
-            boardMatrix[i][tokenColIndex] > 0) {
-            maxGain = minGains[i];
-            rowIndex = i;
-        }
-    }
-
-    return rowIndex;
-};
-
-const randomInteger = (min, max) => {
-    let r = Math.random();
-    return min + Math.round(r * (max - min));
-};
-
-const updateObjectFromJsonString = (object, jsonString) => {
-    const literal = JSON.parse(jsonString);
-    updateObjectFromLiteral(object, literal);
-};
-
-const updateObjectFromLiteral = (object, literal) => {
-    if (literal === undefined) {
-        throw new Error("Undefined object");
-    }
-
-    for (const key of Object.keys(literal)) {
-        if (object.hasOwnProperty(key) &&
-            object[key].constructor.name === literal[key].constructor.name) {
-            object[key] = literal[key];
-        }
-    }
-};
-
-const vectorToMatrix = (vector) => {
-    const size = Math.sqrt(vector.length);
-    if (size > 0 && Number.isInteger(size)) {
-        let matrix = [];
-        for (let i = 0; i < size; i++) {
-            let row = [];
-            for (let j = 0; j < size; j++) {
-                row.push(vector[size * i + j]);
-            }
-            matrix.push(row);
-        }
-        return matrix;
-    } else {
-        throw new Error("Invalid vector size");
-    }
-};
-
 /**
  * Utility functions for the logic's game.
  * @module utils
  */
-module.exports = {
+const self = module.exports = {
     /**
      * Rotate a square matrix clockwisely.
      *
@@ -176,7 +25,19 @@ module.exports = {
      * @param {array} matrix - 2 dimensional array of number representing a square matrix.
      * @returns {array}  2 dimensional array of number representing a rotated square matrix.
      */
-    rotateClockwise,
+    rotateClockwise(matrix) {
+        let size = matrix.length;
+        let newMatrix = [];
+        for (let i = 0; i < size; i++) {
+            let row = [];
+            for (let j = 0; j < size; j++) {
+                row.push(matrix[size - j - 1][i])
+            }
+            newMatrix.push(row);
+        }
+
+        return newMatrix;
+    },
     /**
      * Rotate a square matrix counter-clockwisely.
      *
@@ -199,7 +60,19 @@ module.exports = {
      * @param {array} matrix - 2 dimensional array of number representing a square matrix.
      * @returns {array}  2 dimensional array of number representing a rotated square matrix.
      */
-    rotateCounterClockwise,
+    rotateCounterClockwise(matrix) {
+        let size = matrix.length;
+        let newMatrix = [];
+        for (let i = 0; i < size; i++) {
+            let row = [];
+            for (let j = 0; j < size; j++) {
+                row.push(matrix[j][size - i - 1])
+            }
+            newMatrix.push(row);
+        }
+
+        return newMatrix;
+    },
     /**
      * Rotate row and column indices of an element in a square matrix clockwisely.
      *
@@ -230,7 +103,17 @@ module.exports = {
      * @param {number} size - Size of the square matrix.
      * @returns {array} Array with two numbers defining the rotated row and column indices.
      */
-    rotateIndicesClockwise,
+    rotateIndicesClockwise(rowIndex, colIndex, size) {
+        if (size <= 0) {
+            throw new Error("Size of matrix has to be greater than 0");
+        }
+
+        if (rowIndex >= size || colIndex >= size) {
+            throw new Error("Indices has to be less than size of matrix");
+        }
+
+        return [colIndex, size - rowIndex - 1];
+    },
     /**
      * Rotate row and column indices of an element in a square matrix counter-clockwisely.
      *
@@ -261,7 +144,17 @@ module.exports = {
      * @param {number} size - Size of the square matrix.
      * @returns {array} Array with two numbers defining the rotated row and column indices.
      */
-    rotateIndicesCounterClockwise,
+    rotateIndicesCounterClockwise(rowIndex, colIndex, size) {
+        if (size <= 0) {
+            throw new Error("Size of matrix has to be greater than 0");
+        }
+
+        if (rowIndex >= size || colIndex >= size) {
+            throw new Error("Indices has to be less than size of matrix");
+        }
+
+        return [size - colIndex - 1, rowIndex];
+    },
     /**
      * Get the horizontal gains of a matrix given a column.
      * The gains are calculated by subtracting the values of each column
@@ -295,7 +188,28 @@ module.exports = {
      * @param {array} gameMatrix - 2 dimensional array of numbers representing a square matrix.
      * @returns {array} 2 dimensional array of numbers representing the matrix of gains.
      */
-    getGainsMatrix,
+    getGainsMatrix(tokenColIndex, gameMatrix) {
+        // Assume the direction is vertical, so the agent
+        // selects over a column
+        let size = gameMatrix.length;
+        let gainsMatrix = [];
+        let nGameMatrix = gameMatrix;
+        let nTokenColIndex = tokenColIndex;
+
+        for (let i = 0; i < size; i++) {
+            let row = [];
+            for (let j = 0; j < size; j++) {
+                if (nGameMatrix[i][nTokenColIndex] <= 0) {
+                    row.push(0);
+                } else {
+                    row.push(nGameMatrix[i][nTokenColIndex] - nGameMatrix[i][j]);
+                }
+            }
+            gainsMatrix.push(row);
+        }
+
+        return gainsMatrix;
+    },
     /**
      * Get the indices of the element in the game matrix which gain is the highest.
      * **VERTICAL** direction assumed.
@@ -354,14 +268,51 @@ module.exports = {
      * @returns {array} Array with two numbers defining the row and column of the element
      * with the best gain.
      */
-    getBestGain,
+    getBestGain(tokenRowIndex, tokenColIndex, gainsMatrix, boardMatrix) {
+        // assume the direction is vertical
+        let size = gainsMatrix.length;
+        let minGains = [];
+
+        // get the min gains in every row
+        for (let i = 0; i < size; i++) {
+            let minGain = null;
+            for (let j = 0; j < size; j++) {
+                if (j === tokenColIndex) { // avoid the column of the token
+                    continue;
+                }
+                if (minGain === null || minGain > gainsMatrix[i][j]) {
+                    minGain = gainsMatrix[i][j];
+                }
+            }
+            minGains.push(minGain);
+        }
+
+        // obtain the index of the max gain
+        let rowIndex = -1;
+        let maxGain = null;
+        for (let i = 0; i < size; i++) {
+            // The token has to move to other position: tokenRowIndex !== i
+            // Also, a cell has to be in the position: boardMatrix[i][tokenColIndex] > 0
+            if ((maxGain === null || maxGain < minGains[i]) &&
+                tokenRowIndex !== i &&
+                boardMatrix[i][tokenColIndex] > 0) {
+                maxGain = minGains[i];
+                rowIndex = i;
+            }
+        }
+
+        return rowIndex;
+    },
     /**
      * Generate a random integer between two limits.
      * @param {number} min
      * @param {number} max
      * @returns {number} Random number.
      */
-    randomInteger,
+    randomInteger(min, max) {
+        let r = Math.random();
+        return min + Math.round(r * (max - min));
+    },
     /**
      * Update the elements of an existing object from
      * a valid JSON string. The elements are updated as long as
@@ -369,7 +320,10 @@ module.exports = {
      * @param {object} object
      * @param {string} jsonString
      */
-    updateObjectFromJsonString,
+    updateObjectFromJsonString(object, jsonString) {
+        const literal = JSON.parse(jsonString);
+        self.updateObjectFromLiteral(object, literal);
+    },
     /**
      * Update the elements of an existing object from
      * a literal. The elements are updated as long as
@@ -377,12 +331,38 @@ module.exports = {
      * @param {object} object
      * @param {object} literal
      */
-    updateObjectFromLiteral,
+    updateObjectFromLiteral(object, literal) {
+        if (literal === undefined) {
+            throw new Error("Undefined object");
+        }
+
+        for (const key of Object.keys(literal)) {
+            if (object.hasOwnProperty(key) &&
+                object[key].constructor.name === literal[key].constructor.name) {
+                object[key] = literal[key];
+            }
+        }
+    },
     /**
      * Convert a vector into a square array.
      * @param {array} vector - 1 dimentional array of numbers
      * @throws {Error} **vector** is empty, or its size is not the square of an integer.
      * @returns {array} 2 dimentional array of numbers representing a square matrix.
      */
-    vectorToMatrix
+    vectorToMatrix(vector) {
+        const size = Math.sqrt(vector.length);
+        if (size > 0 && Number.isInteger(size)) {
+            let matrix = [];
+            for (let i = 0; i < size; i++) {
+                let row = [];
+                for (let j = 0; j < size; j++) {
+                    row.push(vector[size * i + j]);
+                }
+                matrix.push(row);
+            }
+            return matrix;
+        } else {
+            throw new Error("Invalid vector size");
+        }
+    }
 };
