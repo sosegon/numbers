@@ -95,14 +95,14 @@ describe("Game", () => {
 
     it("should take value of cell", () => {
         game.moveToken(3, 0);
-        game.takeCell();
+        game.updateLastValueInCellWhereTokenIs();
         expect(game.snap.lastValue).toEqual(5);
     });
 
     it("should update scores (player1)", () => {
         game.moveToken(3, 0);
-        game.takeCell();
-        game.updateScores();
+        game.updateLastValueInCellWhereTokenIs();
+        game.updateCurrentPlayerScore();
         expect(game.player1.score).toEqual(5);
         expect(game.player2.score).toEqual(0);
     });
@@ -110,8 +110,8 @@ describe("Game", () => {
     it("should update scores (player2)", () => {
         game.passToken();
         game.moveToken(3, 0);
-        game.takeCell();
-        game.updateScores();
+        game.updateLastValueInCellWhereTokenIs();
+        game.updateCurrentPlayerScore();
         expect(game.player1.score).toEqual(0);
         expect(game.player2.score).toEqual(5);
     });

@@ -16,14 +16,14 @@ class Game {
      * @param {number} boardSize - Defines a square {@link Board}.
      */
     constructor(boardSize) {
-        this.createFromScratch(boardSize);
+        this.updateFromScratch(boardSize);
     }
     /**
-     * Create a game given the size of the board.
+     * Update the game given the size of the board.
      *
      * @param {number} boardSize - Defines a square {@link Board}.
      */
-    createFromScratch(boardSize) {
+    updateFromScratch(boardSize) {
         this.token = new Token(boardSize);
 
         this.board = new Board(boardSize);
@@ -100,18 +100,18 @@ class Game {
         }
     }
     /**
-     * Take the value of the {@link Cell} located in the token's position.
+     * Update the last value based on the {@link Cell} located in the token's position.
      * The corresponding field in the game is updated.
      */
-    takeCell() {
+    updateLastValueInCellWhereTokenIs() {
         this.snap.lastValue = this.board.getValueInCellByToken(this.token);
     }
     /**
-     * Set the status of the game. For possible values see {@link flags.GAME_STATUSES}.
+     * Update the status of the game. For possible values see {@link flags.GAME_STATUSES}.
      *
      * @param {number} status
      */
-    setStatus(status) {
+    updateStatus(status) {
         // TODO: Check is status is valid.
         this.snap.status = status;
     }
@@ -119,7 +119,7 @@ class Game {
      * Use the {@link Token} to update the values of the {@link Cell}s in the {@link Board}.
      * See {@link Board#update}.
      */
-    updateBoard() {
+    updateCellsWhereTokenIs() {
         this.board.updateCellsByToken(this.token);
     }
     /**
@@ -127,7 +127,7 @@ class Game {
      *
      * @throws {Error} if the turn set in the game is not a value from {@link flags.TURNS}.
      */
-    updateScores() {
+    updateCurrentPlayerScore() {
         if (this.snap.turn === TURNS.PLAYER1) {
             this.player1.incrementScore(this.snap.lastValue);
         } else if (this.snap.turn === TURNS.PLAYER2) {

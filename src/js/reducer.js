@@ -9,17 +9,17 @@ const initialState = game.serialize();
 const doMoveToken = (state, action) => {
     game.updateFromObject(state);
     game.moveToken(action.rowIndex, action.colIndex);
-    game.takeCell();
-    game.setStatus(GAME_STATUSES.MOVING_TOKEN);
+    game.updateLastValueInCellWhereTokenIs();
+    game.updateStatus(GAME_STATUSES.MOVING_TOKEN);
     return game.serialize();
 };
 
 const doUpdateScores = state => {
     game.updateFromObject(state);
-    game.updateScores();
-    game.updateBoard();
+    game.updateCurrentPlayerScore();
+    game.updateCellsWhereTokenIs();
     game.passToken();
-    game.setStatus(GAME_STATUSES.RESTING);
+    game.updateStatus(GAME_STATUSES.RESTING);
     game.updateContinuity();
     return game.serialize();
 };
