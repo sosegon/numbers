@@ -91,7 +91,7 @@ class Board {
      *
      * @param {Token} token
      */
-    update(token) {
+    updateCellsByToken(token) {
         // The old position has to be set to -1
         this.cells[token.oldRowIndex][token.oldColIndex].update(-1);
         // The current position has to be set to 0
@@ -105,7 +105,7 @@ class Board {
      * @returns {number} Value of the {@link Cell}.
      * @throws {Error} token has an invalid position
      */
-    takeCurrentValue(token) {
+    getValueInCellByToken(token) {
         // TODO: token is invalid if it has negative values in rowIndex or colIndex
         if (token.rowIndex >= this.cells.length ||
             token.colIndex >= this.cells.length) {
@@ -122,7 +122,7 @@ class Board {
      * @returns {boolean} board has at least one selectable {@link Cell} in the direction of
      * the {@link Player}
      */
-    isNextTurnPossible(player, token) {
+    canPlayerMakeMove(player, token) {
         let tokenRowIndex = token.rowIndex;
         let tokenColIndex = token.colIndex;
         // TODO: check the position of token.
@@ -163,7 +163,7 @@ class Board {
      * If no {@link Cell} has value 0, then the returned value is
      * <code>[-1, -1]</code>
      *
-     * @returns {array} Array with two numbers defining the row and column of the {@link Token}.
+     * @returns {array} Array with 2 numbers defining the row and column of the {@link Token}.
      */
     findTokenPosition() {
         for (let i = 0; i < this.cells.length; i++) {

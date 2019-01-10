@@ -31,7 +31,7 @@ describe("Board", () => {
 
     it("should set initial position of token", () => {
         const { board, token } = setup();
-        board.update(token);
+        board.updateCellsByToken(token);
         const rowIndex = token.rowIndex;
         const colIndex = token.colIndex;
 
@@ -46,21 +46,21 @@ describe("Board", () => {
         }
     });
 
-    it("should update board based on token position", () => {
+    it("should update cells in board based on token position", () => {
         const { board, token } = setup();
 
         expect(board.cells[token.rowIndex][token.colIndex].value).toBeGreaterThan(0);
 
-        board.update(token);
+        board.updateCellsByToken(token);
         expect(board.cells[token.rowIndex][token.colIndex].value).toEqual(0);
 
         token.moveTo(4, 4);
-        board.update(token);
+        board.updateCellsByToken(token);
         expect(board.cells[token.oldRowIndex][token.oldColIndex].value).toEqual(-1);
         expect(board.cells[token.rowIndex][token.colIndex].value).toEqual(0);
     });
 
-    it("should take value from token position", () => {
+    it("should get value from cell based on token position", () => {
         const board = new Board(100, [
             [1, 2, 3, 4, 5],
             [6, 7, 8, 9, 10],
@@ -70,14 +70,14 @@ describe("Board", () => {
         ]);
         const token = new Token();
         token.set(2, 2);
-        expect(board.takeCurrentValue(token)).toEqual(13);
+        expect(board.getValueInCellByToken(token)).toEqual(13);
 
         token.moveTo(4, 4);
-        expect(board.takeCurrentValue(token)).toEqual(25);
+        expect(board.getValueInCellByToken(token)).toEqual(25);
 
         token.moveTo(5, 4);
         const take = () => {
-            board.takeCurrentValue(token);
+            board.getValueInCellByToken(token);
         };
         expect(take).toThrowError(/Invalid/);
     });
@@ -97,7 +97,7 @@ describe("Board", () => {
             [1, 1, 1, -1, 1]
         ]);
 
-        expect(board.isNextTurnPossible(player, token)).toEqual(false);
+        expect(board.canPlayerMakeMove(player, token)).toEqual(false);
 
     });
 
@@ -116,7 +116,7 @@ describe("Board", () => {
             [1, 1, 1, 1, 1]
         ]);
 
-        expect(board.isNextTurnPossible(player, token)).toEqual(true);
+        expect(board.canPlayerMakeMove(player, token)).toEqual(true);
 
     });
 
@@ -135,7 +135,7 @@ describe("Board", () => {
             [1, 1, 1, 1, 1]
         ]);
 
-        expect(board.isNextTurnPossible(player, token)).toEqual(false);
+        expect(board.canPlayerMakeMove(player, token)).toEqual(false);
 
     });
 
@@ -154,7 +154,7 @@ describe("Board", () => {
             [1, 1, 1, 1, 1]
         ]);
 
-        expect(board.isNextTurnPossible(player, token)).toEqual(true);
+        expect(board.canPlayerMakeMove(player, token)).toEqual(true);
 
     });
 

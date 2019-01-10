@@ -27,7 +27,7 @@ class Game {
         this.token = new Token(boardSize);
 
         this.board = new Board(boardSize);
-        this.board.update(this.token);
+        this.board.updateCellsByToken(this.token);
 
         this.player1 = new Player();
         this.player2 = new Agent();
@@ -104,7 +104,7 @@ class Game {
      * The corresponding field in the game is updated.
      */
     takeCell() {
-        this.snap.lastValue = this.board.takeCurrentValue(this.token);
+        this.snap.lastValue = this.board.getValueInCellByToken(this.token);
     }
     /**
      * Set the status of the game. For possible values see {@link flags.GAME_STATUSES}.
@@ -120,7 +120,7 @@ class Game {
      * See {@link Board#update}.
      */
     updateBoard() {
-        this.board.update(this.token);
+        this.board.updateCellsByToken(this.token);
     }
     /**
      * Update the score of the current {@link Player}.
@@ -157,11 +157,11 @@ class Game {
      */
     updateContinuity() {
         if (this.snap.turn === TURNS.PLAYER1) {
-            if (!this.board.isNextTurnPossible(this.player1, this.token)) {
+            if (!this.board.canPlayerMakeMove(this.player1, this.token)) {
                 this.snap.continuity = GAME_CONTINUITY.OVER;
             }
         } else if (this.snap.turn === TURNS.PLAYER2) {
-            if (!this.board.isNextTurnPossible(this.player2, this.token)) {
+            if (!this.board.canPlayerMakeMove(this.player2, this.token)) {
                 this.snap.continuity = GAME_CONTINUITY.OVER;
             }
         } else {
