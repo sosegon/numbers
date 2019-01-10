@@ -26,7 +26,7 @@ class Cell {
      *
      * @param {number} value
      */
-    update(value) {
+    updateValue(value) {
         this.value = value;
     }
     /**

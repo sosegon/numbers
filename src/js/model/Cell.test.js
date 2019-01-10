@@ -15,14 +15,14 @@ describe('Cell', () => {
 
     it('should update value properly', () => {
         const { cell } = setup();
-        cell.update(8);
+        cell.updateValue(8);
         expect(cell.value).toEqual(8);
     });
 
     it('should check selectability', () => {
         const { cell } = setup();
         expect(cell.isSelectable()).toEqual(true);
-        cell.update(-1);
+        cell.updateValue(-1);
         expect(cell.isSelectable()).toEqual(false);
     });
 

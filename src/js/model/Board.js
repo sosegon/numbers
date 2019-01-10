@@ -93,9 +93,9 @@ class Board {
      */
     updateCellsByToken(token) {
         // The old position has to be set to -1
-        this.cells[token.oldRowIndex][token.oldColIndex].update(-1);
+        this.cells[token.oldRowIndex][token.oldColIndex].updateValue(-1);
         // The current position has to be set to 0
-        this.cells[token.rowIndex][token.colIndex].update(0);
+        this.cells[token.rowIndex][token.colIndex].updateValue(0);
     }
     /**
      * Take the value of the {@link Cell} which position is
@@ -151,7 +151,7 @@ class Board {
         // TODO: Check size
         this.cells.forEach((row, rowIndex) => {
             row.forEach((cell, columnIndex) => {
-                cell.update(values[rowIndex * size + columnIndex]);
+                cell.updateValue(values[rowIndex * size + columnIndex]);
             });
         });
     }
