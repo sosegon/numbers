@@ -142,20 +142,6 @@ class Board {
         return false;
     }
     /**
-     * Set the values of every {@link Cell} in the board.
-     *
-     * @param {array} values - 1 dimentional array of numbers.
-     */
-    setCellValues(values) {
-        let size = Math.sqrt(values.length);
-        // TODO: Check size
-        this.cells.forEach((row, rowIndex) => {
-            row.forEach((cell, columnIndex) => {
-                cell.updateValue(values[rowIndex * size + columnIndex]);
-            });
-        });
-    }
-    /**
      * Find the position of the token in the board.
      * The position of token corresponds to the position
      * of the {@link Cell} which value is 0.

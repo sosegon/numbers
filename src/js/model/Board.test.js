@@ -158,32 +158,6 @@ describe("Board", () => {
 
     });
 
-    it("should set the values of cells", () => {
-        const board = new Board(5);
-        const values = [
-            1, 2, 3, 4, 5,
-            6, 7, 8, 9, 10,
-            11, 12, 13, 14, 15,
-            16, 17, 18, 19, 20,
-            21, 22, 23, 24, 25
-        ];
-        const valuesMatrix = [
-            [1, 2, 3, 4, 5],
-            [6, 7, 8, 9, 10],
-            [11, 12, 13, 14, 15],
-            [16, 17, 18, 19, 20],
-            [21, 22, 23, 24, 25]
-        ];
-
-        board.setCellValues(values);
-
-        for (i in board.cells) {
-            for (j in board.cells[i]) {
-                expect(board.cells[i][j].value).toEqual(valuesMatrix[i][j]);
-            }
-        }
-    });
-
     it("should find the position of token", () => {
         let board = new Board(0, [
             [1, 2, 3, 4, 5],
