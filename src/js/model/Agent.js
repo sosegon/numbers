@@ -37,12 +37,12 @@ class Agent extends Player {
      *
      * If the direction of the agent is **HORIZONTAL**, the algorithm determines the
      * highest value in the row where the {@link Token} is located. Only the values greater
-     * than 0 are considered. The highest value is 9; therefore, the output of the
+     * than 0 are considered. The highest value is <code>9</code>; therefore, the output of the
      * will be the position of that value: <code>[3, 2]</code>.
      *
      * If the direction of the agent is **VERTICAL**, the algorithm determines the
      * highest value in the column where the {@link Token} is located. Only the values greater
-     * than 0 are considered. The highest value is 7; therefore, the output of the
+     * than 0 are considered. The highest value is <code>7</code>; therefore, the output of the
      * will be the position of that value: <code>[0, 3]</code>.
      *
      * If all the values of the row or column are lower than 0, the output will be
@@ -50,9 +50,9 @@ class Agent extends Player {
      *
      * @param {Token} token
      * @param {array} boardMatrix - 2 dimensional array of numbers.
-     * @returns {array} Array with two numbers defining the row and column of the highest value.
+     * @returns {array} Array with 2 numbers defining the row and column of the highest value.
      */
-    maxCell(token, boardMatrix) {
+    getMaxValuePosition(token, boardMatrix) {
         let nBoardMatrix = boardMatrix;
         let nTokenColIndex = token.colIndex;
 
@@ -92,10 +92,10 @@ class Agent extends Player {
      *
      * @param {Token} token
      * @param {array} boardMatrix
-     * @returns {array} Array with two numbers defining the row and column of the value
+     * @returns {array} Array with 2 numbers defining the row and column of the value
      * with best gain.
      */
-    maxGainCell(token, boardMatrix) {
+    getMaxGainValuePosition(token, boardMatrix) {
         // Get the cell with highest gain with respect to next turn
         let nBoardMatrix = boardMatrix;
         let nTokenColIndex = token.colIndex;

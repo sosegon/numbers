@@ -19,12 +19,12 @@ const setup = () => {
 };
 
 describe("Agent", () => {
-    it("should select max cell for vertical (possible)", () => {
+    it("should select max value position for vertical (possible)", () => {
         const { matrix, token, agent } = setup();
-        expect(agent.maxCell(token, matrix)).toEqual([0, 3]);
+        expect(agent.getMaxValuePosition(token, matrix)).toEqual([0, 3]);
     });
 
-    it("should select max cell for vertical (not possible)", () => {
+    it("should select max value position for vertical (not possible)", () => {
         const { token, agent } = setup();
         const matrix = [
             [2, 3, 4, -1, 8],
@@ -33,16 +33,16 @@ describe("Agent", () => {
             [5, 2, 9, 0, 2],
             [8, 7, 9, -1, 1]
         ];
-        expect(agent.maxCell(token, matrix)).toEqual([-1, -1]);
+        expect(agent.getMaxValuePosition(token, matrix)).toEqual([-1, -1]);
     });
 
-    it("should select max cell for horizontal (possible)", () => {
+    it("should select max value position for horizontal (possible)", () => {
         const { matrix, token, agent } = setup();
         agent.direction = PLAYER_DIRECTIONS.HORIZONTAL;
-        expect(agent.maxCell(token, matrix)).toEqual([3, 2]);
+        expect(agent.getMaxValuePosition(token, matrix)).toEqual([3, 2]);
     });
 
-    it("should select max cell for horizontal (not possible)", () => {
+    it("should select max value position for horizontal (not possible)", () => {
         const { token, agent } = setup();
         agent.direction = PLAYER_DIRECTIONS.HORIZONTAL;
         const matrix = [
@@ -52,15 +52,15 @@ describe("Agent", () => {
             [-1, -1, -1, 0, -1],
             [8, 7, 9, 2, 1]
         ];
-        expect(agent.maxCell(token, matrix)).toEqual([-1, -1]);
+        expect(agent.getMaxValuePosition(token, matrix)).toEqual([-1, -1]);
     });
 
-    it("should select max gain cell for vertical (possible)", () => {
+    it("should select max gain value position for vertical (possible)", () => {
         const { matrix, token, agent } = setup();
-        expect(agent.maxGainCell(token, matrix)).toEqual([0, 3]);
+        expect(agent.getMaxGainValuePosition(token, matrix)).toEqual([0, 3]);
     });
 
-    it("should select max gain cell for vertical (not possible)", () => {
+    it("should select max gain value position for vertical (not possible)", () => {
         const { token, agent } = setup();
         const matrix = [
             [2, 3, 4, -1, 8],
@@ -69,16 +69,16 @@ describe("Agent", () => {
             [5, 2, 9, 0, 2],
             [8, 7, 9, -1, 1]
         ];
-        expect(agent.maxGainCell(token, matrix)).toEqual([-1, -1]);
+        expect(agent.getMaxGainValuePosition(token, matrix)).toEqual([-1, -1]);
     });
 
-    it("should select max gain cell for horizontal (possible)", () => {
+    it("should select max gain value position for horizontal (possible)", () => {
         const { matrix, token, agent } = setup();
         agent.direction = PLAYER_DIRECTIONS.HORIZONTAL;
-        expect(agent.maxGainCell(token, matrix)).toEqual([3, 2]);
+        expect(agent.getMaxGainValuePosition(token, matrix)).toEqual([3, 2]);
     });
 
-    it("should select max gain cell for horizontal (not possible)", () => {
+    it("should select max gain value position for horizontal (not possible)", () => {
         const { token, agent } = setup();
         agent.direction = PLAYER_DIRECTIONS.HORIZONTAL;
         const matrix = [
@@ -88,6 +88,6 @@ describe("Agent", () => {
             [-1, -1, -1, 0, -1],
             [8, 7, 9, 2, 1]
         ];
-        expect(agent.maxGainCell(token, matrix)).toEqual([-1, -1]);
+        expect(agent.getMaxGainValuePosition(token, matrix)).toEqual([-1, -1]);
     });
 });
