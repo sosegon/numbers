@@ -16,6 +16,9 @@ const mapStateToProps = (state) => {
     };
 };
 
+/**
+ * Container to connect a {@link WildCardComp}.
+ */
 const WildCardCont = connect(mapStateToProps)(WildCardComp);
 
 module.exports = {

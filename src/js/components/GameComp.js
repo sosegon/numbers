@@ -6,6 +6,15 @@ const { WildCardCont } = require('../containers/WildCardCont.js');
 const { GameEndCont } = require('../containers/GameEndCont.js');
 const { ScoreCont } = require('../containers/ScoreCont.js');
 
+/**
+ * Functional {@link https://reactjs.org/docs/react-component.html|Component}
+ * that renders a {@link Game}.
+ *
+ * @param {object} props
+ * @param {function} props.reset Function to reset a {@link Game}.
+ * @param {array} props.board 2 dimensional array of numbers representing the
+ * values of {@link Cell|Cells} in a {@link Board}.
+ */
 const GameComp = ({
     reset,
     board

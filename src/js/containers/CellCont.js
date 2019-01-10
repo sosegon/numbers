@@ -144,6 +144,13 @@ const mergeProps = (propsFromState, propFromDispatch) => {
     };
 };
 
+/**
+ * Container to connect a {@link CellComp}.
+ * @param {object} props
+ * @param {number} props.rowIndex Row index of the {@link Cell} in a {@link Board}.
+ * @param {number} props.colIndex Column index of the {@link Cell} in a {@link Board}.
+ * @param {number} props.value Value of the {@link Cell}.
+ */
 const CellCont = connect(mapStateToProps, mapDispatchToProps, mergeProps)(CellComp);
 
 CellCont.propTypes = {

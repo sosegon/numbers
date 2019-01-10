@@ -16,6 +16,11 @@ const mapStatToProps = (state, ownProps) => {
     };
 };
 
+/**
+ * Container to connect a {@link ScoreComp}.
+ * @param {object} props
+ * @param {number} props.playerName Flag to identify a {@link Player}. See {@link flags.TURNS}.
+ */
 const ScoreCont = connect(mapStatToProps)(ScoreComp);
 
 ScoreCont.propTypes = {

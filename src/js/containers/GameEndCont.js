@@ -23,6 +23,9 @@ const mapStateToProps = (state) => {
     };
 };
 
+/**
+ * Container to connect a {@link GameEndComp}.
+ */
 const GameEndCont = connect(mapStateToProps)(GameEndComp);
 
 module.exports = {
