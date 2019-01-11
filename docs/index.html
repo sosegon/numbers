@@ -26,6 +26,86 @@
               
                 
                 <li><a
+                  href='#actions'
+                  class=" toggle-sibling">
+                  actions
+                  <span class='icon'>▸</span>
+                </a>
+                
+                <div class='toggle-target display-none'>
+                  
+                  <ul class='list-reset py1-ul pl1'>
+                    <li class='h5'><span>Static members</span></li>
+                    
+                      <li><a
+                        href='#actionsmovetoken'
+                        class='regular pre-open'>
+                        .moveToken
+                      </a></li>
+                    
+                      <li><a
+                        href='#actionsupdatescores'
+                        class='regular pre-open'>
+                        .updateScores
+                      </a></li>
+                    
+                      <li><a
+                        href='#actionsresetgame'
+                        class='regular pre-open'>
+                        .resetGame
+                      </a></li>
+                    
+                    </ul>
+                  
+                  
+                  
+                  
+                </div>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#actiontypes'
+                  class=" toggle-sibling">
+                  actionTypes
+                  <span class='icon'>▸</span>
+                </a>
+                
+                <div class='toggle-target display-none'>
+                  
+                  <ul class='list-reset py1-ul pl1'>
+                    <li class='h5'><span>Static members</span></li>
+                    
+                      <li><a
+                        href='#actiontypestoken_moved'
+                        class='regular pre-open'>
+                        .TOKEN_MOVED
+                      </a></li>
+                    
+                      <li><a
+                        href='#actiontypesscores_updated'
+                        class='regular pre-open'>
+                        .SCORES_UPDATED
+                      </a></li>
+                    
+                      <li><a
+                        href='#actiontypesgame_reset'
+                        class='regular pre-open'>
+                        .GAME_RESET
+                      </a></li>
+                    
+                    </ul>
+                  
+                  
+                  
+                  
+                </div>
+                
+                </li>
+              
+                
+                <li><a
                   href='#cellcomp'
                   class="">
                   CellComp
@@ -121,6 +201,46 @@
                   WildCardCont
                   
                 </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#localstoragemanager'
+                  class=" toggle-sibling">
+                  LocalStorageManager
+                  <span class='icon'>▸</span>
+                </a>
+                
+                <div class='toggle-target display-none'>
+                  
+                  
+                    <ul class='list-reset py1-ul pl1'>
+                      <li class='h5'><span>Instance members</span></li>
+                      
+                      <li><a
+                        href='#localstoragemanagergetgamestate'
+                        class='regular pre-open'>
+                        #getGameState
+                      </a></li>
+                      
+                      <li><a
+                        href='#localstoragemanagersetgamestate'
+                        class='regular pre-open'>
+                        #setGameState
+                      </a></li>
+                      
+                      <li><a
+                        href='#localstoragemanagercleargamestate'
+                        class='regular pre-open'>
+                        #clearGameState
+                      </a></li>
+                      
+                    </ul>
+                  
+                  
+                  
+                </div>
                 
                 </li>
               
@@ -600,6 +720,16 @@
                 
                 </li>
               
+                
+                <li><a
+                  href='#reduce'
+                  class="">
+                  reduce
+                  
+                </a>
+                
+                </li>
+              
             </ul>
           </div>
           <div class='mt1 h6 quiet'>
@@ -608,6 +738,461 @@
         </div>
       </div>
       <div id='split-right' class='relative overflow-auto height-viewport-100'>
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='actions'>
+      actions
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Actions to be dispatched.</p>
+
+ 
+  
+    <div class='pre p1 fill-light mt0'>actions</div>
+   
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Static Members</div>
+    <div class="clearfix">
+  
+    <div class='border-bottom' id='actionsmovetoken'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>moveToken(rowIndex, colIndex)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Dispatch <a href="#actiontypestoken_moved">actionTypes.TOKEN_MOVED</a>.</p>
+
+ 
+  
+    <div class='pre p1 fill-light mt0'>moveToken(rowIndex: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, colIndex: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</div>
+   
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>rowIndex</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
+	    Row index of the 
+<a href="#cell">Cell</a>
+
+to move the 
+<a href="#token">Token</a>
+.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>colIndex</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
+	    Column index of the 
+<a href="#cell">Cell</a>
+
+to move the 
+<a href="#token">Token</a>
+.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='actionsupdatescores'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>updateScores()</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Dispatch <a href="#actiontypesscores_updated">actionTypes.SCORES_UPDATED</a>.</p>
+
+ 
+  
+    <div class='pre p1 fill-light mt0'>updateScores()</div>
+   
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='actionsresetgame'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>resetGame(boardSize)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Dispatch <a href="#actiontypesgame_reset">actionTypes.GAME_RESET</a>.</p>
+
+ 
+  
+    <div class='pre p1 fill-light mt0'>resetGame(boardSize: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</div>
+   
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>boardSize</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
+	    Size of the 
+<a href="#board">Board</a>
+
+for the new 
+<a href="#game">Game</a>
+.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+</div>
+
+  
+
+  
+
+  
+</section>
+
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='actiontypes'>
+      actionTypes
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Type of actions to be dispatched.</p>
+
+ 
+  
+    <div class='pre p1 fill-light mt0'>actionTypes</div>
+   
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Static Members</div>
+    <div class="clearfix">
+  
+    <div class='border-bottom' id='actiontypestoken_moved'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>TOKEN_MOVED</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>The <a href="#token">Token</a> has been moved. This action is dispatched
+when a selectable <a href="#cell">Cell</a> in the <a href="#board">Board</a>
+has been chosen.</p>
+
+ 
+  
+    <div class='pre p1 fill-light mt0'>TOKEN_MOVED</div>
+   
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='actiontypesscores_updated'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>SCORES_UPDATED</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>The scores of <a href="#player">Players</a> has been updated.
+This action is dispatched when the value of a selected
+<a href="#cell">Cell</a> has been taken after the token was moved
+to the position of a <a href="#cell">Cell</a>.</p>
+
+ 
+  
+    <div class='pre p1 fill-light mt0'>SCORES_UPDATED</div>
+   
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='actiontypesgame_reset'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>GAME_RESET</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>The <a href="#game">Game</a> has been reset.
+This action is dispatched when a <a href="#player">Player</a>
+resets the <a href="#game">Game</a>.</p>
+
+ 
+  
+    <div class='pre p1 fill-light mt0'>GAME_RESET</div>
+   
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+</div>
+
+  
+
+  
+
+  
+</section>
+
         
           
           <section class='p2 mb2 clearfix bg-white minishadow'>
@@ -1490,6 +2075,223 @@ that renders the <a href="#token">Token</a> in a <a href="#game">Game</a>.</p>
   
 
   
+
+  
+
+  
+</section>
+
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='localstoragemanager'>
+      LocalStorageManager
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Class to save and retrieve the state of the application in
+<a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage">local storage</a>.
+It is based on <a href="https://github.com/gabrielecirulli/2048/blob/master/js/local_storage_manager.js">this code</a>.</p>
+
+ 
+  
+    <div class='pre p1 fill-light mt0'>new LocalStorageManager()</div>
+   
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Instance Members</div>
+    <div class="clearfix">
+  
+    <div class='border-bottom' id='localstoragemanagergetgamestate'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>getGameState()</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Get the state from local storage.</p>
+
+ 
+  
+    <div class='pre p1 fill-light mt0'>getGameState()</div>
+   
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='localstoragemanagersetgamestate'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>setGameState(gameState)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Save the state in local storage.</p>
+
+ 
+  
+    <div class='pre p1 fill-light mt0'>setGameState(gameState: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>)</div>
+   
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>gameState</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>)</code>
+	    The serialized 
+<a href="#game">Game</a>
+.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='localstoragemanagercleargamestate'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>clearGameState()</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Remove the item to store the state of the application
+from local storage.</p>
+
+ 
+  
+    <div class='pre p1 fill-light mt0'>clearGameState()</div>
+   
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+</div>
 
   
 
@@ -5451,6 +6253,80 @@ they have the same type.</p>
     </div>
   
 </div>
+
+  
+
+  
+
+  
+</section>
+
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='reduce'>
+      reduce
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Update the state of the game based
+on the received <a href="#actions">actions</a></p>
+
+ 
+  
+    <div class='pre p1 fill-light mt0'>reduce</div>
+   
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>state</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>
+            = <code>initialState</code>)</code>
+	    State of the application.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>action</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>)</code>
+	    Action with relevant data to update the state
+of the application.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
 
   
 
