@@ -29,6 +29,13 @@ const doResetGame = (state, action) => {
     return newGame.serialize();
 };
 
+/**
+ * Update the state of the game based
+ * on the received {@link actions}
+ * @param {object} state - State of the application.
+ * @param {object} action - Action with relevant data to update the state
+ * of the application.
+ */
 const reduce = (state = initialState, action) => {
     switch (action.type) {
         case types.TOKEN_MOVED:

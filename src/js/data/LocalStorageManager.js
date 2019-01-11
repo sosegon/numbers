@@ -20,6 +20,11 @@ window.fakeStorage = {
     }
 };
 
+/**
+ * Class to save and retrieve the state of the application in
+ * {@link https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage|local storage}.
+ * It is based on {@link https://github.com/gabrielecirulli/2048/blob/master/js/local_storage_manager.js|this code}.
+ */
 class LocalStorageManager {
     constructor() {
         this.gameStateKey = "gameNumbersState";
@@ -39,17 +44,28 @@ class LocalStorageManager {
         }
     };
 
-    // Game state getters/setters and clearing
-    getGameState = () => {
+    /**
+     * Get the state from local storage.
+     */
+    getGameState() {
         const stateJSON = this.storage.getItem(this.gameStateKey);
         return stateJSON ? JSON.parse(stateJSON) : null;
-    };
+    }
 
-    setGameState = (gameState) => {
+    /**
+     * Save the state in local storage.
+     *
+     * @param {object} gameState - The serialized {@link Game}.
+     */
+    setGameState(gameState) {
         this.storage.setItem(this.gameStateKey, JSON.stringify(gameState));
     };
 
-    clearGameState = () => {
+    /**
+     * Remove the item to store the state of the application
+     * from local storage.
+     */
+    clearGameState() {
         this.storage.removeItem(this.gameStateKey);
     };
 }
