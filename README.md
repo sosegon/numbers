@@ -1,6 +1,6 @@
 # Numbers
 
-It is a board casual game. The objective is to get the highest numbers in the board to defeat the AI. It's running live [here](https://sosegon.github.io/numbers/)
+It is a board casual game. The objective is to select the numbers in the board to increment the score and defeat the AI. It's running live [here](https://sosegon.github.io/numbers-demo/).
 
 ## How to play
 
@@ -21,8 +21,8 @@ The player with the highest score wins.
 
 ## Development
 
-The game was built based on the code of another casual game [2048tricks](https://github.com/sosegon/2048tricks). There are three main scripts:
+The game is being developed using [React](https://reactjs.org/) and [Redux](https://redux.js.org/). The logic of the game is defined in the clasess under the folder [model](https://github.com/sosegon/numbers/tree/master/src/js/model). Those classes serve to create objects that will be handled in the [containers](https://github.com/sosegon/numbers/tree/master/src/js/containers) to present them in the [components](https://github.com/sosegon/numbers/tree/master/src/js/components). The state of the game is save in [local storage](https://github.com/sosegon/numbers/tree/master/src/js/dataLocalStorageManager) for a next session.
 
-  - board.js: It contains the classes and functions that define the logic of the game.
-  - index.js: It has the logic view.
-  - localStorage: It is charge of saving the state of the game for future sessions.
+## Documentation
+
+Documentation can be found [here](https://sosegon.github.io/numbers).
