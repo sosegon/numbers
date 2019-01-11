@@ -1,6 +1,6 @@
 {
   "name": "Numbers",
-  "version": "1.0.0",
+  "version": "0.0.1-alpha1",
   "description": "Board game with numbers",
   "main": "index.js",
   "scripts": {
