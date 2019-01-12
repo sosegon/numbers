@@ -122,7 +122,61 @@ class Agent extends Player {
 
         return position;
     }
-    // TODO: Comment to generate documentation
+    /**
+     * Get the position of the value with the best average difference in a matrix.
+     * The position is either in the column or row of the {@link Token},
+     * depending on the agent's direction.
+     *
+     * In the following matrix, the token is located at position <code>[3, 3]</code>
+     *
+     * <pre><code>
+     * | 1  2  3  4  5  6  7|
+     * |-1  6  4  7  3 -1  5|
+     * | 1  2  3 -1  5  6  7|
+     * | 1  2  3  0  5  6  7|
+     * |-1 -1 -1  8 -1 -1 -1|
+     * | 4 -1  5  9  9  1  2|
+     * |-1  1  2  3 -1  9  3|
+     * </code></pre>
+     *
+     * If the direction of the agent is **HORIZONTAL**, the algorithm evaluates each
+     * row, to find the average value. The evaluation is not performed in the row
+     * of the {@link Token} nor in rows which values in the same column of the {@link Token}
+     * is less than <code>0</code>.
+     * In the above matrix, the evaluation is not done in rows <code>2</code>
+     * and <code>3</code>.
+     *
+     * The evaluation do not consider the values less than 0.
+     * The average of a row is the sum of valid values divided by the number of
+     * valid values. In the first row the average is <code>(1 + 2 + 3 + 5 + 6 + 7) / 6</code>,
+     * in the second row, the average is <code>(6 + 4 + 3 + 5) / 4</code>. In the third
+     * column the average is <code>0</code> since there are no valid values.
+     *
+     * Once each row is evaluated, the average values are subtracted from the main value
+     * (the value in the same column of the token). For the above matrix, there are the
+     * following results:
+
+     * <pre><code>
+     * row      main     average    difference
+     *  0         4         4           0
+     *  1         7         4.5         2.5
+     *  2        -1    Not considered, invalid value
+     *  3         0    Not considered, token's position
+     *  4         8         0           8
+     *  5         9         4.2         4.8
+     *  6         3         3.75       -0.75
+     * </code></pre>
+     *
+     * The row with the highest difference is selected. The output is the selected row,
+     * and the column of the {@link Token}, in this example <code>[4, 3]</code>.
+     *
+     * The process is similar if the direction of the agent is **VERTICAL**.
+     *
+     * @param {Token} token
+     * @param {array} boardMatrix - 2 dimensional array of numbers.
+     * @returns {array} Array with 2 numbers defining the row and column of
+     * the best average value.
+     */
     getBestAverageValuePosition(token, boardMatrix) {
         let nBoardMatrix = boardMatrix;
         let nTokenColIndex = token.colIndex;
