@@ -1,5 +1,6 @@
 node_modules/
 package-lock.json
 built/
+src/experiments
 **/__snapshots__/
 **/_*
