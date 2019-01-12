@@ -90,4 +90,72 @@ describe("Agent", () => {
         ];
         expect(agent.getMaxGainValuePosition(token, matrix)).toEqual([-1, -1]);
     });
+
+    it("should select max avg value position for vertical (possible)", () => {
+        const { agent } = setup();
+        agent.direction = PLAYER_DIRECTIONS.VERTICAL;
+        const matrix = [
+            [ 1,  2,  3,  4,  5,  6,  7],
+            [-1,  6,  4,  7,  3, -1,  5],
+            [ 1,  2,  3, -1,  5,  6,  7],
+            [ 1,  2,  3,  0,  5,  6,  7],
+            [-1, -1, -1,  8, -1, -1, -1],
+            [ 4, -1,  5,  9,  9,  1,  2],
+            [-1,  1,  2,  3, -1,  9,  3],
+        ]
+        const token = new Token();
+        token.set(3, 3);
+        expect(agent.getBestAverageValuePosition(token, matrix)).toEqual([4, 3]);
+    });
+
+    it("should select max avg value position for vertical (not possible)", () => {
+        const { agent } = setup();
+        agent.direction = PLAYER_DIRECTIONS.VERTICAL;
+        const matrix = [
+            [ 1,  2,  3, -1,  5,  6,  7],
+            [-1,  6,  4, -1,  3, -1,  5],
+            [ 1,  2,  3, -1,  5,  6,  7],
+            [ 1,  2,  3,  0,  5,  6,  7],
+            [-1, -1, -1, -1, -1, -1, -1],
+            [ 4, -1,  5, -1,  9,  1,  2],
+            [-1,  1,  2, -1, -1,  9,  3],
+        ]
+        const token = new Token();
+        token.set(3, 3);
+        expect(agent.getBestAverageValuePosition(token, matrix)).toEqual([-1, -1]);
+    });
+
+    it("should select max avg value position for vertical (possible)", () => {
+        const { agent } = setup();
+        agent.direction = PLAYER_DIRECTIONS.HORIZONTAL;
+        const matrix = [
+            [ 1,  2,  3,  4,  5,  6,  7],
+            [-1,  6,  4,  7,  3, -1,  5],
+            [ 1,  2,  3, -1,  5,  6,  7],
+            [ 1,  2,  3,  0,  5,  6,  7],
+            [-1, -1, -1,  8, -1, -1, -1],
+            [ 4, -1,  5,  9,  9,  1,  2],
+            [-1,  1,  2,  3, -1,  9,  3],
+        ]
+        const token = new Token();
+        token.set(3, 3);
+        expect(agent.getBestAverageValuePosition(token, matrix)).toEqual([3, 6]);
+    });
+
+    it("should select max avg value position for vertical (not possible)", () => {
+        const { agent } = setup();
+        agent.direction = PLAYER_DIRECTIONS.HORIZONTAL;
+        const matrix = [
+            [ 1,  2,  3, -1,  5,  6,  7],
+            [-1,  6,  4, -1,  3, -1,  5],
+            [ 1,  2,  3, -1,  5,  6,  7],
+            [ 1,  2,  3,  0,  5,  6,  7],
+            [-1, -1, -1, -1, -1, -1, -1],
+            [ 4, -1,  5, -1,  9,  1,  2],
+            [-1,  1,  2, -1, -1,  9,  3],
+        ]
+        const token = new Token();
+        token.set(3, 3);
+        expect(agent.getBestAverageValuePosition(token, matrix)).toEqual([3, 6]);
+    });
 });

@@ -122,6 +122,58 @@ class Agent extends Player {
 
         return position;
     }
+    // TODO: Comment to generate documentation
+    getBestAverageValuePosition(token, boardMatrix) {
+        let nBoardMatrix = boardMatrix;
+        let nTokenColIndex = token.colIndex;
+        let nTokenRowIndex = token.rowIndex;
+
+        if (this.direction === PLAYER_DIRECTIONS.HORIZONTAL) {
+            nBoardMatrix = rotateClockwise(nBoardMatrix);
+            let indices = rotateIndicesClockwise(token.rowIndex, token.colIndex, nBoardMatrix.length);
+            nTokenRowIndex = indices[0];
+            nTokenColIndex = indices[1];
+        }
+
+        let indexMaxAvgValue = -1;
+        let maxAvgValue = -Infinity;
+        for (let i = 0; i < nBoardMatrix.length; i++) {
+            const valueToSelect = nBoardMatrix[i][nTokenColIndex];
+            // Skip the token itself or empty cells
+            if (i === nTokenRowIndex || valueToSelect <= 0) {
+                continue;
+            }
+
+            let avgValue = 0;
+            let count = 0;
+            for (let j = 0; j < nBoardMatrix.length; j++) {
+                // Skip the value in the token's column or empty ones
+                if (j === nTokenColIndex || nBoardMatrix[i][j] <= 0) {
+                    continue;
+                }
+                avgValue += nBoardMatrix[i][j];
+                count++;
+            }
+
+            if (avgValue > 0 && count > 0) {
+                avgValue /= count;
+            }
+
+            if (valueToSelect - avgValue > maxAvgValue) {
+                maxAvgValue = valueToSelect - avgValue;
+                indexMaxAvgValue = i;
+            }
+        }
+
+        if (indexMaxAvgValue >= 0) {
+            if (this.direction === PLAYER_DIRECTIONS.HORIZONTAL) {
+                return rotateIndicesCounterClockwise(indexMaxAvgValue, nTokenColIndex, nBoardMatrix.length);
+            }
+            return [indexMaxAvgValue, nTokenColIndex];
+        }
+
+        return [-1, -1];
+    }
 }
 
 module.exports = {
