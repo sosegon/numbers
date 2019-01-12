@@ -270,6 +270,12 @@
                         #getMaxGainValuePosition
                       </a></li>
                       
+                      <li><a
+                        href='#agentgetbestaveragevalueposition'
+                        class='regular pre-open'>
+                        #getBestAverageValuePosition
+                      </a></li>
+                      
                     </ul>
                   
                   
@@ -2514,6 +2520,124 @@ depending on the agent's direction.</p>
       <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">array</a></code>:
         Array with 2 numbers defining the row and column of the value
 with best gain.
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='agentgetbestaveragevalueposition'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>getBestAverageValuePosition(token, boardMatrix)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Get the position of the value with the best average difference in a matrix.
+The position is either in the column or row of the <a href="#token">Token</a>.
+depending on the agent's direction.</p>
+<p>In the following matrix, the token is located at position <code>[3, 3]</code></p>
+<pre><code>
+| 1  2  3  4  5  6  7|
+|-1  6  4  7  3 -1  5|
+| 1  2  3 -1  5  6  7|
+| 1  2  3  0  5  6  7|
+|-1 -1 -1  8 -1 -1 -1|
+| 4 -1  5  9  9  1  2|
+|-1  1  2  3 -1  9  3|
+</code></pre>
+<p>If the direction of the agent is <strong>HORIZONTAL</strong>, the algorithm evaluates each
+row, to find the average value. The evaluation is not performed in the row
+of the token nor in rows which value in the same column of the <a href="#token">Token</a>
+is less than <code>0</code>.
+In the above matrix, the evaluation is not done in rows <code>2</code>
+and <code>3</code>.</p>
+<p>That evaluation do not consider the values less than 0.
+The average of a row is the sum of valid values divided by the number of
+valid values. In the first row the average is <code>(1 + 2 + 3 + 5 + 6 + 7) / 6</code>,
+in the second row, the average is <code>(6 + 4 + 3 + 5) / 4</code>. In the third
+column the average is <code>0</code> since there are no valid values.</p>
+<p>Once each row is evaluated, the average values are subtracted from the main value
+(the value in the same column of the token). For the above matrix, there are the
+following values:</p>
+<pre><code>
+row      main     average    difference
+ 0         4         4           0
+ 1         7         4.5         2.5
+ 2        -1    Not considered, invalid value
+ 3         0    Not considered, token's position
+ 4         8         0           8
+ 5         9         4.2         4.8
+ 6         3         3.75       -0.75
+</code></pre>
+<p>The row with the highest difference is selected. The output is the selected row,
+and the column of the <a href="#token">Token</a>, in this example <code>[4, 3]</code>.</p>
+<p>The process is similar if the direction of the agent is <strong>VERTICAL</strong>.</p>
+
+ 
+  
+    <div class='pre p1 fill-light mt0'>getBestAverageValuePosition(token: <a href="#token">Token</a>, boardMatrix: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">array</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">array</a></div>
+   
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>token</span> <code class='quiet'>(<a href="#token">Token</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>boardMatrix</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">array</a>)</code>
+	    2 dimensional array of numbers.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">array</a></code>:
+        Array with 2 numbers defining the row and column of
+the best average value.
 
       
     
