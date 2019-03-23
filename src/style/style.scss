@@ -1,7 +1,9 @@
+@import "variables";
+
 $boardSize: 10;
 $cellSize: 50;
 $marginSize: 1;
-$paddingSize: 5;
+$paddingSize: $board-padding;
 
 @for $row from 0 through $boardSize {
 	@for $column from 0 through $boardSize {

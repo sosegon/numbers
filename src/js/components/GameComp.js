@@ -55,15 +55,11 @@ const GameComp = ({
                     </div>
                 </div>
             </div>
-            <div className="">
-                <div className="buttons-container">
-                </div>
+            <div className="container">
                 <div className='board'>
                     <WildCardCont />
                     { cells }
                     <GameEndCont />
-                </div>
-                <div className="scores-container">
                 </div>
             </div>
         </div>
