@@ -33,18 +33,38 @@ const GameComp = ({
     });
 
     return (
-        <div>
-            <div className="buttons-container">
-                <button className="tryAgain" onClick={reset}>Restart</button>
+        <div class="">
+            <div className="container-fluid">
+                <div className="top-bar row d-flex justify-content-center">
+                    <div className="top-item col-lg-auto d-flex">
+                        <img className="mt-auto" src="./images/restart.png" onClick={reset} />
+                    </div>
+                    <div className="left-score-box top-item col-lg-auto d-flex">
+                        <ScoreCont playerName={TURNS.PLAYER1}/>
+                    </div>
+                    <div className="top-item col-lg-auto">
+                        <div className="top-level">
+                            <img className="mt-auto" src="./images/level.png" />
+                        </div>
+                    </div>
+                    <div className="right-score-box top-item col-lg-auto d-flex">
+                        <ScoreCont playerName={TURNS.PLAYER2}/>
+                    </div>
+                    <div className="top-item col-lg-auto d-flex">
+                        <img className="mt-auto" src="./images/clock2.png" onClick={reset} />
+                    </div>
+                </div>
             </div>
-            <div className='board'>
-                <WildCardCont />
-                { cells }
-                <GameEndCont />
-            </div>
-            <div className="scores-container">
-                <ScoreCont playerName={TURNS.PLAYER1}/>&nbsp;
-                <ScoreCont playerName={TURNS.PLAYER2}/>
+            <div className="">
+                <div className="buttons-container">
+                </div>
+                <div className='board'>
+                    <WildCardCont />
+                    { cells }
+                    <GameEndCont />
+                </div>
+                <div className="scores-container">
+                </div>
             </div>
         </div>
     );

@@ -6,13 +6,15 @@ const { TURNS } = require('../model/flags.js');
 const mapStatToProps = (state, ownProps) => {
     const { playerName } = ownProps;
     const name = playerName === TURNS.PLAYER1 ? 'You' : 'AI';
+    const style = playerName === TURNS.PLAYER1 ? 'player-1' : 'player-2';
     const score = playerName === TURNS.PLAYER1 ?
         state.player1.score :
         state.player2.score;
 
     return {
         name,
-        score
+        score,
+        style
     };
 };
 

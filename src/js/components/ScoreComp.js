@@ -8,12 +8,27 @@ const PropTypes = require('prop-types');
  * @param {object} props
  * @param {number} props.score Score of a {@link Player}.
  * @param {string} props.name Name to identify the {@link Player}.
+ * @param {string} props.style CSS class name for the score {@link Player}.
  */
-const ScoreComp = ({ score, name }) => {
+const ScoreComp = ({ score, name, style }) => {
+	let scoreClass = [style];
+	scoreClass.push("player-score");
+	scoreClass.push("ml-auto");
+	scoreClass.push("my-auto");
+	scoreClass = scoreClass.join(" ");
+
     return (
-        <div className="score-container">
-			<span className="player-name">{name}</span>
-			<span className="player-score">{score}</span>
+        <div className="score-container align-self-center d-flex">
+			<div className="player-name mr-auto rounded-circle">
+				<span className="align-middle">
+					{name}
+				</span>
+			</div>
+			<div className={scoreClass} >
+				<span className="align-middle">
+					{score}
+				</span>
+			</div>
 		</div>
     );
 };

@@ -1,8 +1,181 @@
+@import "node_modules/bootstrap/scss/bootstrap";
 $game-container-background: #bbada0;
 $section-space: 8px;
 $text-color: #776E65;
 $tile-color: #eee4da;
 $board-color: #baa;
+
+
+
+/* --------------------- MIXIN --------------------- */
+@mixin box-shadow($top, $left, $blur, $color, $inset: false) {
+  @if $inset {
+    -webkit-box-shadow:inset $top $left $blur $color;
+    -moz-box-shadow:inset $top $left $blur $color;
+    box-shadow:inset $top $left $blur $color;
+  } @else {
+    -webkit-box-shadow: $top $left $blur $color;
+    -moz-box-shadow: $top $left $blur $color;
+    box-shadow: $top $left $blur $color;
+  }
+}
+/* --------------------- MIXIN --------------------- */
+
+
+/* --------------------- VARIABLES --------------------- */
+$size-2: 2px;
+$size-4: 4px;
+$size-8: 8px;
+$size-16: 16px;
+$size-32: 32px;
+$size-40: 40px;
+$size-64: 64px;
+$size-80: 80px;
+$size-128: 128px;
+$size-192: 192px;
+$size-256: 256px;
+
+$light-gray: #D2D5D4;
+
+$light-purple: #592D8F;
+$dark-purple: #292356;
+$white-purple: #6F1EF4;
+
+$white-magenta: #18EFE9;
+
+$dark-yellow: #F4BC17;
+
+/* --------------------- TOP BAR START --------------------- */
+
+.top-bar {
+  height: $size-80;
+  color: white;
+  text-transform: uppercase;
+  margin-bottom: $size-128;
+}
+
+.top-bar .top-item {
+  text-align: center;
+  height: 100%;
+}
+
+.top-item > img {
+  height: $size-64;
+}
+
+.top-item:nth-child(n+2):nth-child(-n+4) {
+  background-color: white;
+}
+
+.left-score-box {
+  border-radius: $size-32 0 0 $size-4;
+  padding-left: $size-80;
+}
+
+.right-score-box {
+  border-radius: 0 $size-32 $size-4 0;
+  padding-right: $size-80;
+}
+
+.score-container {
+  width: 100%;
+}
+
+.player-name {
+  height: $size-64;
+  width: $size-64;
+  background-color: $dark-yellow;
+  color: $dark-purple;
+  border-bottom: $size-4 solid $light-gray;
+  z-index: $zindex-dropdown;
+}
+
+.player-score {
+  height: $size-40;
+  width: $size-192;
+  border-radius: 0 $size-8 $size-8 0;
+  font-weight: bold;
+  left: -$size-8;
+  position: relative;
+  @include box-shadow(0, $size-2, 0, $light-gray, false)
+}
+
+.player-name, .player-score {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.player-1 {
+  background-image: linear-gradient(90deg, $dark-purple, $white-purple);
+}
+
+.player-2 {
+  background-image: linear-gradient(90deg, $dark-purple, $white-magenta);
+}
+
+.top-level {
+  width: $size-256;
+  text-transform: uppercase;
+  height: 100%;
+  color:red;
+}
+
+.top-level > img {
+  width: $size-128;
+  position: relative;
+  top: $size-16;
+}
+
+
+
+/* --------------------- TOP BAR END --------------------- */
+
+
+
+
+
+
+
+
+
+/*.top-bar .score-box {
+  display: flex;
+}
+
+.score-box>div {
+  height: $size-64;
+}
+
+.top-item:nth-child(n+2):nth-child(-n+4) {
+  background-color: white;
+}
+
+.btn-restart {
+  background-image: linear-gradient(45 deg, #592D8F, #292356);
+}
+
+.player-name {
+  color: $light-purple;
+  text-transform: uppercase;
+  border-radius: $size-64;
+  background-color: $dark-yellow;
+  vertical-align: middle;
+  display: flex;
+  left: $size-64/2;
+}
+
+.player-score-old {
+  display: flex;
+  background-image: linear-gradient(45deg, $dark-purple, $light-purple);
+  color: white;
+  font-weight: bold;
+}
+
+.player-name>span, .player-score>span{
+  vertical-align: middle;
+}
+*/
 
 .board .cell, .tile, #boardDiv {
   user-select: none;
@@ -10,7 +183,8 @@ $board-color: #baa;
 }
 
 body {
-  display: flex;
+  /*display: flex;*/
+  background-image: linear-gradient(45deg, $light-purple, $dark-purple);
   flex-direction: column;
   justify-content: center;
   align-content: center;
@@ -64,7 +238,7 @@ body {
   position: absolute;
 }
 
-.score-container {
+.score-container-old {
   $height: 25px;
   $width: 60px;
 
@@ -105,14 +279,6 @@ body {
 .scores-container {
   margin-top: $section-space;
   text-align: left;
-}
-
-.player-name, .player-score {
-  display: block
-}
-
-.player-score {
-  font-weight: bold;
 }
 
 .buttons-container {
