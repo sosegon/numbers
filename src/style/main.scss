@@ -25,7 +25,7 @@ $board-color: #baa;
   height: $size-80+px;
   color: white;
   text-transform: uppercase;
-  margin-bottom: $size-128+px;
+  margin-bottom: $segments-spacing+px;
 }
 
 .top-bar .top-item {
@@ -183,6 +183,36 @@ $board-color: #baa;
   font-size: $cell-selectable-font-size+px;
 }
 /* --------------------- CELLS END --------------------- */
+
+/* --------------------- FOOTER START --------------------- */
+.bottom-bar {
+  margin-top: $segments-spacing*.75+px;
+}
+.socials-box {
+  background-color: white;
+  height: $socials-size*1.5+px;
+  border-radius: $size-32+px $size-32+px 0 0;
+  padding: $size-8+px $size-16+px;
+  @include box-shadow($size-4+px, $size-4+px, 0, $light-gray, false)
+}
+
+.socials-box > img {
+  width: $socials-size+px;
+  margin-right: $socials-size/2+px;
+  border-radius: $socials-size/2+px;
+}
+
+.socials-box > img:last-child {
+  margin-right: 0;
+}
+
+.logo-box > img{
+  width: $logo-size+px;
+}
+
+/* --------------------- FOOTER END --------------------- */
+
+
 
 .board .cell, .tile, #boardDiv {
   user-select: none;

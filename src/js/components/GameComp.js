@@ -71,6 +71,18 @@ const GameComp = ({
                     <GameEndCont />
                 </div>
             </div>
+            <div className="container">
+                <div className="row bottom-bar d-flex justify-content-between">
+                    <div className="socials-box align-self-center">
+                        <img src="./images/socials-tumblr.png" />
+                        <img src="./images/socials-twitter.png" />
+                        <img src="./images/socials-facebook.png" />
+                    </div>
+                    <div className="logo-box">
+                        <img src="./images/logo.png" />
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };
