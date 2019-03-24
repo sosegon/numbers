@@ -73,12 +73,12 @@ const GameComp = ({
             </div>
             <div className="container">
                 <div className="row bottom-bar d-flex justify-content-between">
-                    <div className="socials-box align-self-center">
+                    <div className="socials-box align-self-start">
                         <img src="./images/socials-tumblr.png" />
                         <img src="./images/socials-twitter.png" />
                         <img src="./images/socials-facebook.png" />
                     </div>
-                    <div className="logo-box">
+                    <div className="logo-box align-self-start">
                         <img src="./images/logo.png" />
                     </div>
                 </div>
