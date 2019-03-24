@@ -22,19 +22,20 @@ $board-color: #baa;
 
 /* --------------------- TOP BAR START --------------------- */
 .top-bar {
-  height: $size-80+px;
+  height: $top-bar-height+px;
+  margin-bottom: $segments-spacing+px;
   color: white;
   text-transform: uppercase;
-  margin-bottom: $segments-spacing+px;
 }
 
 .top-bar .top-item {
-  text-align: center;
   height: 100%;
+  text-align: center;
 }
 
 .top-item > img {
   height: $size-64+px;
+  padding: 0 $size-32+px;
 }
 
 .top-item:nth-child(n+2):nth-child(-n+4) {
@@ -58,18 +59,20 @@ $board-color: #baa;
 .player-name {
   height: $size-64+px;
   width: $size-64+px;
+  border-bottom: $size-4+px solid $light-gray;
+  font-size: $player-name-font-size+px;
   background-color: $dark-yellow;
   color: $dark-purple;
-  border-bottom: $size-4+px solid $light-gray;
   z-index: $zindex-dropdown;
 }
 
 .player-score {
-  height: $size-40+px;
-  width: $size-192+px;
+  height: $player-score-height+px;
+  width: $player-score-width+px;
   border-radius: 0 $size-8+px $size-8+px 0;
-  font-weight: bold;
   left: -$size-8+px;
+  font-size: $player-score-font-size+px;
+  font-weight: bold;
   position: relative;
   @include box-shadow(0, $size-2+px, 0, $light-gray, false)
 }
@@ -90,15 +93,15 @@ $board-color: #baa;
 
 .top-level {
   width: $size-256+px;
-  text-transform: uppercase;
   height: 100%;
   color:red;
+  text-transform: uppercase;
 }
 
 .top-level > img {
   width: $size-128+px;
+  top: $size-32+px;
   position: relative;
-  top: $size-16+px;
 }
 /* --------------------- TOP BAR END --------------------- */
 
