@@ -22,7 +22,9 @@ class CellComp extends Component {
         const props = this.props;
 
         return (
-            <span className={props.style} onClick={props.onClick}>{props.value}</span>
+            <div className='wrapper-cell'>
+                <span className={props.style} onClick={props.onClick}>{props.value}</span>
+            </div>
         );
     }
 }

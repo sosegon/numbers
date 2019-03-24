@@ -34,7 +34,7 @@ const isCellSelectable = (state, ownProps) => {
     }
 };
 
-const generateStyle = (isSelectable, hid, turn) => {
+const generateStyle = (isSelectable, hid, turn, value) => {
     let classArray = ['cell'];
     if (isSelectable && turn === TURNS.PLAYER1) {
         classArray.push('selectable');
@@ -44,6 +44,10 @@ const generateStyle = (isSelectable, hid, turn) => {
 
     if (hid) {
         classArray.push('hid');
+    }
+
+    if(value >= 1 && value <= 9) {
+        classArray.push('cell-value-' + value);
     }
 
     return classArray.join(' ');
@@ -116,7 +120,7 @@ const mapStateToProps = (state, ownProps) => {
     const isSelectable = isCellSelectable(state, ownProps);
     const hid = value <= 0;
     const turn = state.snap.turn;
-    const style = generateStyle(isSelectable, hid, turn);
+    const style = generateStyle(isSelectable, hid, turn, value);
     const gameStatus = state.snap.status;
 
     return {

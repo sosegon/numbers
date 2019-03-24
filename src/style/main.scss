@@ -113,6 +113,77 @@ $board-color: #baa;
 }
 /* --------------------- BOARD END --------------------- */
 
+/* --------------------- CELLS START --------------------- */
+.wrapper-cell {
+  float: left;
+  border-right: $cell-border+px $light-purple solid;
+  border-bottom: $cell-border+px $light-purple solid;
+}
+
+.wrapper-cell:last-child {
+  border-right: 0;
+}
+
+.last-board-row .wrapper-cell {
+  border-bottom: 0;
+}
+
+.cell, .wild-card {
+  width: $cell-size+px;
+  height: $cell-size+px;
+  margin: $cell-margin+px;
+  line-height: $cell-size+px;
+  font-size: $cell-font-size+px;
+  border-radius: $cell-size/3+px;
+  display: inline-block;
+  font-weight: bold;
+  text-align: center;
+  vertical-align: middle;
+  color: $number-color;
+}
+
+.wild-card {
+  background-color: $white-purple;
+  color: $dark-purple;
+  font-size: $wildcard-font-size+px;
+  position: absolute;
+}
+
+.hid {
+  color: #fff0;
+  background-color: white;
+}
+
+@for $value from 1 through 9 {
+  $name: cell-value-#{$value};
+
+  @if $value >= 1 and $value <= 3 {
+    .#{$name} {
+      background-color: $low-cell-color;
+    }
+  } @else if $value >= 4 and $value <= 6 {
+    .#{$name} {
+      background-color: $med-cell-color;
+    }
+  } @else if $value >= 7 and $value <= 9 {
+    .#{$name} {
+      background-color: $hig-cell-color;
+    }
+  }
+}
+
+.selectable {
+  background-color: $you-cells-color !important;
+  font-size: $cell-selectable-font-size+px;
+}
+
+.agent {
+  background-color: $ai-cells-color !important;
+  pointer-events: none;
+  font-size: $cell-selectable-font-size+px;
+}
+/* --------------------- CELLS END --------------------- */
+
 .board .cell, .tile, #boardDiv {
   user-select: none;
   cursor: default;
@@ -125,47 +196,10 @@ body {
   justify-content: center;
   align-content: center;
   align-items: center;
-  font-family: "Clear Sans", sans-serif;
-  font-size: 21px;
-}
-
-
-.cell, .wild-card {
-  width: 50px;
-  height: 50px;
-  margin: 1px;
-  line-height: 50px;
-  display: inline-block;
-  font-size: 20px;
-  font-weight: bold;
-  text-align: center;
-  vertical-align: middle;
-  border-radius: 2px;
-  font-family: "Clear Sans";
-  color: #413434;
-  background-color: #dcb;
-}
-
-.selectable {
-  background-color: #f69191;
-}
-
-.agent {
-  background-color: #b4f691 !important;
-  pointer-events: none;
-}
-
-.hid {
-  color: #fff0;
 }
 
 .invisible {
   display: none;
-}
-
-.wild-card {
-  background-color: #669dd4;
-  position: absolute;
 }
 
 .score-container-old {

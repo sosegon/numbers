@@ -1,15 +1,15 @@
 @import "variables";
 
-$boardSize: 10;
-$cellSize: 50;
-$marginSize: 1;
+$boardSize: 9;
+$cellSize: $cell-size;
+$marginSize: $cell-margin;
 $paddingSize: $board-padding;
 
 @for $row from 0 through $boardSize {
 	@for $column from 0 through $boardSize {
 		.position_#{$row}_#{$column}:not(.isMoving) {
-			top: (($cellSize + 2 * $marginSize) * $row + $paddingSize) * 1px;
-			left: (($cellSize + 2 * $marginSize) * $column + $paddingSize) * 1px;
+			top: (($cellSize + 2 * $marginSize + $cell-border) * $row + $paddingSize) * 1px;
+			left: (($cellSize + 2 * $marginSize + $cell-border) * $column + $paddingSize) * 1px;
 		}
 	}
 }
@@ -20,7 +20,7 @@ $paddingSize: $board-padding;
 
 		@if $fromRow == $toRow {
 			.#{$name} {
-				top: (($cellSize + 2 * $marginSize) * $toRow + $paddingSize) * 1px;
+				top: (($cellSize + 2 * $marginSize + $cell-border) * $toRow + $paddingSize) * 1px;
 			}
 		} @else {
 			.#{$name} {
@@ -31,10 +31,10 @@ $paddingSize: $board-padding;
 
 			@keyframes #{$name} {
 				from {
-					top: (($cellSize + 2 * $marginSize) * $fromRow + $paddingSize) * 1px;
+					top: (($cellSize + 2 * $marginSize + $cell-border) * $fromRow + $paddingSize) * 1px;
 				}
 				to {
-					top: (($cellSize + 2 * $marginSize) * $toRow + $paddingSize) * 1px;
+					top: (($cellSize + 2 * $marginSize + $cell-border) * $toRow + $paddingSize) * 1px;
 				}
 			}
 		}
@@ -47,7 +47,7 @@ $paddingSize: $board-padding;
 
 		@if $fromColumn == $toColumn {
 			.#{$name} {
-				left: (($cellSize + 2 * $marginSize) * $toColumn + $paddingSize) * 1px;
+				left: (($cellSize + 2 * $marginSize + $cell-border) * $toColumn + $paddingSize) * 1px;
 			}
 		} @else {
 			.#{$name} {
@@ -58,10 +58,10 @@ $paddingSize: $board-padding;
 
 			@keyframes #{$name} {
 				from {
-					left: (($cellSize + 2 * $marginSize) * $fromColumn + $paddingSize) * 1px;
+					left: (($cellSize + 2 * $marginSize + $cell-border) * $fromColumn + $paddingSize) * 1px;
 				}
 				to {
-					left: (($cellSize + 2 * $marginSize) * $toColumn + $paddingSize) * 1px;
+					left: (($cellSize + 2 * $marginSize + $cell-border) * $toColumn + $paddingSize) * 1px;
 				}
 			}
 		}

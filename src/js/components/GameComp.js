@@ -19,9 +19,18 @@ const GameComp = ({
     reset,
     board
 }) => {
+    let boardSize = board.length;
     let cells = board.map((row, rowIndex) => {
+        let style = ['board-row'];
+
+        if(rowIndex === boardSize - 1) {
+            style.push('last-board-row');
+        }
+
+        style = style.join(' ');
+
         return (
-            <div>
+            <div className={style}>
                 {
                     row.map((col, colIndex) => <CellCont
                         rowIndex = { rowIndex }
