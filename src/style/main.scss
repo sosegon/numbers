@@ -1,10 +1,5 @@
 @import "node_modules/bootstrap/scss/bootstrap";
 @import "variables";
-$game-container-background: #bbada0;
-$section-space: 8px;
-$text-color: #776E65;
-$tile-color: #eee4da;
-$board-color: #baa;
 
 /* --------------------- MIXIN START --------------------- */
 @mixin box-shadow($top, $left, $blur, $color, $inset: false) {
@@ -211,82 +206,26 @@ $board-color: #baa;
 .logo-box > img{
   width: $logo-size+px;
 }
-
 /* --------------------- FOOTER END --------------------- */
 
 /* --------------------- OTHER START --------------------- */
 #boardDiv {
   height: 100vh;
 }
-/* --------------------- OTHER END --------------------- */
-
-
-
-.board .cell, .tile, #boardDiv {
-  user-select: none;
-  cursor: default;
-}
 
 body {
-  /*display: flex;*/
   color: $number-color;
   background-image: linear-gradient(45deg, $light-purple, $dark-purple);
-  flex-direction: column;
-  justify-content: center;
-  align-content: center;
-  align-items: center;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .invisible {
   display: none;
-}
-
-.score-container-old {
-  $height: 25px;
-  $width: 60px;
-
-  position: relative;
-  display: inline-block;
-  background: $game-container-background;
-  width: $width;
-  border-radius: 3px;
-  color: white;
-  text-align: center;
-
-  &:after {
-    position: absolute;
-    width: 100%;
-    top: 10px;
-    left: 0;
-    text-transform: uppercase;
-    font-size: 13px;
-    line-height: 13px;
-    text-align: center;
-    color: $tile-color;
-  }
-
-  .score-addition {
-    position: absolute;
-    right: 30px;
-    color: red;
-    font-size: $height;
-    line-height: $height;
-    font-weight: bold;
-    color: rgba($text-color, .9);
-    z-index: 100;
-    /*@include animation(move-up 600ms ease-in);
-    @include animation-fill-mode(both);*/
-  }
-}
-
-.scores-container {
-  margin-top: $section-space;
-  text-align: left;
-}
-
-.buttons-container {
-  text-align: left;
-  margin-bottom: $section-space;
 }
 
 .overlay {
@@ -321,3 +260,4 @@ body {
   border: none;
   border-radius: 5px;
 }
+/* --------------------- OTHER END --------------------- */
