@@ -235,6 +235,7 @@ body {
   right: 0px;
   border-radius: $board-padding*1.5+px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   position: absolute;
@@ -250,6 +251,11 @@ body {
   margin: 0;
   border-color: red;
   background-image: linear-gradient(90deg, $dark-purple, $light-purple);
+}
+
+.overlay > img {
+  height: $top-item-control-size+px;
+  margin-top: $size-16+px;
 }
 
 .tryAgain {

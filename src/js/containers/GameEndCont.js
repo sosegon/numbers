@@ -1,6 +1,7 @@
 const { connect } = require('react-redux');
 const { GameEndComp } = require('../components/GameEndComp.js');
 const { GAME_CONTINUITY } = require('../model/flags.js');
+const actions = require('../actions.js');
 
 const getStyle = (isOver) => {
     return isOver ? 'overlay' : 'invisible';
@@ -23,10 +24,16 @@ const mapStateToProps = (state) => {
     };
 };
 
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+        reset: () => { dispatch(actions.resetGame(ownProps.boardSize)) }
+    };
+};
+
 /**
  * Container to connect a {@link GameEndComp}.
  */
-const GameEndCont = connect(mapStateToProps)(GameEndComp);
+const GameEndCont = connect(mapStateToProps, mapDispatchToProps)(GameEndComp);
 
 module.exports = {
     GameEndCont

@@ -11,11 +11,13 @@ const PropTypes = require('prop-types');
  */
 const GameEndComp = ({
     style,
-    message
+    message,
+    reset
 }) => {
     return (
         <div className={style}>
             <p className='message'>{message}</p>
+            <img src="./images/restart.png"  onClick={reset}/>
         </div>
     );
 };

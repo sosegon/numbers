@@ -68,7 +68,7 @@ const GameComp = ({
                 <div className='board'>
                     <WildCardCont />
                     { cells }
-                    <GameEndCont />
+                    <GameEndCont boardSize={boardSize}/>
                 </div>
             </div>
             <div className="container">
