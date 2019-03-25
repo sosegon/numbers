@@ -43,23 +43,23 @@ const GameComp = ({
 
     return (
         <div class="">
-            <div className="container-fluid">
+            <div className="container">
                 <div className="top-bar row d-flex justify-content-center">
-                    <div className="top-item col-lg-auto d-flex">
+                    <div className="top-item d-flex">
                         <img className="mt-auto" src="./images/restart.png" onClick={reset} />
                     </div>
-                    <div className="left-score-box top-item col-lg-auto d-flex">
+                    <div className="left-score-box top-item d-flex">
                         <ScoreCont playerName={TURNS.PLAYER1}/>
                     </div>
-                    <div className="top-item col-lg-auto">
+                    <div className="top-item ">
                         <div className="top-level">
                             <img className="mt-auto" src="./images/level.png" />
                         </div>
                     </div>
-                    <div className="right-score-box top-item col-lg-auto d-flex">
+                    <div className="right-score-box top-item d-flex">
                         <ScoreCont playerName={TURNS.PLAYER2}/>
                     </div>
-                    <div className="top-item col-lg-auto d-flex">
+                    <div className="top-item d-flex">
                         <img className="mt-auto" src="./images/clock2.png" onClick={reset} />
                     </div>
                 </div>

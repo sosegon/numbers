@@ -24,7 +24,6 @@ $board-color: #baa;
 .top-bar {
   height: $top-bar-height+px;
   margin-bottom: $segments-spacing+px;
-  color: white;
   text-transform: uppercase;
 }
 
@@ -34,8 +33,7 @@ $board-color: #baa;
 }
 
 .top-item > img {
-  height: $size-64+px;
-  padding: 0 $size-32+px;
+  height: $top-item-control-size+px;
 }
 
 .top-item:nth-child(n+2):nth-child(-n+4) {
@@ -44,12 +42,14 @@ $board-color: #baa;
 
 .left-score-box {
   border-radius: $size-32+px 0 0 $size-4+px;
-  padding-left: $size-80+px;
+  padding-left: $score-box-padding+px;
+  margin-left: $score-box-margin+px;
 }
 
 .right-score-box {
   border-radius: 0 $size-32+px $size-4+px 0;
-  padding-right: $size-80+px;
+  padding-right: $score-box-padding+px;
+  margin-right: $score-box-margin+px;
 }
 
 .score-container {
@@ -57,8 +57,8 @@ $board-color: #baa;
 }
 
 .player-name {
-  height: $size-64+px;
-  width: $size-64+px;
+  height: $player-name-size+px;
+  width: $player-name-size+px;
   border-bottom: $size-4+px solid $light-gray;
   font-size: $player-name-font-size+px;
   background-color: $dark-yellow;
@@ -70,7 +70,7 @@ $board-color: #baa;
   height: $player-score-height+px;
   width: $player-score-width+px;
   border-radius: 0 $size-8+px $size-8+px 0;
-  left: -$size-8+px;
+  left: -$player-score-left+px;
   font-size: $player-score-font-size+px;
   font-weight: bold;
   position: relative;
@@ -92,15 +92,14 @@ $board-color: #baa;
 }
 
 .top-level {
-  width: $size-256+px;
+  width: $top-level-width+px;
   height: 100%;
-  color:red;
   text-transform: uppercase;
 }
 
 .top-level > img {
-  width: $size-128+px;
-  top: $size-32+px;
+  width: $top-level-frame-width+px;
+  top: $top-level-frame-top+px;
   position: relative;
 }
 /* --------------------- TOP BAR END --------------------- */
@@ -142,7 +141,6 @@ $board-color: #baa;
   font-weight: bold;
   text-align: center;
   vertical-align: middle;
-  color: $number-color;
 }
 
 .wild-card {
@@ -191,6 +189,7 @@ $board-color: #baa;
 .bottom-bar {
   margin-top: $segments-spacing+px;
 }
+
 .socials-box {
   background-color: white;
   height: $socials-size*1.5+px;
@@ -230,6 +229,7 @@ $board-color: #baa;
 
 body {
   /*display: flex;*/
+  color: $number-color;
   background-image: linear-gradient(45deg, $light-purple, $dark-purple);
   flex-direction: column;
   justify-content: center;
