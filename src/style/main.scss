@@ -168,15 +168,26 @@
   }
 }
 
-.selectable {
-  background-color: $you-cells-color !important;
-  font-size: $cell-selectable-font-size+px;
+@keyframes highlightSelectableCell {
+  0% {
+    background-color: $dark-purple;
+  }
+  50% {
+    background-color: $white-purple;
+  }
+  100% {
+    background-color: $dark-purple;
+  }
 }
 
+.selectable {
+  animation: highlightSelectableCell 2.5s ease-in-out infinite;
+}
+
+
 .agent {
-  background-color: $ai-cells-color !important;
   pointer-events: none;
-  font-size: $cell-selectable-font-size+px;
+  background-color: $white-magenta;
 }
 /* --------------------- CELLS END --------------------- */
 
