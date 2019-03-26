@@ -35,22 +35,44 @@
 
 .top-item > img {
   height: $top-item-control-size+px;
+  position: relative;
 }
 
-.top-item:nth-child(n+2):nth-child(-n+4) {
+.top-item:first-child > img {
+  right: -$curve-width/2+px;
+}
+
+.top-item:last-child > img {
+  right: $curve-width/2+px;
+}
+
+.top-item:nth-child(n+3):nth-child(-n+5) {
   background-color: white;
 }
 
+.left-curve, .right-curve{
+  height: 100% !important;
+  width: $curve-width+px;
+  right: -1px;
+  position: relative;
+  background-image: url(../images/curve.svg);
+  background-size: 100% 100%;
+}
+
+.right-curve {
+  right: 1px;
+  position: relative;
+  transform: scaleX(-1);
+}
+
 .left-score-box {
-  border-radius: $size-32+px 0 0 $size-4+px;
+  border-radius: 0 0 0 $size-8+px;
   padding-left: $score-box-padding+px;
-  margin-left: $score-box-margin+px;
 }
 
 .right-score-box {
-  border-radius: 0 $size-32+px $size-4+px 0;
+  border-radius: 0 0 $size-8+px 0;
   padding-right: $score-box-padding+px;
-  margin-right: $score-box-margin+px;
 }
 
 .score-container {
@@ -205,6 +227,10 @@
 /* --------------------- FOOTER START --------------------- */
 .bottom-bar {
   margin-top: $segments-spacing+px;
+}
+
+.bottom-bar > div {
+  margin: 0 $size-32+px;
 }
 
 .socials-box {
