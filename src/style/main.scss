@@ -40,10 +40,12 @@
 
 .top-item:first-child > img {
   right: -$curve-width/2+px;
+  z-index: $zindex-dropdown;
 }
 
 .top-item:last-child > img {
   right: $curve-width/2+px;
+  z-index: $zindex-dropdown;
 }
 
 .top-item:nth-child(n+3):nth-child(-n+5) {
