@@ -48,19 +48,25 @@ const GameComp = ({
                     <div className="top-item d-flex">
                         <img className="mt-auto" src="./images/restart.png" onClick={reset} />
                     </div>
+
                     <div className="left-curve"/>
                     <div className="left-score-box top-item d-flex">
                         <ScoreCont playerName={TURNS.PLAYER1}/>
                     </div>
-                    <div className="top-item ">
+                    <div className="right-curve"/>
+
+                    <div className="top-item top-center">
                         <div className="top-level">
-                            <img className="mt-auto" src="./images/level.png" />
+                            <img className="top-logo" src="./images/logo.png" />
                         </div>
                     </div>
+
+                    <div className="left-curve"/>
                     <div className="right-score-box top-item d-flex">
                         <ScoreCont playerName={TURNS.PLAYER2}/>
                     </div>
                     <div className="right-curve"/>
+
                     <div className="top-item d-flex">
                         <img className="mt-auto" src="./images/clock2.png" onClick={reset} />
                     </div>
