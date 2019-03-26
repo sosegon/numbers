@@ -86,8 +86,15 @@ const GameComp = ({
                         <img src="./images/socials-twitter.png" />
                         <img src="./images/socials-facebook.png" />
                     </div>
-                    <div className="logo-box align-self-start">
-                        <img src="./images/logo.png" />
+                    <div className="copyright-box align-self-start">
+                        <span>
+                            Copyright © 2019 <a href="https:sosegon.github.io/se-vel" target="_blank">
+                                Se-Vel
+                            </a>.
+                        </span><br />
+                        <span>
+                            All Rights Reserved.
+                        </span>
                     </div>
                 </div>
             </div>

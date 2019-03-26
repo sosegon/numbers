@@ -279,12 +279,28 @@
   margin-right: 0;
 }
 
-.logo-box > img{
-  width: $logo-size+px;
+.copyright-box {
+  text-align: center;
+}
+
+.copyright-box > span {
+  font-size: $copyright-font-size+px;
+}
+
+.copyright-box > span > a {
+  font-weight: bold;
 }
 /* --------------------- FOOTER END --------------------- */
 
 /* --------------------- OTHER START --------------------- */
+a:visited {
+  color: $white-magenta;
+}
+
+a:link {
+  color: $number-color;
+}
+
 #boardDiv {
   height: 100vh;
 }
