@@ -364,5 +364,12 @@ const self = module.exports = {
         } else {
             throw new Error("Invalid vector size");
         }
+    },
+    /**
+     * Generate a random number between 0 and 100.
+     * @returns {number} Random number between 0 and 100.
+     */
+    generateRandomNumber() {
+        return Math.round(Math.random()*100);
     }
 };
