@@ -17,6 +17,8 @@ const ScoreComp = ({ score, name, style }) => {
 	scoreClass.push("my-auto");
 	scoreClass = scoreClass.join(" ");
 
+	// key in span for the scor is a workaround to create the element
+	// every time the score changes, thus enabling the animation.
     return (
         <div className="score-container align-self-center d-flex">
 			<div className="player-name mr-auto">
@@ -25,7 +27,7 @@ const ScoreComp = ({ score, name, style }) => {
 				</span>
 			</div>
 			<div className={scoreClass} >
-				<span className="align-middle">
+				<span className="align-middle" key={score}>
 					{score}
 				</span>
 			</div>

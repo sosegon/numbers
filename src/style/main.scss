@@ -99,10 +99,28 @@
   width: $player-score-width+px;
   border-radius: 0 $size-8+px $size-8+px 0;
   left: -$player-name-size/4+px;
-  font-size: $player-score-font-size+px;
   font-weight: bold;
   position: relative;
   @include box-shadow(0, $size-2+px, 0, $light-gray, false)
+}
+
+@keyframes updateScore {
+  0% {
+    font-size: $player-score-font-size+px;
+    transform: rotate(-360deg);
+  }
+  50% {
+    font-size: $player-score-font-size*2+px;
+  }
+  100% {
+    font-size: $player-score-font-size+px;
+    transform: rotate(0);
+  }
+}
+
+.player-score > span {
+  font-size: $player-score-font-size+px;
+  animation: updateScore 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
 
 .player-name, .player-score {
@@ -133,6 +151,15 @@
 /* --------------------- TOP BAR END --------------------- */
 
 /* --------------------- BOARD START --------------------- */
+@keyframes flip-diagonal-2-br {
+  0% {
+    transform: scaleY(0);
+  }
+  100% {
+    transform: scaleY(1);
+  }
+}
+
 .board {
   padding: $board-padding+px;
   background-color: white;
@@ -140,6 +167,7 @@
   position: relative;
   display: table;
   margin: 0 auto;
+  animation: flip-diagonal-2-br 0.4s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
 }
 /* --------------------- BOARD END --------------------- */
 
@@ -277,6 +305,15 @@ body {
   display: none;
 }
 
+@keyframes entryOverlay {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 .overlay {
   top: 0px;
   bottom: 0px;
@@ -291,6 +328,7 @@ body {
   font-size: $end-game-text+px;
   font-weight: bolder;
   background-color: $light-purple-translucent;
+  animation: entryOverlay 0.5s  cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .message {
