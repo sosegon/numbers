@@ -41,7 +41,7 @@ describe("GameComp", () => {
 
     it('should render', () => {
         expect(shallowWrapper).toMatchSnapshot();
-        expect(mountWrapper.find('button').length).toEqual(1);
+        expect(mountWrapper.find('img').length).toBeGreaterThan(0);
         expect(mountWrapper.find('WildCardComp').length).toEqual(1);
         expect(mountWrapper.find('CellComp').length).toEqual(25);
         expect(mountWrapper.find('GameEndComp').length).toEqual(1);

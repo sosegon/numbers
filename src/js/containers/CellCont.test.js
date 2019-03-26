@@ -133,21 +133,21 @@ describe("CellCont", () => {
     it("should have props with correct values", () => {
         expect(componentVertical.props().rowIndex).toEqual(verticalPosition.rowIndex);
         expect(componentVertical.props().colIndex).toEqual(verticalPosition.colIndex);
-        expect(componentVertical.props().style).toEqual('cell selectable');
+        expect(componentVertical.props().style).toEqual('cell selectable cell-value-7');
         expect(componentVertical.props().isSelectable).toEqual(true);
         expect(componentVertical.props().gameStatus).toEqual(GAME_STATUSES.RESTING);
         expect(componentVertical.props().value).toEqual(verticalPosition.value);
 
         expect(componentHorizontal.props().rowIndex).toEqual(horizontalPosition.rowIndex);
         expect(componentHorizontal.props().colIndex).toEqual(horizontalPosition.colIndex);
-        expect(componentHorizontal.props().style).toEqual('cell selectable');
+        expect(componentHorizontal.props().style).toEqual('cell selectable cell-value-5');
         expect(componentHorizontal.props().isSelectable).toEqual(true);
         expect(componentHorizontal.props().gameStatus).toEqual(GAME_STATUSES.RESTING);
         expect(componentHorizontal.props().value).toEqual(horizontalPosition.value);
 
         expect(componentOther.props().rowIndex).toEqual(otherPosition.rowIndex);
         expect(componentOther.props().colIndex).toEqual(otherPosition.colIndex);
-        expect(componentOther.props().style).toEqual('cell');
+        expect(componentOther.props().style).toEqual('cell cell-value-6');
         expect(componentOther.props().isSelectable).toEqual(false);
         expect(componentOther.props().gameStatus).toEqual(GAME_STATUSES.RESTING);
         expect(componentOther.props().value).toEqual(otherPosition.value);

@@ -61,7 +61,7 @@ describe("CellCont", () => {
 
         expect(store.getActions()).toEqual([]);
 
-        component.find('button').at(0).simulate('click');
+        component.find('img').at(0).simulate('click');
         expect(store.getActions()).toEqual([resetGame(boardSize)]);
         store.clearActions();
     });
