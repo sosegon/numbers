@@ -28,18 +28,23 @@
   text-transform: uppercase;
 }
 
-.top-bar .top-item {
+.top-bar .top-any {
   height: 100%;
   text-align: center;
 }
 
-.top-item > img {
-  height: $top-item-control-size+px;
+.top-control > img {
+  height: $top-control-size+px;
   position: relative;
 }
 
-.top-item:first-child > img {
+.top-control:first-child > img {
   right: -$curve-width/2+px;
+  z-index: $zindex-dropdown;
+}
+
+.top-control:last-child > img {
+  right: $curve-width/2+px;
   z-index: $zindex-dropdown;
 }
 
@@ -136,16 +141,16 @@
   background-color: #fff0 !important;
 }
 
-.top-level {
-  width: $top-level-width+px;
+.top-logo {
+  width: $top-logo-width+px;
   height: 100%;
   text-transform: uppercase;
 }
 
-.top-level > img {
-  width: $top-level-frame-width+px;
-  top: $top-level-frame-top+px;
-  left: ($top-level-width - $top-level-frame-width)/2+px;
+.top-logo > img {
+  width: $top-logo-frame-width+px;
+  top: $top-logo-frame-top+px;
+  left: ($top-logo-width - $top-logo-frame-width)/2+px;
   position: relative;
 }
 /* --------------------- TOP BAR END --------------------- */
@@ -244,7 +249,6 @@
 .selectable {
   animation: highlightSelectableCell 2.5s ease-in-out infinite;
 }
-
 
 .agent {
   pointer-events: none;
@@ -357,7 +361,7 @@ body {
 }
 
 .overlay > img {
-  height: $top-item-control-size+px;
+  height: $top-control-size+px;
   margin-top: $size-16+px;
 }
 

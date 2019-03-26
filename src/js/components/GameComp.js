@@ -45,31 +45,33 @@ const GameComp = ({
         <div class="">
             <div className="container">
                 <div className="top-bar row d-flex justify-content-center">
-                    <div className="top-item d-flex">
+
+                    <div className="top-control d-flex">
                         <img className="mt-auto" src="./images/restart.png" onClick={reset} />
                     </div>
 
                     <div className="left-curve"/>
-                    <div className="left-score-box top-item d-flex">
+                    <div className="left-score-box d-flex">
                         <ScoreCont playerName={TURNS.PLAYER1}/>
                     </div>
                     <div className="right-curve"/>
 
-                    <div className="top-item top-center">
-                        <div className="top-level">
-                            <img className="top-logo" src="./images/logo.png" />
+                    <div className="top-center">
+                        <div className="top-logo">
+                            <img src="./images/logo.png" />
                         </div>
                     </div>
 
                     <div className="left-curve"/>
-                    <div className="right-score-box top-item d-flex">
+                    <div className="right-score-box d-flex">
                         <ScoreCont playerName={TURNS.PLAYER2}/>
                     </div>
                     <div className="right-curve"/>
 
-                    <div className="top-item d-flex">
+                    <div className="top-control d-flex">
                         <img className="mt-auto" src="./images/clock2.png" onClick={reset} />
                     </div>
+
                 </div>
             </div>
             <div className="container">
