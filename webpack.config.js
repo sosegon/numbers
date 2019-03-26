@@ -28,7 +28,19 @@ module.exports = {
 					'style-loader',
 					MiniCssExtractPlugin.loader,
 					'css-loader',
-					'sass-loader'
+					{
+						loader: 'resolve-url-loader',
+						options: {
+							sourceMap: true
+						}
+					},
+					{
+						loader: 'sass-loader',
+						options: {
+							sourceMap: true,
+							sourceMapContents: false
+						}
+					},
 				]
 			},
 			{
@@ -37,7 +49,14 @@ module.exports = {
 				options: {
 					outputPath: '../css',
 				}
-			}
+			},
+			{
+                test: /\.svg/,
+                use: {
+                    loader: 'svg-url-loader',
+                    options: {}
+                }
+            }
 		]
 	},
 	plugins: [
