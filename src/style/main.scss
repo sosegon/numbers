@@ -1,6 +1,12 @@
 @import "node_modules/bootstrap/scss/bootstrap";
 @import "variables";
 
+@font-face {
+  src: url(../fonts/Quicksand-Regular.ttf) format('truetype');
+  font-family: Quicksand-Regular;
+  font-weight: regular;
+}
+
 /* --------------------- MIXIN START --------------------- */
 @mixin box-shadow($top, $left, $blur, $color, $inset: false) {
   @if $inset {
@@ -59,6 +65,7 @@
   background-color: $dark-yellow;
   color: $dark-purple;
   z-index: $zindex-dropdown;
+  font-weight: bold;
 }
 
 .player-score {
@@ -227,6 +234,7 @@
 body {
   color: $number-color;
   background-image: linear-gradient(45deg, $light-purple, $dark-purple);
+  font-family: Quicksand-Regular, Arial, sans-serif;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
