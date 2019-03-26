@@ -60,9 +60,13 @@
 .player-name {
   height: $player-name-size+px;
   width: $player-name-size+px;
-  border-bottom: $size-4+px solid $light-gray;
   font-size: $player-name-font-size+px;
-  background-color: $dark-yellow;
+  left: $player-name-size/4+px;
+  position: relative;
+  background-image: url(../images/star.svg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
   color: $dark-purple;
   z-index: $zindex-dropdown;
   font-weight: bold;
@@ -72,7 +76,7 @@
   height: $player-score-height+px;
   width: $player-score-width+px;
   border-radius: 0 $size-8+px $size-8+px 0;
-  left: -$player-score-left+px;
+  left: -$player-name-size/4+px;
   font-size: $player-score-font-size+px;
   font-weight: bold;
   position: relative;

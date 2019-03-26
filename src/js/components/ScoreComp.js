@@ -19,7 +19,7 @@ const ScoreComp = ({ score, name, style }) => {
 
     return (
         <div className="score-container align-self-center d-flex">
-			<div className="player-name mr-auto rounded-circle">
+			<div className="player-name mr-auto">
 				<span className="align-middle">
 					{name}
 				</span>
