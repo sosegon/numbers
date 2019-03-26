@@ -7,9 +7,15 @@ const mapStatToProps = (state, ownProps) => {
     const { playerName } = ownProps;
     const name = playerName === TURNS.PLAYER1 ? 'You' : 'AI';
     const style = playerName === TURNS.PLAYER1 ? 'player-1' : 'player-2';
-    const score = playerName === TURNS.PLAYER1 ?
+    let score = playerName === TURNS.PLAYER1 ?
         state.player1.score :
         state.player2.score;
+
+    const digits = 3;
+    score = "" + score;
+    while(score.length < digits) {
+        score = "0" + score;
+    }
 
     return {
         name,
