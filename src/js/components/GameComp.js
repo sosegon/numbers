@@ -5,6 +5,7 @@ const { CellCont } = require('../containers/CellCont.js');
 const { WildCardCont } = require('../containers/WildCardCont.js');
 const { GameEndCont } = require('../containers/GameEndCont.js');
 const { ScoreCont } = require('../containers/ScoreCont.js');
+const { SocialsCont } = require('../containers/SocialsCont.js');
 
 /**
  * Functional {@link https://reactjs.org/docs/react-component.html|Component}
@@ -83,10 +84,8 @@ const GameComp = ({
             </div>
             <div className="container">
                 <div className="row bottom-bar d-flex justify-content-between">
-                    <div className="socials-box align-self-start">
-                        <img src="./images/socials-tumblr.png" />
-                        <img src="./images/socials-twitter.png" />
-                        <img src="./images/socials-facebook.png" />
+                    <div className="align-self-start">
+                        <SocialsCont />
                     </div>
                     <div className="copyright-box align-self-start">
                         <span>
