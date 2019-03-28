@@ -382,6 +382,11 @@ body {
 .overlay > img {
   height: $top-control-size+px;
   margin-top: $size-16+px;
+  transition: $transition-slow+s;
+}
+
+.overlay > img:hover {
+  @include clickable();
 }
 
 .tryAgain {
