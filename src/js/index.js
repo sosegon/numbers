@@ -10,6 +10,7 @@ const { GameCont } = require('./containers/GameCont.js');
 const { initialState, reduce } = require('./reducer.js');
 const { PLAYER_DIRECTIONS, TURNS, GAME_CONTINUITY } = require('./model/flags.js');
 const { Game } = require('./model/Game.js');
+const bootstrap = require('bootstrap');
 
 const NumbersApp = () => (
     <GameCont boardSize={9} />

@@ -6,6 +6,7 @@ const { WildCardCont } = require('../containers/WildCardCont.js');
 const { GameEndCont } = require('../containers/GameEndCont.js');
 const { ScoreCont } = require('../containers/ScoreCont.js');
 const { SocialsCont } = require('../containers/SocialsCont.js');
+const { InfoComp } = require('../components/InfoComp.js');
 
 /**
  * Functional {@link https://reactjs.org/docs/react-component.html|Component}
@@ -20,6 +21,8 @@ const GameComp = ({
     reset,
     board
 }) => {
+    let modalId = "game-info";
+    let modalIdHash = "#" + modalId;
     let boardSize = board.length;
     let cells = board.map((row, rowIndex) => {
         let style = ['board-row'];
@@ -70,7 +73,7 @@ const GameComp = ({
                     <div className="right-curve"/>
 
                     <div className="top-control d-flex">
-                        <img className="mt-auto" src="./images/clock2.png" onClick={reset} />
+                        <img className="mt-auto" src="./images/clock2.png" data-toggle="modal" data-target={modalIdHash}/>
                     </div>
 
                 </div>
@@ -99,6 +102,7 @@ const GameComp = ({
                     </div>
                 </div>
             </div>
+            <InfoComp id={modalId} style=""/>
         </div>
     );
 };

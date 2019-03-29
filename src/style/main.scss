@@ -315,6 +315,32 @@
 }
 /* --------------------- FOOTER END --------------------- */
 
+/* --------------------- INFO START --------------------- */
+#game-info .modal-header, #game-info .modal-footer {
+  background-color: $dark-purple;
+}
+
+#game-info .modal-header > button {
+  color: $number-color;
+}
+
+#game-info .modal-body, #game-info .modal-footer > button{
+  background-color: $light-purple;
+}
+
+#game-info h3, #game-info h4 {
+  font-weight: bold;
+}
+
+#game-info h4 {
+  text-decoration: underline;
+}
+
+#game-info p {
+  font-size: $info-font-size+px;
+}
+/* --------------------- INFO END --------------------- */
+
 /* --------------------- OTHER START --------------------- */
 a:visited {
   color: $white-magenta;
