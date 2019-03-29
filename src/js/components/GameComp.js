@@ -46,7 +46,7 @@ const GameComp = ({
     });
 
     return (
-        <div class="">
+        <div>
             <div className="container">
                 <div className="top-bar row d-flex justify-content-center">
 
@@ -103,7 +103,9 @@ const GameComp = ({
                 </div>
             </div>
             <InfoComp id={modalId} style=""/>
-            <div id="game-splash" />
+            <div id="game-splash">
+                <img src="./images/splash-screen.png" />
+            </div>
         </div>
     );
 };

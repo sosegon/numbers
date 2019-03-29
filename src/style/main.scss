@@ -347,6 +347,38 @@
 }
 /* --------------------- INFO END --------------------- */
 
+/* --------------------- SPLASH START --------------------- */
+
+@keyframes show-splash {
+  0% {
+    bottom: 0;
+  }
+  99% {
+    bottom: 0;
+  }
+  100% {
+    bottom: 9999px;
+  }
+}
+
+#game-splash {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background-image: linear-gradient(45deg, $light-purple, $dark-purple);
+  z-index: $zindex-sticky;
+  animation: show-splash $transition-slow*1.5+s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+#game-splash > img {
+  position: relative;
+  width: $splash-size+px;
+  margin: 1.75rem auto;
+  display: block;
+}
+
+/* --------------------- SPLASH END --------------------- */
+
 /* --------------------- OTHER START --------------------- */
 a:visited {
   color: $white-magenta;
