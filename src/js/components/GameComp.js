@@ -73,7 +73,7 @@ const GameComp = ({
                     <div className="right-curve"/>
 
                     <div className="top-control d-flex">
-                        <img className="mt-auto" src="./images/clock2.png" data-toggle="modal" data-target={modalIdHash}/>
+                        <img className="mt-auto" src="./images/info.png" data-toggle="modal" data-target={modalIdHash}/>
                     </div>
 
                 </div>
