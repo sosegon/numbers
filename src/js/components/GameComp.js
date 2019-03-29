@@ -103,6 +103,7 @@ const GameComp = ({
                 </div>
             </div>
             <InfoComp id={modalId} style=""/>
+            <div id="game-splash" />
         </div>
     );
 };

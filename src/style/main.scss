@@ -339,6 +339,12 @@
 #game-info p {
   font-size: $info-font-size+px;
 }
+
+#game-info .modal-body > img {
+  width: 80%;
+  position: relative;
+  left: 10%;
+}
 /* --------------------- INFO END --------------------- */
 
 /* --------------------- OTHER START --------------------- */
