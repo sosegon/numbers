@@ -4,6 +4,7 @@
   "description": "Board game with numbers",
   "main": "index.js",
   "scripts": {
+    "dev": "webpack-dev-server --config webpack.config.js",
     "test": "jest"
   },
   "jest": {
@@ -35,6 +36,8 @@
     "babel-core": "^7.0.0-bridge.0",
     "babel-loader": "^8.0.4",
     "babel-plugin-transform-class-properties": "^6.24.1",
+    "browser-sync": "^2.26.5",
+    "browser-sync-webpack-plugin": "^2.2.2",
     "copy-webpack-plugin": "^5.0.1",
     "css-loader": "^2.1.0",
     "deep-freeze": "0.0.1",
@@ -52,7 +55,9 @@
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
     "svg-url-loader": "^2.3.2",
-    "webpack": "^4.28.3"
+    "webpack": "^4.28.3",
+    "webpack-cli": "^3.3.2",
+    "webpack-dev-server": "^3.3.1"
   },
   "dependencies": {
     "bootstrap": "^4.3.1",
