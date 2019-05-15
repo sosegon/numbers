@@ -1,87 +1,87 @@
-@import "node_modules/bootstrap/scss/bootstrap";
-@import "variables";
+@import 'node_modules/bootstrap/scss/bootstrap';
+@import 'variables';
 
 @font-face {
-  src: url(../fonts/Quicksand-Regular.ttf) format('truetype');
   font-family: Quicksand-Regular;
   font-weight: regular;
+  src: url('../fonts/Quicksand-Regular.ttf') format('truetype');
 }
 
 /* --------------------- MIXIN START --------------------- */
 @mixin box-shadow($top, $left, $blur, $color, $inset: false) {
   @if $inset {
-    -webkit-box-shadow:inset $top $left $blur $color;
-    -moz-box-shadow:inset $top $left $blur $color;
-    box-shadow:inset $top $left $blur $color;
-  } @else {
-    -webkit-box-shadow: $top $left $blur $color;
-    -moz-box-shadow: $top $left $blur $color;
+    box-shadow: inset $top $left $blur $color;
+  }
+
+  @else {
     box-shadow: $top $left $blur $color;
   }
 }
 
-@mixin clickable() {
+@mixin clickable {
   transform: scale3d(1.2, 1.2, 1);
 }
+
 /* --------------------- MIXIN END --------------------- */
 
 /* --------------------- TOP BAR START --------------------- */
 .top-bar {
-  height: $top-bar-height+px;
-  margin-bottom: $segments-spacing+px;
+  height: $top-bar-height + px;
+  margin-bottom: $segments-spacing + px;
   text-transform: uppercase;
+
+  .top-any {
+    height: 100%;
+    text-align: center;
+  }
 }
 
-.top-bar .top-any {
-  height: 100%;
-  text-align: center;
-}
-
-.top-control > img {
-  height: $top-control-size+px;
+.top-control>img {
+  height: $top-control-size + px;
   position: relative;
-  transition: $transition-slow+s;
+  transition: $transition-slow + s;
+
+  :hover {
+    @include clickable;
+  }
+
+  :first-child>img {
+    right: -$curve-width / 2 + px;
+    z-index: $zindex-dropdown;
+  }
+
+  :last-child>img {
+    right: $curve-width / 2 + px;
+    z-index: $zindex-dropdown;
+  }
 }
 
-.top-control > img:hover {
-  @include clickable();
-}
-
-.top-control:first-child > img {
-  right: -$curve-width/2+px;
-  z-index: $zindex-dropdown;
-}
-
-.top-control:last-child > img {
-  right: $curve-width/2+px;
-  z-index: $zindex-dropdown;
-}
-
-.left-curve, .right-curve{
-  height: 100% !important;
-  width: $curve-width+px;
-  right: -1px;
-  position: relative;
-  background-image: url(../images/curve.svg);
+.left-curve,
+.right-curve {
+  background-image: url('../images/curve.svg');
   background-size: 100% 100%;
+  height: 100% !important;
+  position: relative;
+  right: -1px;
+  width: $curve-width + px;
 }
 
 .right-curve {
-  right: 1px;
   position: relative;
+  right: 1px;
   transform: scaleX(-1);
 }
 
 .left-score-box {
-  border-radius: 0 0 $size-8+px $size-8+px;
-  padding-left: $score-box-padding+px;
-  background-color: white;
+  background-color: 'white';
+  border-radius: 0 0 $size-8 + px $size-8 + px;
+  padding-left: $score-box-padding + px;
 }
 
 .right-score-box {
-  border-radius: 0 0 $size-8+px $size-8+px;
-  padding-right: $score-box-padding+px;
-  background-color: white;
+  background-color: 'white';
+  border-radius: 0 0 $size-8 + px $size-8 + px;
+  padding-right: $score-box-padding + px;
 }
 
 .score-container {
@@ -89,53 +89,55 @@
 }
 
 .player-name {
-  height: $player-name-size+px;
-  width: $player-name-size+px;
-  font-size: $player-name-font-size+px;
-  left: $player-name-size/4+px;
-  position: relative;
-  background-image: url(../images/star.svg);
-  background-size: cover;
-  background-repeat: no-repeat;
+  background-image: url('../images/star.svg');
   background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
   color: $dark-purple;
-  z-index: $zindex-dropdown;
+  font-size: $player-name-font-size + px;
   font-weight: bold;
+  height: $player-name-size + px;
+  left: $player-name-size / 4 + px;
+  position: relative;
+  width: $player-name-size + px;
+  z-index: $zindex-dropdown;
 }
 
 .player-score {
-  height: $player-score-height+px;
-  width: $player-score-width+px;
-  border-radius: 0 $size-8+px $size-8+px 0;
-  left: -$player-name-size/4+px;
+  @include box-shadow(0, $size-2 + px, 0, $light-gray, false) border-radius: 0 $size-8 + px $size-8 + px 0;
   font-weight: bold;
+  height: $player-score-height + px;
+  left: -$player-name-size / 4 + px;
   position: relative;
-  @include box-shadow(0, $size-2+px, 0, $light-gray, false)
+  width: $player-score-width + px;
 }
 
 @keyframes updateScore {
   0% {
-    font-size: $player-score-font-size+px;
+    font-size: $player-score-font-size + px;
     transform: rotate(-360deg);
   }
+
   50% {
-    font-size: $player-score-font-size*2+px;
+    font-size: $player-score-font-size * 2 + px;
   }
+
   100% {
-    font-size: $player-score-font-size+px;
+    font-size: $player-score-font-size + px;
     transform: rotate(0);
   }
 }
 
-.player-score > span {
-  font-size: $player-score-font-size+px;
-  animation: updateScore 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+.player-score>span {
+  animation: updateScore .4s cubic-bezier(.25, .46, .45, .94) both;
+  font-size: $player-score-font-size + px;
 }
 
-.player-name, .player-score {
+.player-name,
+.player-score {
+  align-items: center;
   display: flex;
   justify-content: center;
-  align-items: center;
 }
 
 .player-1 {
@@ -151,17 +153,18 @@
 }
 
 .top-logo {
-  width: $top-logo-width+px;
   height: 100%;
   text-transform: uppercase;
+  width: $top-logo-width + px;
 }
 
-.top-logo > img {
-  width: $top-logo-frame-width+px;
-  top: $top-logo-frame-top+px;
-  left: ($top-logo-width - $top-logo-frame-width)/2+px;
+.top-logo>img {
+  left: ($top-logo-width - $top-logo-frame-width) / 2 + px;
   position: relative;
+  top: $top-logo-frame-top + px;
+  width: $top-logo-frame-width + px;
 }
+
 /* --------------------- TOP BAR END --------------------- */
 
 /* --------------------- BOARD START --------------------- */
@@ -169,74 +172,83 @@
   0% {
     transform: scaleY(0);
   }
+
   100% {
     transform: scaleY(1);
   }
 }
 
 .board {
-  padding: $board-padding+px;
-  background-color: white;
-  border-radius: $board-padding*1.5+px;
-  position: relative;
+  animation: flip-diagonal-2-br .4s cubic-bezier(.455, .03, .515, .955) both;
+  background-color: 'white';
+  border-radius: $board-padding * 1.5 + px;
   display: table;
   margin: 0 auto;
-  animation: flip-diagonal-2-br 0.4s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
+  padding: $board-padding + px;
+  position: relative;
 }
+
 /* --------------------- BOARD END --------------------- */
 
 /* --------------------- CELLS START --------------------- */
 .wrapper-cell {
+  border-bottom: $cell-border + px $light-purple solid;
+  border-right: $cell-border + px $light-purple solid;
   float: left;
-  border-right: $cell-border+px $light-purple solid;
-  border-bottom: $cell-border+px $light-purple solid;
+
+  :last-child {
+    border-right: 0;
+  }
 }
 
-.wrapper-cell:last-child {
-  border-right: 0;
+.last-board-row {
+  .wrapper-cell {
+    border-bottom: 0;
+  }
 }
 
-.last-board-row .wrapper-cell {
-  border-bottom: 0;
-}
-
-.cell, .wild-card {
-  width: $cell-size+px;
-  height: $cell-size+px;
-  margin: $cell-margin+px;
-  line-height: $cell-size+px;
-  font-size: $cell-font-size+px;
-  border-radius: $cell-size/3+px;
+.cell,
+.wild-card {
+  border-radius: $cell-size / 3 + px;
   display: inline-block;
+  font-size: $cell-font-size + px;
   font-weight: bold;
+  height: $cell-size + px;
+  line-height: $cell-size + px;
+  margin: $cell-margin + px;
   text-align: center;
   vertical-align: middle;
+  width: $cell-size + px;
 }
 
 .wild-card {
   background-color: $white-purple;
   color: $dark-purple;
-  font-size: $wildcard-font-size+px;
+  font-size: $wildcard-font-size + px;
   position: absolute;
 }
 
 .hid {
+  background-color: 'white';
   color: #fff0;
-  background-color: white;
 }
 
 @for $value from 1 through 9 {
   $name: cell-value-#{$value};
 
-  @if $value >= 1 and $value <= 3 {
+  @if $value>=1 and $value <=3 {
     .#{$name} {
       background-color: $low-cell-color;
     }
-  } @else if $value >= 4 and $value <= 6 {
+  }
+
+  @else if $value>=4 and $value <=6 {
     .#{$name} {
       background-color: $med-cell-color;
     }
-  } @else if $value >= 7 and $value <= 9 {
+  }
+
+  @else if $value>=7 and $value <=9 {
     .#{$name} {
       background-color: $hig-cell-color;
     }
@@ -247,9 +259,11 @@
   0% {
     background-color: $dark-purple;
   }
+
   50% {
     background-color: $white-purple;
   }
+
   100% {
     background-color: $dark-purple;
   }
@@ -257,94 +271,105 @@
 
 .selectable {
   animation: highlightSelectableCell 2.5s ease-in-out infinite;
-  transition: $transition-slow+s;
-}
+  transition: $transition-slow + s;
 
-.selectable:hover {
-  @include clickable();
+  :hover {
+    @include clickable;
+  }
 }
 
 .agent {
-  pointer-events: none;
   background-color: $white-magenta;
+  pointer-events: none;
 }
+
 /* --------------------- CELLS END --------------------- */
 
 /* --------------------- FOOTER START --------------------- */
 .bottom-bar {
-  margin-top: $segments-spacing+px;
+  margin-top: $segments-spacing + px;
 }
 
-.bottom-bar > div {
-  margin: 0 $size-32+px;
+.bottom-bar>div {
+  margin: 0 $size-32 + px;
 }
 
 .socials-box {
-  background-color: white;
-  height: $socials-size*1.5+px;
-  border-radius: $size-32+px $size-32+px 0 0;
-  padding: $size-8+px $size-16+px;
-  @include box-shadow($size-4+px, $size-4+px, 0, $light-gray, false)
+  @include box-shadow($size-4 + px, $size-4 + px, 0, $light-gray, false) background-color: 'white';
+  border-radius: $size-32 + px $size-32 + px 0 0;
+  height: $socials-size * 1.5 + px;
+  padding: $size-8 + px $size-16 + px;
 }
 
-.socials-box > img {
-  width: $socials-size+px;
-  margin-right: $socials-size/2+px;
-  border-radius: $socials-size/2+px;
-  transition: $transition-slow+s;
+.socials-box>img {
+  border-radius: $socials-size / 2 + px;
+  margin-right: $socials-size / 2 + px;
+  transition: $transition-slow + s;
+  width: $socials-size + px;
+
+  :hover {
+    @include clickable;
+  }
+
+  :last-child {
+    margin-right: 0;
+  }
 }
 
-.socials-box > img:hover {
-  @include clickable();
-}
-
-.socials-box > img:last-child {
-  margin-right: 0;
-}
 
 .copyright-box {
   text-align: center;
 }
 
-.copyright-box > span {
-  font-size: $copyright-font-size+px;
+.copyright-box>span {
+  font-size: $copyright-font-size + px;
 }
 
-.copyright-box > span > a {
+.copyright-box>span>a {
   font-weight: bold;
 }
+
 /* --------------------- FOOTER END --------------------- */
 
 /* --------------------- INFO START --------------------- */
-#game-info .modal-header, #game-info .modal-footer {
-  background-color: $dark-purple;
+
+#game-info {
+
+  .modal-header,
+  .modal-footer {
+    background-color: $dark-purple;
+  }
+
+  .modal-header>button {
+    color: $number-color;
+  }
+
+  .modal-body,
+  .modal-footer>button {
+    background-color: $light-purple;
+  }
+
+  h3,
+  h4 {
+    font-weight: bold;
+  }
+
+  h4 {
+    text-decoration: underline;
+  }
+
+  p {
+    font-size: $info-font-size + px;
+  }
+
+  .modal-body>img {
+    left: 10%;
+    position: relative;
+    width: 80%;
+  }
 }
 
-#game-info .modal-header > button {
-  color: $number-color;
-}
 
-#game-info .modal-body, #game-info .modal-footer > button{
-  background-color: $light-purple;
-}
-
-#game-info h3, #game-info h4 {
-  font-weight: bold;
-}
-
-#game-info h4 {
-  text-decoration: underline;
-}
-
-#game-info p {
-  font-size: $info-font-size+px;
-}
-
-#game-info .modal-body > img {
-  width: 80%;
-  position: relative;
-  left: 10%;
-}
 /* --------------------- INFO END --------------------- */
 
 /* --------------------- SPLASH START --------------------- */
@@ -353,55 +378,60 @@
   0% {
     bottom: 0;
   }
+
   99% {
     bottom: 0;
   }
+
   100% {
     bottom: 9999px;
   }
 }
 
 #game-splash {
-  position: fixed;
-  height: 100%;
-  width: 100%;
+  animation: show-splash $transition-slow * 1.5 + s cubic-bezier(.25, .46, .45, .94) both;
   background-image: linear-gradient(45deg, $light-purple, $dark-purple);
+  height: 100%;
+  position: fixed;
+  width: 100%;
   z-index: $zindex-sticky;
-  animation: show-splash $transition-slow*1.5+s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 
-#game-splash > img {
-  top: 100px;
-  position: relative;
-  width: $splash-size+px;
-  margin: 1.75rem auto;
+#game-splash>img {
   display: block;
+  margin: 1.75rem auto;
+  position: relative;
+  top: 100px;
+  width: $splash-size + px;
 }
 
 /* --------------------- SPLASH END --------------------- */
 
 /* --------------------- OTHER START --------------------- */
-a:visited {
-  color: $white-magenta;
+a {
+  :visited {
+    color: $white-magenta;
+  }
+
+  :link {
+    color: $number-color;
+  }
 }
 
-a:link {
-  color: $number-color;
-}
 
 #boardDiv {
   height: 100vh;
 }
 
 body {
-  color: $number-color;
-  background-image: linear-gradient(45deg, $light-purple, $dark-purple);
-  font-family: Quicksand-Regular, Arial, sans-serif;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
   -khtml-user-select: none;
-  -moz-user-select: none;
   -ms-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  background-image: linear-gradient(45deg, $light-purple, $dark-purple);
+  color: $number-color;
+  font-family: Quicksand-Regular, Arial, sans-serif;
   user-select: none;
 }
 
@@ -413,56 +443,59 @@ body {
   0% {
     transform: scale(0);
   }
+
   100% {
     transform: scale(1);
   }
 }
 
 .overlay {
-  top: 0px;
-  bottom: 0px;
-  left: 0px;
-  right: 0px;
-  border-radius: $board-padding*1.5+px;
+  align-items: center;
+  animation: entryOverlay .5s cubic-bezier(.25, .46, .45, .94);
+  background-color: $light-purple-translucent;
+  border-radius: $board-padding * 1.5 + px;
+  bottom: 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  font-size: $end-game-text+px;
+  font-size: $end-game-text + px;
   font-weight: bolder;
-  background-color: $light-purple-translucent;
-  animation: entryOverlay 0.5s  cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  justify-content: center;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
 }
 
 .message {
-  border-radius: $size-16+px;
-  border-width: $size-8+px;
-  padding: $size-16+px;
-  margin: 0;
-  border-color: red;
   background-image: linear-gradient(90deg, $dark-purple, $light-purple);
+  border-color: 'red';
+  border-radius: $size-16 + px;
+  border-width: $size-8 + px;
+  margin: 0;
+  padding: $size-16 + px;
 }
 
-.overlay > img {
-  height: $top-control-size+px;
-  margin-top: $size-16+px;
-  transition: $transition-slow+s;
+.overlay>img {
+  height: $top-control-size + px;
+  margin-top: $size-16 + px;
+  transition: $transition-slow + s;
+
+  :hover {
+    @include clickable;
+  }
 }
 
-.overlay > img:hover {
-  @include clickable();
-}
 
 .tryAgain {
   background-color: #876;
-  color: #fff;
-  height: 40px;
-  width: 100px;
+  border: 0;
+  border-radius: 5px;
+  color: 'black';
+  cursor: pointer;
   font-size: 20px;
   font-weight: bold;
-  cursor: pointer;
-  border: none;
-  border-radius: 5px;
+  height: 40px;
+  width: 100px;
 }
+
 /* --------------------- OTHER END --------------------- */
