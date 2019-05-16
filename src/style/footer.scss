@@ -1,0 +1,44 @@
+@import 'variables';
+
+.bottom-bar {
+  margin-top: $segments-spacing + px;
+}
+
+.bottom-bar>div {
+  margin: 0 $size-32 + px;
+}
+
+.socials-box {
+  @include box-shadow($size-4 + px, $size-4 + px, 0, $light-gray, false);
+  background-color: $top-background-color;
+  border-radius: $size-32 + px $size-32 + px 0 0;
+  height: $socials-size * 1.5 + px;
+  padding: $size-8 + px $size-16 + px;
+}
+
+.socials-box>img {
+  border-radius: $socials-size / 2 + px;
+  margin-right: $socials-size / 2 + px;
+  transition: $transition-slow + s;
+  width: $socials-size + px;
+
+  &:hover {
+    @include clickable;
+  }
+
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+.copyright-box {
+  text-align: center;
+}
+
+.copyright-box>span {
+  font-size: $copyright-font-size + px;
+}
+
+.copyright-box>span>a {
+  font-weight: bold;
+}

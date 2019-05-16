@@ -1,5 +1,11 @@
 @import 'node_modules/bootstrap/scss/bootstrap';
 @import 'variables';
+@import 'mixin';
+@import 'top_bar';
+@import 'cells';
+@import 'splash';
+@import 'footer';
+@import 'game_over';
 
 @font-face {
   font-family: Quicksand-Regular;
@@ -7,168 +13,6 @@
   src: url('../fonts/Quicksand-Regular.ttf') format('truetype');
 }
 
-/* --------------------- MIXIN START --------------------- */
-@mixin box-shadow($top, $left, $blur, $color, $inset: false) {
-  @if $inset {
-    box-shadow: inset $top $left $blur $color;
-  }
-
-  @else {
-    box-shadow: $top $left $blur $color;
-  }
-}
-
-@mixin clickable {
-  transform: scale3d(1.2, 1.2, 1);
-}
-
-/* --------------------- MIXIN END --------------------- */
-
-/* --------------------- TOP BAR START --------------------- */
-.top-bar {
-  height: $top-bar-height + px;
-  margin-bottom: $segments-spacing + px;
-  text-transform: uppercase;
-
-  .top-any {
-    height: 100%;
-    text-align: center;
-  }
-}
-
-.top-control>img {
-  height: $top-control-size + px;
-  position: relative;
-  transition: $transition-slow + s;
-
-  &:hover {
-    @include clickable;
-  }
-
-  &:first-child>img {
-    right: -$curve-width / 2 + px;
-    z-index: $zindex-dropdown;
-  }
-
-  &:last-child>img {
-    right: $curve-width / 2 + px;
-    z-index: $zindex-dropdown;
-  }
-}
-
-.left-curve,
-.right-curve {
-  background-image: url('../images/curve.svg');
-  background-size: 100% 100%;
-  height: 100% !important;
-  position: relative;
-  right: -1px;
-  width: $curve-width + px;
-}
-
-.right-curve {
-  position: relative;
-  right: 1px;
-  transform: scaleX(-1);
-}
-
-.left-score-box {
-  background-color: $top-background-color;
-  border-radius: 0 0 $size-8 + px $size-8 + px;
-  padding-left: $score-box-padding + px;
-}
-
-.right-score-box {
-  background-color: $top-background-color;
-  border-radius: 0 0 $size-8 + px $size-8 + px;
-  padding-right: $score-box-padding + px;
-}
-
-.score-container {
-  width: 100%;
-}
-
-.player-name {
-  background-image: url('../images/star.svg');
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  color: $dark-purple;
-  font-size: $player-name-font-size + px;
-  font-weight: bold;
-  height: $player-name-size + px;
-  left: $player-name-size / 4 + px;
-  position: relative;
-  width: $player-name-size + px;
-  z-index: $zindex-dropdown;
-}
-
-.player-score {
-  @include box-shadow(0, $size-2 + px, 0, $light-gray, false);
-  border-radius: 0 $size-8 + px $size-8 + px 0;
-  font-weight: bold;
-  height: $player-score-height + px;
-  left: -$player-name-size / 4 + px;
-  position: relative;
-  width: $player-score-width + px;
-}
-
-@keyframes updateScore {
-  0% {
-    font-size: $player-score-font-size + px;
-    transform: rotate(-360deg);
-  }
-
-  50% {
-    font-size: $player-score-font-size * 2 + px;
-  }
-
-  100% {
-    font-size: $player-score-font-size + px;
-    transform: rotate(0);
-  }
-}
-
-.player-score>span {
-  animation: updateScore .4s cubic-bezier(.25, .46, .45, .94) both;
-  font-size: $player-score-font-size + px;
-}
-
-.player-name,
-.player-score {
-  align-items: center;
-  display: flex;
-  justify-content: center;
-}
-
-.player-1 {
-  background-image: linear-gradient(90deg, $dark-purple, $white-purple);
-}
-
-.player-2 {
-  background-image: linear-gradient(90deg, $dark-purple, $white-magenta);
-}
-
-.top-center {
-  background-color: $top-background-color-transparent !important;
-}
-
-.top-logo {
-  height: 100%;
-  text-transform: uppercase;
-  width: $top-logo-width + px;
-}
-
-.top-logo>img {
-  left: ($top-logo-width - $top-logo-frame-width) / 2 + px;
-  position: relative;
-  top: $top-logo-frame-top + px;
-  width: $top-logo-frame-width + px;
-}
-
-/* --------------------- TOP BAR END --------------------- */
-
-/* --------------------- BOARD START --------------------- */
 @keyframes flip-diagonal-2-br {
   0% {
     transform: scaleY(0);
@@ -177,252 +21,6 @@
   100% {
     transform: scaleY(1);
   }
-}
-
-.board {
-  animation: flip-diagonal-2-br .4s cubic-bezier(.455, .03, .515, .955) both;
-  background-color: $top-background-color;
-  border-radius: $board-padding * 1.5 + px;
-  display: table;
-  margin: 0 auto;
-  padding: $board-padding + px;
-  position: relative;
-}
-
-/* --------------------- BOARD END --------------------- */
-
-/* --------------------- CELLS START --------------------- */
-.wrapper-cell {
-  border-bottom: $cell-border + px $light-purple solid;
-  border-right: $cell-border + px $light-purple solid;
-  float: left;
-
-  &:last-child {
-    border-right: 0;
-  }
-}
-
-.last-board-row {
-  .wrapper-cell {
-    border-bottom: 0;
-  }
-}
-
-.cell,
-.wild-card {
-  border-radius: $cell-size / 3 + px;
-  display: inline-block;
-  font-size: $cell-font-size + px;
-  font-weight: bold;
-  height: $cell-size + px;
-  line-height: $cell-size + px;
-  margin: $cell-margin + px;
-  text-align: center;
-  vertical-align: middle;
-  width: $cell-size + px;
-}
-
-.wild-card {
-  background-color: $white-purple;
-  color: $dark-purple;
-  font-size: $wildcard-font-size + px;
-  position: absolute;
-}
-
-.hid {
-  background-color: $top-background-color;
-  color: $top-background-color-transparent;
-}
-
-@for $value from 1 through 9 {
-  $name: cell-value-#{$value};
-
-  @if $value>=1 and $value <=3 {
-    .#{$name} {
-      background-color: $low-cell-color;
-    }
-  }
-
-  @else if $value>=4 and $value <=6 {
-    .#{$name} {
-      background-color: $med-cell-color;
-    }
-  }
-
-  @else if $value>=7 and $value <=9 {
-    .#{$name} {
-      background-color: $hig-cell-color;
-    }
-  }
-}
-
-@keyframes highlightSelectableCell {
-  0% {
-    background-color: $dark-purple;
-  }
-
-  50% {
-    background-color: $white-purple;
-  }
-
-  100% {
-    background-color: $dark-purple;
-  }
-}
-
-.selectable {
-  animation: highlightSelectableCell 2.5s ease-in-out infinite;
-  transition: $transition-slow + s;
-
-  &:hover {
-    @include clickable;
-  }
-}
-
-.agent {
-  background-color: $white-magenta;
-  pointer-events: none;
-}
-
-/* --------------------- CELLS END --------------------- */
-
-/* --------------------- FOOTER START --------------------- */
-.bottom-bar {
-  margin-top: $segments-spacing + px;
-}
-
-.bottom-bar>div {
-  margin: 0 $size-32 + px;
-}
-
-.socials-box {
-  @include box-shadow($size-4 + px, $size-4 + px, 0, $light-gray, false);
-  background-color: $top-background-color;
-  border-radius: $size-32 + px $size-32 + px 0 0;
-  height: $socials-size * 1.5 + px;
-  padding: $size-8 + px $size-16 + px;
-}
-
-.socials-box>img {
-  border-radius: $socials-size / 2 + px;
-  margin-right: $socials-size / 2 + px;
-  transition: $transition-slow + s;
-  width: $socials-size + px;
-
-  &:hover {
-    @include clickable;
-  }
-
-  &:last-child {
-    margin-right: 0;
-  }
-}
-
-
-.copyright-box {
-  text-align: center;
-}
-
-.copyright-box>span {
-  font-size: $copyright-font-size + px;
-}
-
-.copyright-box>span>a {
-  font-weight: bold;
-}
-
-/* --------------------- FOOTER END --------------------- */
-
-/* --------------------- INFO START --------------------- */
-
-#game-info {
-
-  .modal-header,
-  .modal-footer {
-    background-color: $dark-purple;
-  }
-
-  .modal-header>button {
-    color: $number-color;
-  }
-
-  .modal-body,
-  .modal-footer>button {
-    background-color: $light-purple;
-  }
-
-  h3,
-  h4 {
-    font-weight: bold;
-  }
-
-  h4 {
-    text-decoration: underline;
-  }
-
-  p {
-    font-size: $info-font-size + px;
-  }
-
-  .modal-body>img {
-    left: 10%;
-    position: relative;
-    width: 80%;
-  }
-}
-
-
-/* --------------------- INFO END --------------------- */
-
-/* --------------------- SPLASH START --------------------- */
-
-@keyframes show-splash {
-  0% {
-    bottom: 0;
-  }
-
-  99% {
-    bottom: 0;
-  }
-
-  100% {
-    bottom: 9999px;
-  }
-}
-
-#game-splash {
-  animation: show-splash $transition-slow * 1.5 + s cubic-bezier(.25, .46, .45, .94) both;
-  background-image: linear-gradient(45deg, $light-purple, $dark-purple);
-  height: 100%;
-  position: fixed;
-  width: 100%;
-  z-index: $zindex-sticky;
-}
-
-#game-splash>img {
-  display: block;
-  margin: 1.75rem auto;
-  position: relative;
-  top: 100px;
-  width: $splash-size + px;
-}
-
-/* --------------------- SPLASH END --------------------- */
-
-/* --------------------- OTHER START --------------------- */
-a {
-  &:visited {
-    color: $white-magenta;
-  }
-
-  &:link {
-    color: $number-color;
-  }
-}
-
-
-#boardDiv {
-  height: 100vh;
 }
 
 body {
@@ -437,53 +35,30 @@ body {
   user-select: none;
 }
 
+a {
+  &:visited {
+    color: $white-magenta;
+  }
+
+  &:link {
+    color: $number-color;
+  }
+}
+
+#boardDiv {
+  height: 100vh;
+}
+
+.board {
+  animation: flip-diagonal-2-br .4s cubic-bezier(.455, .03, .515, .955) both;
+  background-color: $top-background-color;
+  border-radius: $board-padding * 1.5 + px;
+  display: table;
+  margin: 0 auto;
+  padding: $board-padding + px;
+  position: relative;
+}
+
 .invisible {
   display: none;
 }
-
-@keyframes entryOverlay {
-  0% {
-    transform: scale(0);
-  }
-
-  100% {
-    transform: scale(1);
-  }
-}
-
-.overlay {
-  align-items: center;
-  animation: entryOverlay .5s cubic-bezier(.25, .46, .45, .94);
-  background-color: $light-purple-translucent;
-  border-radius: $board-padding * 1.5 + px;
-  bottom: 0;
-  display: flex;
-  flex-direction: column;
-  font-size: $end-game-text + px;
-  font-weight: bolder;
-  justify-content: center;
-  left: 0;
-  position: absolute;
-  right: 0;
-  top: 0;
-}
-
-.message {
-  background-image: linear-gradient(90deg, $dark-purple, $light-purple);
-  border-radius: $size-16 + px;
-  border-width: $size-8 + px;
-  margin: 0;
-  padding: $size-16 + px;
-}
-
-.overlay>img {
-  height: $top-control-size + px;
-  margin-top: $size-16 + px;
-  transition: $transition-slow + s;
-
-  &:hover {
-    @include clickable;
-  }
-}
-
-/* --------------------- OTHER END --------------------- */

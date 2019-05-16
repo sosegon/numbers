@@ -1,69 +1,68 @@
-@import "variables";
+@import 'variables';
 
-$boardSize: 9;
-$cellSize: $cell-size;
-$marginSize: $cell-margin;
-$paddingSize: $board-padding;
-
-@for $row from 0 through $boardSize {
-	@for $column from 0 through $boardSize {
-		.position_#{$row}_#{$column}:not(.isMoving) {
-			top: (($cellSize + 2 * $marginSize + $cell-border) * $row + $paddingSize) * 1px;
-			left: (($cellSize + 2 * $marginSize + $cell-border) * $column + $paddingSize) * 1px;
-		}
-	}
+@for $row from 0 through $board-size {
+  @for $column from 0 through $board-size {
+    .position_#{$row}_#{$column} {
+      &:not(.isMoving) {
+        left: (($cell-size + 2 * $cell-margin + $cell-border) * $column + $board-padding) * 1px;
+        top: (($cell-size + 2 * $cell-margin + $cell-border) * $row + $board-padding) * 1px;
+      }
+    }
+  }
 }
 
-@for $fromRow from 0 through $boardSize {
-	@for $toRow from 0 through $boardSize {
-		$name: row_from_#{$fromRow}_to_#{$toRow};
+@for $from-row from 0 through $board-size {
+  @for $to-row from 0 through $board-size {
+    $name: row_from_#{$from-row}_to_#{$to-row};
 
-		@if $fromRow == $toRow {
-			.#{$name} {
-				top: (($cellSize + 2 * $marginSize + $cell-border) * $toRow + $paddingSize) * 1px;
-			}
-		} @else {
-			.#{$name} {
-				animation-duration: 0.20s;
-				animation-name: $name;
-				animation-fill-mode: forwards;
-			}
+    @if $from-row == $to-row {
+      .#{$name} {
+        top: (($cell-size + 2 * $cell-margin + $cell-border) * $to-row + $board-padding) * 1px;
+      }
+    } @else {
+      .#{$name} {
+        animation-duration: .2s;
+        animation-fill-mode: forwards;
+        animation-name: $name;
+      }
 
-			@keyframes #{$name} {
-				from {
-					top: (($cellSize + 2 * $marginSize + $cell-border) * $fromRow + $paddingSize) * 1px;
-				}
-				to {
-					top: (($cellSize + 2 * $marginSize + $cell-border) * $toRow + $paddingSize) * 1px;
-				}
-			}
-		}
-	}
+      @keyframes #{$name} {
+        from {
+          top: (($cell-size + 2 * $cell-margin + $cell-border) * $from-row + $board-padding) * 1px;
+        }
+
+        to {
+          top: (($cell-size + 2 * $cell-margin + $cell-border) * $to-row + $board-padding) * 1px;
+        }
+      }
+    }
+  }
 }
 
-@for $fromColumn from 0 through $boardSize {
-	@for $toColumn from 0 through $boardSize {
-		$name: column_from_#{$fromColumn}_to_#{$toColumn};
+@for $from-column from 0 through $board-size {
+  @for $to-column from 0 through $board-size {
+    $name: column_from_#{$from-column}_to_#{$to-column};
 
-		@if $fromColumn == $toColumn {
-			.#{$name} {
-				left: (($cellSize + 2 * $marginSize + $cell-border) * $toColumn + $paddingSize) * 1px;
-			}
-		} @else {
-			.#{$name} {
-				animation-duration: 0.20s;
-				animation-name: $name;
-				animation-fill-mode: forwards;
-			}
+    @if $from-column == $to-column {
+      .#{$name} {
+        left: (($cell-size + 2 * $cell-margin + $cell-border) * $to-column + $board-padding) * 1px;
+      }
+    } @else {
+      .#{$name} {
+        animation-duration: .2s;
+        animation-fill-mode: forwards;
+        animation-name: $name;
+      }
 
-			@keyframes #{$name} {
-				from {
-					left: (($cellSize + 2 * $marginSize + $cell-border) * $fromColumn + $paddingSize) * 1px;
-				}
-				to {
-					left: (($cellSize + 2 * $marginSize + $cell-border) * $toColumn + $paddingSize) * 1px;
-				}
-			}
-		}
-	}
+      @keyframes #{$name} {
+        from {
+          left: (($cell-size + 2 * $cell-margin + $cell-border) * $from-column + $board-padding) * 1px;
+        }
+
+        to {
+          left: (($cell-size + 2 * $cell-margin + $cell-border) * $to-column + $board-padding) * 1px;
+        }
+      }
+    }
+  }
 }
