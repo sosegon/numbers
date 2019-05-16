@@ -103,7 +103,7 @@ const GameComp = ({
                 </div>
             </div>
             <InfoComp id={modalId} style=""/>
-            <div id="game-splash">
+            <div className='game-splash'>
                 <img src="./images/logo.png" />
             </div>
         </div>

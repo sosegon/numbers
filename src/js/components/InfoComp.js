@@ -14,7 +14,7 @@ const InfoComp = ({
     id,
     style
 }) => {
-    let css = ['modal', 'fade'];
+    let css = ['modal', 'fade', 'game-info'];
     css.push(style);
     css = css.join(' ');
 

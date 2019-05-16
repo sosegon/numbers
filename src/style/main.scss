@@ -1,11 +1,12 @@
 @import 'node_modules/bootstrap/scss/bootstrap';
-@import 'variables';
-@import 'mixin';
-@import 'top_bar';
 @import 'cells';
-@import 'splash';
 @import 'footer';
 @import 'game_over';
+@import 'info';
+@import 'mixin';
+@import 'splash';
+@import 'top_bar';
+@import 'variables';
 
 @font-face {
   font-family: Quicksand-Regular;
@@ -45,7 +46,7 @@ a {
   }
 }
 
-#boardDiv {
+.board-div {
   height: 100vh;
 }
 

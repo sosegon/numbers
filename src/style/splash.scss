@@ -14,7 +14,7 @@
   }
 }
 
-#game-splash {
+.game-splash {
   animation: show-splash $transition-slow * 1.5 + s cubic-bezier(.25, .46, .45, .94) both;
   background-image: linear-gradient(45deg, $light-purple, $dark-purple);
   height: 100%;
@@ -23,7 +23,7 @@
   z-index: $zindex-sticky;
 }
 
-#game-splash>img {
+.game-splash>img {
   display: block;
   margin: 1.75rem auto;
   position: relative;
