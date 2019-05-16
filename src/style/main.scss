@@ -41,16 +41,16 @@
   position: relative;
   transition: $transition-slow + s;
 
-  :hover {
+  &:hover {
     @include clickable;
   }
 
-  :first-child>img {
+  &:first-child>img {
     right: -$curve-width / 2 + px;
     z-index: $zindex-dropdown;
   }
 
-  :last-child>img {
+  &:last-child>img {
     right: $curve-width / 2 + px;
     z-index: $zindex-dropdown;
   }
@@ -73,13 +73,13 @@
 }
 
 .left-score-box {
-  background-color: 'white';
+  background-color: $top-background-color;
   border-radius: 0 0 $size-8 + px $size-8 + px;
   padding-left: $score-box-padding + px;
 }
 
 .right-score-box {
-  background-color: 'white';
+  background-color: $top-background-color;
   border-radius: 0 0 $size-8 + px $size-8 + px;
   padding-right: $score-box-padding + px;
 }
@@ -104,7 +104,8 @@
 }
 
 .player-score {
-  @include box-shadow(0, $size-2 + px, 0, $light-gray, false) border-radius: 0 $size-8 + px $size-8 + px 0;
+  @include box-shadow(0, $size-2 + px, 0, $light-gray, false);
+  border-radius: 0 $size-8 + px $size-8 + px 0;
   font-weight: bold;
   height: $player-score-height + px;
   left: -$player-name-size / 4 + px;
@@ -149,7 +150,7 @@
 }
 
 .top-center {
-  background-color: #fff0 !important;
+  background-color: $top-background-color-transparent !important;
 }
 
 .top-logo {
@@ -180,7 +181,7 @@
 
 .board {
   animation: flip-diagonal-2-br .4s cubic-bezier(.455, .03, .515, .955) both;
-  background-color: 'white';
+  background-color: $top-background-color;
   border-radius: $board-padding * 1.5 + px;
   display: table;
   margin: 0 auto;
@@ -196,7 +197,7 @@
   border-right: $cell-border + px $light-purple solid;
   float: left;
 
-  :last-child {
+  &:last-child {
     border-right: 0;
   }
 }
@@ -229,8 +230,8 @@
 }
 
 .hid {
-  background-color: 'white';
-  color: #fff0;
+  background-color: $top-background-color;
+  color: $top-background-color-transparent;
 }
 
 @for $value from 1 through 9 {
@@ -273,7 +274,7 @@
   animation: highlightSelectableCell 2.5s ease-in-out infinite;
   transition: $transition-slow + s;
 
-  :hover {
+  &:hover {
     @include clickable;
   }
 }
@@ -295,7 +296,8 @@
 }
 
 .socials-box {
-  @include box-shadow($size-4 + px, $size-4 + px, 0, $light-gray, false) background-color: 'white';
+  @include box-shadow($size-4 + px, $size-4 + px, 0, $light-gray, false);
+  background-color: $top-background-color;
   border-radius: $size-32 + px $size-32 + px 0 0;
   height: $socials-size * 1.5 + px;
   padding: $size-8 + px $size-16 + px;
@@ -307,11 +309,11 @@
   transition: $transition-slow + s;
   width: $socials-size + px;
 
-  :hover {
+  &:hover {
     @include clickable;
   }
 
-  :last-child {
+  &:last-child {
     margin-right: 0;
   }
 }
@@ -409,11 +411,11 @@
 
 /* --------------------- OTHER START --------------------- */
 a {
-  :visited {
+  &:visited {
     color: $white-magenta;
   }
 
-  :link {
+  &:link {
     color: $number-color;
   }
 }
@@ -468,7 +470,6 @@ body {
 
 .message {
   background-image: linear-gradient(90deg, $dark-purple, $light-purple);
-  border-color: 'red';
   border-radius: $size-16 + px;
   border-width: $size-8 + px;
   margin: 0;
@@ -480,22 +481,9 @@ body {
   margin-top: $size-16 + px;
   transition: $transition-slow + s;
 
-  :hover {
+  &:hover {
     @include clickable;
   }
-}
-
-
-.tryAgain {
-  background-color: #876;
-  border: 0;
-  border-radius: 5px;
-  color: 'black';
-  cursor: pointer;
-  font-size: 20px;
-  font-weight: bold;
-  height: 40px;
-  width: 100px;
 }
 
 /* --------------------- OTHER END --------------------- */
