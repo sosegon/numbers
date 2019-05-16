@@ -3,7 +3,6 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
 
 module.exports = {
 	entry: {
@@ -12,6 +11,11 @@ module.exports = {
 	output: {
 		filename: 'build.js',
 		path: path.join(__dirname, '/built/js/')
+	},
+	devServer: {
+		publicPath: '/js/',
+		contentBase: path.resolve(__dirname, './built'),
+		watchContentBase: true
 	},
 	module: {
 		rules: [
@@ -74,12 +78,6 @@ module.exports = {
 		}),
 		new CopyWebpackPlugin([
 			{from: './src/images', to: '../images'}
-		]),
-		new BrowserSyncPlugin({
-			host: 'localhost',
-			port: 3000,
-			proxy: 'http://localhost:8080/'
-		})
-
+		])
 	]
 };
