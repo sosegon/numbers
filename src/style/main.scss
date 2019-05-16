@@ -44,7 +44,8 @@ a {
 }
 
 .board-div {
-  height: 100vh;
+  height: 100%;
+  position: relative;
 }
 
 .board {
@@ -60,3 +61,44 @@ a {
 .invisible {
   display: none;
 }
+
+@include media-breakpoint-down(lg) {
+
+  .game-root {
+    margin: auto;
+  }
+
+  .left-curve,
+  .right-curve,
+  .top-center {
+    display: none;
+  }
+
+  .left-score-box,
+  .right-score-box {
+    border-radius: $size-8 + px;
+    padding: 0;
+  }
+
+  .left-score-box {
+    margin-left: $size-4 + px;
+    margin-right: $size-2 + px;
+  }
+
+  .right-score-box {
+    margin-left: $size-2 + px;
+    margin-right: $size-4 + px;
+  }
+
+  .top-control {
+
+    &:first-child>img {
+      right: 0;
+    }
+
+    &:last-child>img {
+      right: 0;
+    }
+  }
+}
+

@@ -46,8 +46,8 @@ const GameComp = ({
     });
 
     return (
-        <div>
-            <div className="container">
+        <div className="game-root">
+            <div className="container game-section">
                 <div className="top-bar row d-flex justify-content-center">
 
                     <div className="top-control d-flex">
@@ -78,14 +78,14 @@ const GameComp = ({
 
                 </div>
             </div>
-            <div className="container">
+            <div className="container game-section">
                 <div className='board'>
                     <WildCardCont />
                     { cells }
                     <GameEndCont boardSize={boardSize}/>
                 </div>
             </div>
-            <div className="container">
+            <div className="container game-section">
                 <div className="row bottom-bar d-flex justify-content-between">
                     <div className="align-self-start">
                         <SocialsCont />
