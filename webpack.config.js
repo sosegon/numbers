@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+var HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
@@ -13,7 +14,6 @@ module.exports = {
 		path: path.join(__dirname, './built')
 	},
 	devServer: {
-		publicPath: '/js/',
 		contentBase: path.resolve(__dirname, './built'),
 		watchContentBase: true
 	},
@@ -56,20 +56,22 @@ module.exports = {
 				}
 			},
 			{
-                test: /\.svg/,
-                use: {
-                    loader: 'svg-url-loader',
-                    options: {}
-                }
-            }
+        test: /\.svg/,
+        use: {
+          loader: 'svg-url-loader',
+          options: {}
+        }
+      }
 		]
 	},
 	plugins: [
 		new HtmlWebpackPlugin({
 			title: 'Numbers',
 			filename: 'index.html',
-			template: './src/index.html'
-		}),
+      template: './src/index.html',
+      alwaysWriteToDisk: true
+    }),
+    new HtmlWebpackHarddiskPlugin(),
 		new webpack.ProvidePlugin({
 			'React' : 'react'
 		}),
