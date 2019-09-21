@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "webpack-dev-server --config webpack.config.js",
+    "build": "rm -rf built && webpack",
     "test": "jest"
   },
   "jest": {

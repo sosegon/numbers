@@ -9,8 +9,8 @@ module.exports = {
 		index: path.join(__dirname, './src/js/index.js')
 	},
 	output: {
-		filename: 'build.js',
-		path: path.join(__dirname, '/built/js/')
+		filename: './js/bundle.js',
+		path: path.join(__dirname, './built')
 	},
 	devServer: {
 		publicPath: '/js/',
@@ -52,7 +52,7 @@ module.exports = {
 				test: /\.(woff|woff2|eot|ttf|otf)$/,
 				loader: 'file-loader',
 				options: {
-					outputPath: '../css',
+					outputPath: './css',
 				}
 			},
 			{
@@ -67,17 +67,17 @@ module.exports = {
 	plugins: [
 		new HtmlWebpackPlugin({
 			title: 'Numbers',
-			filename: '../index.html',
+			filename: 'index.html',
 			template: './src/index.html'
 		}),
 		new webpack.ProvidePlugin({
 			'React' : 'react'
 		}),
 		new MiniCssExtractPlugin({
-			filename: '../css/style.css'
+			filename: './css/style.css'
 		}),
 		new CopyWebpackPlugin([
-			{from: './src/images', to: '../images'}
+			{from: './src/images', to: 'images'}
 		])
 	]
 };
