@@ -12,7 +12,8 @@ module.exports = {
 	output: {
 		filename: './js/bundle.js',
 		path: path.join(__dirname, './built')
-	},
+  },
+  devtool: 'inline-source-map',
 	devServer: {
 		contentBase: path.resolve(__dirname, './built'),
 		watchContentBase: true
