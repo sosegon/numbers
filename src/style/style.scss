@@ -1,4 +1,4 @@
-@import 'variables';
+@use 'variables' as *;
 
 @for $row from 0 through $board-size {
   @for $column from 0 through $board-size {
@@ -21,7 +21,7 @@
       }
     } @else {
       .#{$name} {
-        animation-duration: .2s;
+        animation-duration: 0.2s;
         animation-fill-mode: forwards;
         animation-name: $name;
       }
@@ -49,14 +49,15 @@
       }
     } @else {
       .#{$name} {
-        animation-duration: .2s;
+        animation-duration: 0.2s;
         animation-fill-mode: forwards;
         animation-name: $name;
       }
 
       @keyframes #{$name} {
         from {
-          left: (($cell-size + 2 * $cell-margin + $cell-border) * $from-column + $board-padding) * 1px;
+          left: (($cell-size + 2 * $cell-margin + $cell-border) * $from-column + $board-padding) *
+            1px;
         }
 
         to {

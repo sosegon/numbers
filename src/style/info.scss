@@ -1,18 +1,17 @@
-@import 'variables';
+@use 'variables' as *;
 
 .game-info {
-
   .modal-header,
   .modal-footer {
     background-color: $dark-purple;
   }
 
-  .modal-header>button {
+  .modal-header > button {
     color: $number-color;
   }
 
   .modal-body,
-  .modal-footer>button {
+  .modal-footer > button {
     background-color: $light-purple;
   }
 
@@ -29,7 +28,7 @@
     font-size: $info-font-size + px;
   }
 
-  .modal-body>img {
+  .modal-body > img {
     left: 10%;
     position: relative;
     width: 80%;

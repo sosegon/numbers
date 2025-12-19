@@ -1,10 +1,11 @@
-@import 'variables';
+@use 'variables' as *;
+@use 'mixin' as *;
 
 .bottom-bar {
   margin-top: $segments-spacing + px;
 }
 
-.bottom-bar>div {
+.bottom-bar > div {
   margin: 0 $size-32 + px;
 }
 
@@ -16,9 +17,9 @@
   padding: $size-8 + px $size-16 + px;
 }
 
-.socials-box>img {
-  border-radius: $socials-size / 2 + px;
-  margin-right: $socials-size / 2 + px;
+.socials-box > img {
+  border-radius: calc($socials-size / 2) + px;
+  margin-right: calc($socials-size / 2) + px;
   transition: $transition-slow + s;
   width: $socials-size + px;
 
@@ -35,10 +36,10 @@
   text-align: center;
 }
 
-.copyright-box>span {
+.copyright-box > span {
   font-size: $copyright-font-size + px;
 }
 
-.copyright-box>span>a {
+.copyright-box > span > a {
   font-weight: bold;
 }

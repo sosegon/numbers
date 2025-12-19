@@ -1,5 +1,5 @@
-@import 'variables';
-@import 'mixin';
+@use 'variables' as *;
+@use 'mixin' as *;
 
 .top-bar {
   height: $top-bar-height + px;
@@ -12,7 +12,7 @@
   }
 }
 
-.top-control>img {
+.top-control > img {
   height: $top-control-size + px;
   position: relative;
   transition: $transition-slow + s;
@@ -21,14 +21,14 @@
     @include clickable;
   }
 
-  &:first-child>img {
+  &:first-child > img {
     right: -$curve-width / 2 + px;
-    z-index: $zindex-dropdown;
+    // z-index: $zindex-dropdown;
   }
 
-  &:last-child>img {
+  &:last-child > img {
     right: $curve-width / 2 + px;
-    z-index: $zindex-dropdown;
+    // z-index: $zindex-dropdown;
   }
 }
 
@@ -76,7 +76,7 @@
   left: $player-name-size / 4 + px;
   position: relative;
   width: $player-name-size + px;
-  z-index: $zindex-dropdown;
+  //z-index: $zindex-dropdown;
 }
 
 .player-score {
@@ -105,8 +105,8 @@
   }
 }
 
-.player-score>span {
-  animation: updateScore .4s cubic-bezier(.25, .46, .45, .94) both;
+.player-score > span {
+  animation: updateScore 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
   font-size: $player-score-font-size + px;
 }
 
@@ -135,7 +135,7 @@
   width: $top-logo-width + px;
 }
 
-.top-logo>img {
+.top-logo > img {
   left: ($top-logo-width - $top-logo-frame-width) / 2 + px;
   position: relative;
   top: $top-logo-frame-top + px;

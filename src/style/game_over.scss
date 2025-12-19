@@ -1,4 +1,5 @@
-@import 'variables';
+@use 'variables' as *;
+@use 'mixin' as *;
 
 @keyframes entryOverlay {
   0% {
@@ -12,7 +13,7 @@
 
 .overlay {
   align-items: center;
-  animation: entryOverlay .5s cubic-bezier(.25, .46, .45, .94);
+  animation: entryOverlay 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   background-color: $light-purple-translucent;
   border-radius: $board-padding * 1.5 + px;
   bottom: 0;
@@ -35,7 +36,7 @@
   padding: $size-16 + px;
 }
 
-.overlay>img {
+.overlay > img {
   height: $top-control-size + px;
   margin-top: $size-16 + px;
   transition: $transition-slow + s;

@@ -1,13 +1,13 @@
-@import 'node_modules/bootstrap/scss/bootstrap';
-@import 'style';
-@import 'cells';
-@import 'footer';
-@import 'game_over';
-@import 'info';
-@import 'mixin';
-@import 'splash';
-@import 'top_bar';
-@import 'variables';
+@use 'node_modules/bootstrap/scss/bootstrap' as *;
+@use 'variables' as *;
+@use 'mixin' as *;
+@use 'style';
+@use 'cells';
+@use 'footer';
+@use 'game_over';
+@use 'info';
+@use 'splash';
+@use 'top_bar';
 
 @font-face {
   font-family: Quicksand-Regular;
@@ -49,7 +49,7 @@ a {
 }
 
 .board {
-  animation: flip-diagonal-2-br .4s cubic-bezier(.455, .03, .515, .955) both;
+  animation: flip-diagonal-2-br 0.4s cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
   background-color: $top-background-color;
   border-radius: $board-padding * 1.5 + px;
   display: table;
@@ -63,7 +63,6 @@ a {
 }
 
 @include media-breakpoint-down(lg) {
-
   .game-root {
     margin: auto;
   }
@@ -91,14 +90,12 @@ a {
   }
 
   .top-control {
-
-    &:first-child>img {
+    &:first-child > img {
       right: 0;
     }
 
-    &:last-child>img {
+    &:last-child > img {
       right: 0;
     }
   }
 }
-
