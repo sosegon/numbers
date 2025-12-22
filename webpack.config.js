@@ -27,8 +27,15 @@ module.exports = {
                 use: [{ loader: 'html-loader', options: { minimize: false } }],
             },
             {
-                test: /\.js$/,
-                loader: 'babel-loader',
+                test: /\.[jt]sx?$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-react', '@babel/preset-env'],
+                        plugins: ['@babel/plugin-transform-class-properties'],
+                    },
+                },
             },
             {
                 test: /\.s[ac]ss$/i,
