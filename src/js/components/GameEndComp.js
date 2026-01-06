@@ -11,9 +11,10 @@ const ResetButton = styled.default.button`
     border-color: ${({ theme }) => theme.colors.primary};
     color: ${({ theme }) => theme.colors.secondary};
     transition:
-        border-color 0.3s,
-        color 0.3s;
+    border-color 0.3s,
+    color 0.3s;
     &:hover {
+        cursor: pointer;
         border-color: ${({ theme }) => theme.colors.secondary};
         color: ${({ theme }) => theme.colors.primary};
         transition:

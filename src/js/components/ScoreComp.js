@@ -58,7 +58,7 @@ const ScoreComp = ({ score, name, direction }) => {
                             textTransform: 'uppercase',
                         }}
                     >
-                        // {name} //
+                        {`// ${name} //`}
                     </div>
                     <div
                         style={{
@@ -82,7 +82,7 @@ const ScoreComp = ({ score, name, direction }) => {
                     {isAi ? <AiIcon width="70%" /> : <HumanIcon width="70%" />}
                 </IconContainer>
             </div>
-            <div style={{ textTransform: 'uppercase' }}> &gt; {direction}</div>
+            <div style={{ textTransform: 'uppercase' }}> {`> ${direction}`}</div>
         </ScoreWrapper>
     );
 };

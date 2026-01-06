@@ -33,14 +33,7 @@ const WildCardComp = ({ rowIndex, colIndex }) => {
     };
     return (
         <CellSpan style={style}>
-            <TokenIcon
-                width="80%"
-                style={{
-                    svg: {
-                        fill: 'red',
-                    },
-                }}
-            />
+            <TokenIcon width="80%" />
         </CellSpan>
     );
 };

@@ -119,7 +119,7 @@ const GameComp = ({ board, player1Direction, player2Direction, reset }) => {
                     <TitleContainer>
                         <h1 style={{ margin: 0 }}>Numbers</h1>
                         <p style={{ fontSize: '10px', margin: 0 }}>
-                            // MAXIMIZE YOUR SCORE IN THE GRID //{' '}
+                            {'// MAXIMIZE YOUR SCORE IN THE GRID //'}
                         </p>
                     </TitleContainer>
                     <ResetButton
