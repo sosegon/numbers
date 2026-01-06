@@ -21,6 +21,9 @@ jobs:
       - name: Install dependencies
         run: npm install --force
 
+      - name: Generate documentation
+        run: npm run docs
+
       - name: Build project
         run: npm run build
 
