@@ -1,11 +1,11 @@
-const { Token } = require('./Token.js');
+const { Token } = require('@model/Token');
 
 const setup = () => {
     const token = new Token(9);
     return { token };
 };
 
-describe("Token", () => {
+describe('Token', () => {
     it('should create token', () => {
         const { token } = setup();
         expect(token.rowIndex).toBeGreaterThanOrEqual(0);
@@ -52,7 +52,7 @@ describe("Token", () => {
             rowIndex: 1,
             colIndex: 2,
             oldRowIndex: 1,
-            oldColIndex: 2
+            oldColIndex: 2,
         });
     });
 
@@ -60,21 +60,18 @@ describe("Token", () => {
         const { token } = setup();
         token.set(1, 2);
         expect(token.toString()).toEqual(
-            "{\"rowIndex\":1," +
-            "\"colIndex\":2," +
-            "\"oldRowIndex\":1," +
-            "\"oldColIndex\":2}"
+            '{"rowIndex":1,' + '"colIndex":2,' + '"oldRowIndex":1,' + '"oldColIndex":2}'
         );
     });
 
-    it("should update from object (ideal)", () => {
+    it('should update from object (ideal)', () => {
         const { token } = setup();
         token.set(1, 2);
         const object = {
             rowIndex: 10,
             colIndex: 20,
             oldRowIndex: 100,
-            oldColIndex: 200
+            oldColIndex: 200,
         };
         token.updateFromObject(object);
         expect(token.rowIndex).toEqual(10);
@@ -83,7 +80,7 @@ describe("Token", () => {
         expect(token.oldColIndex).toEqual(200);
     });
 
-    it("should update from object (empty)", () => {
+    it('should update from object (empty)', () => {
         const { token } = setup();
         token.set(1, 2);
         const object = {};
@@ -94,22 +91,24 @@ describe("Token", () => {
         expect(token.oldColIndex).toEqual(2);
     });
 
-    it("should update from object (undefined)", () => {
+    it('should update from object (undefined)', () => {
         const { token } = setup();
         token.set(1, 2);
         let object;
-        const update = () => { token.updateFromObject(object); };
+        const update = () => {
+            token.updateFromObject(object);
+        };
         expect(update).toThrowError(/Undefined/);
     });
 
-    it("should update from object (invalid keys)", () => {
+    it('should update from object (invalid keys)', () => {
         const { token } = setup();
         token.set(1, 2);
         const object = {
             rowINdex: 10,
             colINdex: 20,
             oldRowINdex: 100,
-            oldColINdex: 200
+            oldColINdex: 200,
         };
         token.updateFromObject(object);
         expect(token.rowIndex).toEqual(1);
@@ -118,14 +117,14 @@ describe("Token", () => {
         expect(token.oldColIndex).toEqual(2);
     });
 
-    it("should update from object (invalid types)", () => {
+    it('should update from object (invalid types)', () => {
         const { token } = setup();
         token.set(1, 2);
         const object = {
-            rowIndex: "10",
+            rowIndex: '10',
             colIndex: true,
             oldRowIndex: [],
-            oldColIndex: {}
+            oldColIndex: {},
         };
         token.updateFromObject(object);
         expect(token.rowIndex).toEqual(1);

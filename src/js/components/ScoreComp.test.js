@@ -1,19 +1,19 @@
 const React = require('react');
 const { shallow, mount } = require('enzyme');
-const { ScoreComp } = require('./ScoreComp.js');
+const { ScoreComp } = require('@components/ScoreComp');
 
 const setup = () => {
-    const shallowWrapper = shallow(<ScoreComp name={'you'} score={0}/>);
-    const mountWrapper = mount(<ScoreComp name={'agent'} score={0}/>);
+    const shallowWrapper = shallow(<ScoreComp name={'you'} score={0} />);
+    const mountWrapper = mount(<ScoreComp name={'agent'} score={0} />);
 
     return {
         shallowWrapper,
-        mountWrapper
+        mountWrapper,
     };
 };
 
-describe("ScoreComp", () => {
-    it("should render", () => {
+describe('ScoreComp', () => {
+    it('should render', () => {
         const { shallowWrapper, mountWrapper } = setup();
 
         expect(shallowWrapper).toMatchSnapshot();

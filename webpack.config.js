@@ -3,7 +3,6 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 var HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     entry: {
@@ -19,6 +18,19 @@ module.exports = {
             directory: path.resolve(__dirname, './built'),
             watch: true,
         },
+    },
+    resolve: {
+        alias: {
+            '@root': path.resolve(__dirname, 'src/js/'),
+            '@components': path.resolve(__dirname, 'src/js/components/'),
+            '@containers': path.resolve(__dirname, 'src/js/containers/'),
+            '@data': path.resolve(__dirname, 'src/js/data/'),
+            '@model': path.resolve(__dirname, 'src/js/model/'),
+            '@icons': path.resolve(__dirname, 'src/js/icons/'),
+            '@style': path.resolve(__dirname, 'src/style/'),
+            '@test': path.resolve(__dirname, 'src/js/test/'),
+        },
+        extensions: ['.js', '.jsx', '.json'],
     },
     module: {
         rules: [
@@ -38,13 +50,12 @@ module.exports = {
                 },
             },
             {
-                test: /\.s[ac]ss$/i,
+                test: /\.css$/i,
                 use: [
                     process.env.NODE_ENV !== 'production'
                         ? 'style-loader'
                         : MiniCssExtractPlugin.loader,
                     'css-loader',
-                    'sass-loader',
                 ],
             },
             {
@@ -76,9 +87,6 @@ module.exports = {
         }),
         new MiniCssExtractPlugin({
             filename: './css/style.css',
-        }),
-        new CopyWebpackPlugin({
-            patterns: [{ from: './src/images', to: 'images' }],
         }),
     ],
 };

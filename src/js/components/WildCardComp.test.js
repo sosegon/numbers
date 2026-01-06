@@ -1,6 +1,6 @@
 const React = require('react');
 const { shallow, mount } = require('enzyme');
-const { WildCardComp } = require('./WildCardComp.js');
+const { WildCardComp } = require('@components/WildCardComp');
 
 const setup = () => {
     const shallowWrapper = shallow(<WildCardComp />);
@@ -8,12 +8,12 @@ const setup = () => {
 
     return {
         shallowWrapper,
-        mountWrapper
+        mountWrapper,
     };
 };
 
-describe("WildCardComp", () => {
-    it("should render", () => {
+describe('WildCardComp', () => {
+    it('should render', () => {
         const { shallowWrapper, mountWrapper } = setup();
 
         expect(shallowWrapper).toMatchSnapshot();

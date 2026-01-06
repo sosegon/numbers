@@ -1,9 +1,9 @@
-const { Board } = require('./Board.js');
-const { Token } = require('./Token.js');
-const { Player } = require('./Player.js');
-const { Agent } = require('./Agent.js');
-const { updateObjectFromLiteral } = require('./utils.js');
-const { GAME_STATUSES, TURNS, PLAYER_DIRECTIONS, GAME_CONTINUITY } = require('./flags.js');
+const { Board } = require('@model/Board');
+const { Token } = require('@model/Token');
+const { Player } = require('@model/Player');
+const { Agent } = require('@model/Agent');
+const { updateObjectFromLiteral } = require('@model/utils');
+const { GAME_STATUSES, TURNS, PLAYER_DIRECTIONS, GAME_CONTINUITY } = require('@model/flags');
 
 /**
  * Class representing a game. A game is made of a {@link Board} a
@@ -36,7 +36,7 @@ class Game {
             lastValue: 0,
             continuity: GAME_CONTINUITY.CONTINUE,
             turn: TURNS.PLAYER1,
-            status: GAME_STATUSES.RESTING
+            status: GAME_STATUSES.RESTING,
         };
     }
     /**
@@ -70,7 +70,10 @@ class Game {
     moveToken(rowIndex, colIndex) {
         this.token.moveTo(rowIndex, colIndex);
         // Define the direction for the players
-        if (this.player1.direction === PLAYER_DIRECTIONS.NONE || this.player2.direction === PLAYER_DIRECTIONS.NONE) {
+        if (
+            this.player1.direction === PLAYER_DIRECTIONS.NONE ||
+            this.player2.direction === PLAYER_DIRECTIONS.NONE
+        ) {
             let direction = PLAYER_DIRECTIONS.NONE;
 
             if (this.token.oldRowIndex === this.token.rowIndex) {
@@ -81,9 +84,8 @@ class Game {
                     this.player1.direction = PLAYER_DIRECTIONS.VERTICAL;
                     this.player2.direction = PLAYER_DIRECTIONS.HORIZONTAL;
                 } else {
-                    throw new Error("Error setting PLAYER_directions for players");
+                    throw new Error('Error setting PLAYER_directions for players');
                 }
-
             } else if (this.token.oldColIndex === this.token.colIndex) {
                 if (this.snap.turn === TURNS.PLAYER1) {
                     this.player1.direction = PLAYER_DIRECTIONS.VERTICAL;
@@ -92,10 +94,10 @@ class Game {
                     this.player1.direction = PLAYER_DIRECTIONS.HORIZONTAL;
                     this.player2.direction = PLAYER_DIRECTIONS.VERTICAL;
                 } else {
-                    throw new Error("Error setting PLAYER_directions for players");
+                    throw new Error('Error setting PLAYER_directions for players');
                 }
             } else {
-                throw new Error("Error setting PLAYER_directions for players");
+                throw new Error('Error setting PLAYER_directions for players');
             }
         }
     }
@@ -133,7 +135,7 @@ class Game {
         } else if (this.snap.turn === TURNS.PLAYER2) {
             this.player2.incrementScore(this.snap.lastValue);
         } else {
-            throw new Error("Error updating scores");
+            throw new Error('Error updating scores');
         }
     }
     /**
@@ -147,7 +149,7 @@ class Game {
         } else if (this.snap.turn === TURNS.PLAYER2) {
             this.snap.turn = TURNS.PLAYER1;
         } else {
-            throw new Error("Error passing token");
+            throw new Error('Error passing token');
         }
     }
     /**
@@ -165,7 +167,7 @@ class Game {
                 this.snap.continuity = GAME_CONTINUITY.OVER;
             }
         } else {
-            throw new Error("Error checking continuity of game");
+            throw new Error('Error checking continuity of game');
         }
     }
     /**
@@ -179,7 +181,7 @@ class Game {
         } else if (this.snap.turn === TURNS.PLAYER2) {
             return this.player2;
         } else {
-            throw new Error("Error getting current player");
+            throw new Error('Error getting current player');
         }
     }
     /**
@@ -193,7 +195,7 @@ class Game {
         } else if (this.snap.turn === TURNS.PLAYER2) {
             return this.player1;
         } else {
-            throw new Error("Error getting next player");
+            throw new Error('Error getting next player');
         }
     }
     /**
@@ -210,7 +212,7 @@ class Game {
             board: this.board.serialize(),
             player1: this.player1.serialize(),
             player2: this.player2.serialize(),
-            snap: this.snap
+            snap: this.snap,
         };
     }
     /**
@@ -224,19 +226,19 @@ class Game {
     updateFromObject(game) {
         for (const key of Object.keys(game)) {
             switch (key) {
-                case "token":
+                case 'token':
                     this.token.updateFromObject(game[key]);
                     continue;
-                case "board":
+                case 'board':
                     this.board.updateFromVector(game[key]);
                     continue;
-                case "player1":
+                case 'player1':
                     this.player1.updateFromObject(game[key]);
                     continue;
-                case "player2":
+                case 'player2':
                     this.player2.updateFromObject(game[key]);
                     continue;
-                case "snap":
+                case 'snap':
                     updateObjectFromLiteral(this.snap, game[key]);
                     continue;
                 default:
@@ -247,5 +249,5 @@ class Game {
 }
 
 module.exports = {
-    Game
+    Game,
 };

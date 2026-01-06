@@ -15,7 +15,15 @@
     ],
     "setupFiles": [
       "./src/test/setupTests.js"
-    ]
+    ],
+    "moduleNameMapper": {
+      "^@model/(.*)$": "<rootDir>/src/js/model/$1",
+      "^@components/(.*)$": "<rootDir>/src/js/components/$1",
+      "^@icons/(.*)$": "<rootDir>/src/js/icons/$1",
+      "^@containers/(.*)$": "<rootDir>/src/js/containers/$1",
+      "^@root/(.*)$": "<rootDir>/src/js/$1",
+      "^@test/(.*)$": "<rootDir>/src/test/$1"
+    }
   },
   "repository": {
     "type": "git",
@@ -40,7 +48,7 @@
     "babel-core": "^7.0.0-bridge.0",
     "babel-loader": "^8.0.4",
     "babel-plugin-transform-class-properties": "^6.24.1",
-    "copy-webpack-plugin": "^11.0.0",
+    "cheerio": "1.0.0-rc.12",
     "css-loader": "^6.11.0",
     "deep-freeze": "0.0.1",
     "enzyme": "^3.8.0",
@@ -55,8 +63,6 @@
     "prettier": "^3.7.4",
     "redux-mock-store": "^1.5.3",
     "resolve-url-loader": "^3.0.1",
-    "sass": "^1.97.0",
-    "sass-loader": "^13.3.3",
     "style-loader": "^3.3.4",
     "svg-url-loader": "^2.3.2",
     "terser-webpack-plugin": "^5.3.16",
@@ -65,15 +71,13 @@
     "webpack-dev-server": "^5.2.2"
   },
   "dependencies": {
-    "bootstrap": "^4.3.1",
-    "jquery": "^3.3.1",
-    "popper.js": "^1.14.7",
     "prop-types": "^15.6.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^6.0.0",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
+    "styled-components": "^6.1.19",
     "uuid": "^3.3.2"
   }
 }

@@ -1,4 +1,4 @@
-const { updateObjectFromLiteral } = require('./utils.js');
+const { updateObjectFromLiteral } = require('@model/utils');
 
 /**
  * Class representing a cell. A cell is a positioned element in the
@@ -50,5 +50,5 @@ class Cell {
 }
 
 module.exports = {
-    Cell
+    Cell,
 };

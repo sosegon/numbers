@@ -1,12 +1,97 @@
 const React = require('react');
 const PropTypes = require('prop-types');
-const { TURNS } = require('../model/flags.js');
-const { CellCont } = require('../containers/CellCont.js');
-const { WildCardCont } = require('../containers/WildCardCont.js');
-const { GameEndCont } = require('../containers/GameEndCont.js');
-const { ScoreCont } = require('../containers/ScoreCont.js');
-const { SocialsCont } = require('../containers/SocialsCont.js');
-const { InfoComp } = require('../components/InfoComp.js');
+const styled = require('styled-components');
+const { TURNS } = require('@model/flags');
+const { CellCont } = require('@containers/CellCont');
+const { WildCardCont } = require('@containers/WildCardCont');
+const { GameEndCont } = require('@containers/GameEndCont');
+const { ScoreCont } = require('@containers/ScoreCont');
+const { ResetButton } = require('@components/GameEndComp');
+
+const scan = styled.keyframes`
+    0% {
+        top: -100%;
+    }
+    100% {
+        top: 100%;
+    }
+`;
+const Wrapper = styled.default.div`
+    display: flex;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    overflow: hidden;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    padding: 16px;
+    width: fit-content;
+    height: fit-content;
+    margin: 0 auto;
+    border: 2px solid;
+    border-color: ${({ theme }) => theme.colors.primaryLight};
+    border-radius: 16px;
+    background-color: ${({ theme }) => theme.colors.tertiaryDark};
+    box-shadow: 0 0 30px rgba(0, 255, 255, 0.3), 0 0 60px rgba(255, 0, 255, 0.2);
+    &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        background: linear-gradient(transparent 0%, rgba(0, 255, 255, 0.1) 50%, transparent 100%);
+        animation: ${scan} 9s linear infinite;
+        margin: 0 auto;
+    }
+`;
+
+const FlexContainer = styled.default.div`
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    margin: 0 auto;
+    width: 400px;
+    align-items: end;
+    justify-content: center;
+`;
+
+const ScoresContainer = styled.default.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 400px;
+    margin: 0 auto;
+    gap: 16px;
+`;
+
+const TitleContainer = styled.default.div`
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: space-between;
+    width: auto;
+    flex: 1 0 auto;
+    color: ${({ theme }) => theme.colors.primary};
+    text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00ffff;
+`;
+
+const Board = styled.default.div`
+    background-color: ${({ theme }) => theme.colors.black};
+    border-radius: ${({ theme }) => theme.sizes.boardPadding}px;
+    display: table;
+    margin: 0 auto;
+    padding: ${({ theme }) => theme.sizes.boardPadding}px;
+    position: relative;
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgb(34 211 238 / 0.5);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.2), inset 0 0 20px rgba(0, 255, 255, 0.05);
+`;
 
 /**
  * Functional {@link https://reactjs.org/docs/react-component.html|Component}
@@ -17,104 +102,55 @@ const { InfoComp } = require('../components/InfoComp.js');
  * @param {array} props.board 2 dimensional array of numbers representing the
  * values of {@link Cell|Cells} in a {@link Board}.
  */
-const GameComp = ({
-    reset,
-    board
-}) => {
-    let modalId = "game-info";
-    let modalIdHash = "#" + modalId;
+const GameComp = ({ board, player1Direction, player2Direction, reset }) => {
     let boardSize = board.length;
-    let cells = board.map((row, rowIndex) => {
-        let style = ['board-row'];
-
-        if(rowIndex === boardSize - 1) {
-            style.push('last-board-row');
-        }
-
-        style = style.join(' ');
-
-        return (
-            <div className={style}>
-                {
-                    row.map((col, colIndex) => <CellCont
-                        rowIndex = { rowIndex }
-                        colIndex = { colIndex }
-                        value = { col } />)
-                }
-            </div>
-        );
-    });
+    let cells = board.map((row, rowIndex) => (
+        <div>
+            {row.map((col, colIndex) => (
+                <CellCont rowIndex={rowIndex} colIndex={colIndex} value={col} />
+            ))}
+        </div>
+    ));
 
     return (
-        <div className="game-root">
-            <div className="container game-section">
-                <div className="top-bar row d-flex justify-content-center">
-
-                    <div className="top-control d-flex">
-                        <img className="mt-auto" src="./images/restart.png" onClick={reset} />
-                    </div>
-
-                    <div className="left-curve"/>
-                    <div className="left-score-box d-flex">
-                        <ScoreCont playerName={TURNS.PLAYER1}/>
-                    </div>
-                    <div className="right-curve"/>
-
-                    <div className="top-center">
-                        <div className="top-logo">
-                            <img src="./images/logo.png" />
-                        </div>
-                    </div>
-
-                    <div className="left-curve"/>
-                    <div className="right-score-box d-flex">
-                        <ScoreCont playerName={TURNS.PLAYER2}/>
-                    </div>
-                    <div className="right-curve"/>
-
-                    <div className="top-control d-flex">
-                        <img className="mt-auto" src="./images/info.png" data-toggle="modal" data-target={modalIdHash}/>
-                    </div>
-
-                </div>
+        <Wrapper>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                <FlexContainer>
+                    <TitleContainer>
+                        <h1 style={{ margin: 0 }}>Numbers</h1>
+                        <p style={{ fontSize: '10px', margin: 0 }}>
+                            // MAXIMIZE YOUR SCORE IN THE GRID //{' '}
+                        </p>
+                    </TitleContainer>
+                    <ResetButton
+                        style={{
+                            maxWidth: 'fit-content',
+                        }}
+                        onClick={() => reset()}
+                    >
+                        RESTART
+                    </ResetButton>
+                </FlexContainer>
+                <ScoresContainer>
+                    <ScoreCont playerName={TURNS.PLAYER1} direction={player1Direction} />
+                    <ScoreCont playerName={TURNS.PLAYER2} direction={player2Direction} />
+                </ScoresContainer>
             </div>
-            <div className="container game-section">
-                <div className='board'>
-                    <WildCardCont />
-                    { cells }
-                    <GameEndCont boardSize={boardSize}/>
-                </div>
-            </div>
-            <div className="container game-section">
-                <div className="row bottom-bar d-flex justify-content-between">
-                    <div className="align-self-start">
-                        <SocialsCont />
-                    </div>
-                    <div className="copyright-box align-self-start">
-                        <span>
-                            Copyright © 2019 <a href="https:sosegon.github.io/se-vel" target="_blank">
-                                Se-Vel
-                            </a>.
-                        </span><br />
-                        <span>
-                            All Rights Reserved.
-                        </span>
-                    </div>
-                </div>
-            </div>
-            <InfoComp id={modalId} style=""/>
-            <div className='game-splash'>
-                <img src="./images/logo.png" />
-            </div>
-        </div>
+            <Board>
+                <WildCardCont />
+                {cells}
+                <GameEndCont boardSize={boardSize} />
+            </Board>
+        </Wrapper>
     );
 };
 
 GameComp.propTypes = {
     reset: PropTypes.func.isRequired,
-    board: PropTypes.array.isRequired
+    board: PropTypes.array.isRequired,
 };
 
 module.exports = {
-    GameComp
+    GameComp,
+    ResetButton,
 };

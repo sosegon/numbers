@@ -1,12 +1,12 @@
-const { Player } = require('./Player.js');
-const { PLAYER_DIRECTIONS } = require('./flags.js');
+const { Player } = require('@model/Player');
+const { PLAYER_DIRECTIONS } = require('@model/flags');
 const {
     rotateClockwise,
     rotateIndicesClockwise,
     rotateIndicesCounterClockwise,
     getGainsMatrix,
-    getBestGain
-} = require('./utils.js');
+    getBestGain,
+} = require('@model/utils');
 
 /**
  * Class representing an agent. An agent is a {@link Player}
@@ -58,7 +58,11 @@ class Agent extends Player {
 
         if (this.direction === PLAYER_DIRECTIONS.HORIZONTAL) {
             nBoardMatrix = rotateClockwise(boardMatrix);
-            let indices = rotateIndicesClockwise(token.rowIndex, token.colIndex, nBoardMatrix.length);
+            let indices = rotateIndicesClockwise(
+                token.rowIndex,
+                token.colIndex,
+                nBoardMatrix.length
+            );
             nTokenColIndex = indices[1];
         }
 
@@ -76,7 +80,11 @@ class Agent extends Player {
 
         if (maxValue > 0) {
             if (this.direction === PLAYER_DIRECTIONS.HORIZONTAL) {
-                return rotateIndicesCounterClockwise(indexMaxValue, nTokenColIndex, nBoardMatrix.length);
+                return rotateIndicesCounterClockwise(
+                    indexMaxValue,
+                    nTokenColIndex,
+                    nBoardMatrix.length
+                );
             }
             return [indexMaxValue, nTokenColIndex];
         }
@@ -103,7 +111,11 @@ class Agent extends Player {
 
         if (this.direction === PLAYER_DIRECTIONS.HORIZONTAL) {
             nBoardMatrix = rotateClockwise(nBoardMatrix);
-            let indices = rotateIndicesClockwise(token.rowIndex, token.colIndex, nBoardMatrix.length);
+            let indices = rotateIndicesClockwise(
+                token.rowIndex,
+                token.colIndex,
+                nBoardMatrix.length
+            );
             nTokenRowIndex = indices[0];
             nTokenColIndex = indices[1];
         }
@@ -114,7 +126,11 @@ class Agent extends Player {
         let position = [-1, -1];
         if (indexBestGain >= 0) {
             if (this.direction === PLAYER_DIRECTIONS.HORIZONTAL) {
-                position = rotateIndicesCounterClockwise(indexBestGain, nTokenColIndex, nBoardMatrix.length);
+                position = rotateIndicesCounterClockwise(
+                    indexBestGain,
+                    nTokenColIndex,
+                    nBoardMatrix.length
+                );
             } else {
                 position = [indexBestGain, nTokenColIndex];
             }
@@ -184,7 +200,11 @@ class Agent extends Player {
 
         if (this.direction === PLAYER_DIRECTIONS.HORIZONTAL) {
             nBoardMatrix = rotateClockwise(nBoardMatrix);
-            let indices = rotateIndicesClockwise(token.rowIndex, token.colIndex, nBoardMatrix.length);
+            let indices = rotateIndicesClockwise(
+                token.rowIndex,
+                token.colIndex,
+                nBoardMatrix.length
+            );
             nTokenRowIndex = indices[0];
             nTokenColIndex = indices[1];
         }
@@ -221,7 +241,11 @@ class Agent extends Player {
 
         if (indexMaxAvgValue >= 0) {
             if (this.direction === PLAYER_DIRECTIONS.HORIZONTAL) {
-                return rotateIndicesCounterClockwise(indexMaxAvgValue, nTokenColIndex, nBoardMatrix.length);
+                return rotateIndicesCounterClockwise(
+                    indexMaxAvgValue,
+                    nTokenColIndex,
+                    nBoardMatrix.length
+                );
             }
             return [indexMaxAvgValue, nTokenColIndex];
         }
@@ -231,5 +255,5 @@ class Agent extends Player {
 }
 
 module.exports = {
-    Agent
+    Agent,
 };

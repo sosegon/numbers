@@ -1,15 +1,22 @@
-require('../style/main.scss');
+require('@style/main.css');
 const ReactDOM = require('react-dom/client');
 const { createStore, applyMiddleware } = require('redux');
 const thunk = require('redux-thunk').default;
 const { Provider } = require('react-redux');
-const { LocalStorageManager } = require('./data/LocalStorageManager.js');
-const { GameCont } = require('./containers/GameCont.js');
-const { initialState, reduce } = require('./reducer.js');
-const { PLAYER_DIRECTIONS, TURNS, GAME_CONTINUITY } = require('./model/flags.js');
-const { Game } = require('./model/Game.js');
+const styled = require('styled-components');
+const { LocalStorageManager } = require('@data/LocalStorageManager');
+const { GameCont } = require('@containers/GameCont');
+const { initialState, reduce } = require('@root/reducer');
+const { PLAYER_DIRECTIONS, TURNS, GAME_CONTINUITY } = require('@model/flags');
+const { Game } = require('@model/Game');
+const theme = require('@root/theme');
 
-const NumbersApp = () => <GameCont boardSize={9} />;
+const ThemeProvider = styled.ThemeProvider || styled.default.ThemeProvider;
+const NumbersApp = () => (
+    <ThemeProvider theme={theme}>
+        <GameCont boardSize={9} />
+    </ThemeProvider>
+);
 
 const localStorageManager = new LocalStorageManager();
 const getGame = () => {
@@ -41,7 +48,7 @@ const saveGame = () => {
 
 store.subscribe(saveGame);
 
-const container = document.getElementById('boardDiv');
+const container = document.getElementById('board-game');
 const root = ReactDOM.createRoot(container);
 root.render(
     <Provider store={store}>

@@ -1,18 +1,10 @@
 const { connect } = require('react-redux');
-const { WildCardComp } = require('../components/WildCardComp.js');
-
-const generateStyle = (token) => {
-    let classArray = ['wild-card'];
-    classArray.push('position_' + token.rowIndex + '_' + token.colIndex);
-    classArray.push('row_from_' + token.oldRowIndex + '_to_' + token.rowIndex);
-    classArray.push('column_from_' + token.oldColIndex + '_to_' + token.colIndex);
-
-    return classArray.join(' ');
-};
+const { WildCardComp } = require('@components/WildCardComp');
 
 const mapStateToProps = (state) => {
     return {
-        style: generateStyle(state.token)
+        rowIndex: state.token.rowIndex,
+        colIndex: state.token.colIndex,
     };
 };
 
@@ -22,5 +14,5 @@ const mapStateToProps = (state) => {
 const WildCardCont = connect(mapStateToProps)(WildCardComp);
 
 module.exports = {
-    WildCardCont
+    WildCardCont,
 };

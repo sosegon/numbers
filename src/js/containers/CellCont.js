@@ -1,11 +1,11 @@
 const PropTypes = require('prop-types');
 const { connect } = require('react-redux');
-const { CellComp } = require('../components/CellComp.js');
-const actions = require('../actions.js');
-const { Token } = require('../model/Token.js');
-const { Agent } = require('../model/Agent.js');
-const { vectorToMatrix } = require('../model/utils.js');
-const { TURNS, PLAYER_DIRECTIONS, GAME_CONTINUITY } = require('../model/flags.js');
+const { CellComp } = require('@components/CellComp');
+const actions = require('@root/actions');
+const { Token } = require('@model/Token');
+const { Agent } = require('@model/Agent');
+const { vectorToMatrix } = require('@model/utils');
+const { TURNS, PLAYER_DIRECTIONS, GAME_CONTINUITY } = require('@model/flags');
 
 const delay = 200;
 
@@ -19,12 +19,10 @@ const isCellSelectable = (state, ownProps) => {
     }
 
     const turn = state.snap.turn;
-    const direction = turn === TURNS.PLAYER1 ?
-        state.player1.direction :
-        state.player2.direction;
+    const direction = turn === TURNS.PLAYER1 ? state.player1.direction : state.player2.direction;
 
     if (direction === PLAYER_DIRECTIONS.NONE) {
-        return (rowIndex === tokenRowIndex || colIndex === tokenColIndex) && value > 0
+        return (rowIndex === tokenRowIndex || colIndex === tokenColIndex) && value > 0;
     } else if (direction === PLAYER_DIRECTIONS.VERTICAL) {
         return colIndex === tokenColIndex && value > 0;
     } else if (direction === PLAYER_DIRECTIONS.HORIZONTAL) {
@@ -34,30 +32,11 @@ const isCellSelectable = (state, ownProps) => {
     }
 };
 
-const generateStyle = (isSelectable, hid, turn, value) => {
-    let classArray = ['cell'];
-    if (isSelectable && turn === TURNS.PLAYER1) {
-        classArray.push('selectable');
-    } else if (isSelectable && turn === TURNS.PLAYER2) {
-        classArray.push('agent');
-    }
-
-    if (hid) {
-        classArray.push('hid');
-    }
-
-    if(value >= 1 && value <= 9) {
-        classArray.push('cell-value-' + value);
-    }
-
-    return classArray.join(' ');
-};
-
 const moveToken = (object) => {
     const { dispatch, getState, position } = object;
 
     dispatch(actions.moveToken(position.rowIndex, position.colIndex));
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         setTimeout(() => resolve({ dispatch, getState }), delay);
     });
 };
@@ -65,13 +44,12 @@ const moveToken = (object) => {
 const updateScores = (object) => {
     const { dispatch, getState } = object;
     dispatch(actions.updateScores());
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         if (getState().snap.continuity === GAME_CONTINUITY.CONTINUE) {
-            console.log(getState().snap.continuity);
             setTimeout(() => resolve({ dispatch, getState }), delay);
         } else {
             // TODO: This is still unclear
-            console.log("TODO: This is still unclear");
+            console.log('TODO: This is still unclear');
         }
     });
 };
@@ -81,17 +59,17 @@ const execAgent = (object) => {
     const agent = new Agent();
     const token = new Token(9); // Argument does not matter
 
-    const boardMatrix = vectorToMatrix(getState().board)
+    const boardMatrix = vectorToMatrix(getState().board);
     agent.updateFromObject(getState().player2);
     token.updateFromObject(getState().token);
 
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         const bestPosition = agent.getMaxGainValuePosition(token, boardMatrix);
         if (bestPosition[0] >= 0 && bestPosition[1] >= 0) {
             const position = { rowIndex: bestPosition[0], colIndex: bestPosition[1] };
             setTimeout(() => resolve({ dispatch, getState, position }), delay);
         } else {
-            console.log("Error in agent");
+            console.log('Error in agent');
         }
     });
 };
@@ -104,32 +82,32 @@ const makeMove = (ownProps, isSelectable) => {
 
         const { rowIndex, colIndex } = ownProps;
         const position = { rowIndex, colIndex };
-        new Promise((resolve, reject) => {
-                resolve({ dispatch, getState, position });
-            })
-            .then(object => moveToken(object))
-            .then(object => updateScores(object))
-            .then(object => execAgent(object))
-            .then(object => moveToken(object))
-            .then(object => updateScores(object));
+        new Promise((resolve) => {
+            resolve({ dispatch, getState, position });
+        })
+            .then((object) => moveToken(object))
+            .then((object) => updateScores(object))
+            .then((object) => execAgent(object))
+            .then((object) => moveToken(object))
+            .then((object) => updateScores(object));
     };
 };
 
 const mapStateToProps = (state, ownProps) => {
     const { rowIndex, colIndex, value } = ownProps;
     const isSelectable = isCellSelectable(state, ownProps);
-    const hid = value <= 0;
+    const taken = value <= 0;
     const turn = state.snap.turn;
-    const style = generateStyle(isSelectable, hid, turn, value);
     const gameStatus = state.snap.status;
 
     return {
         rowIndex,
         colIndex,
-        style,
         isSelectable,
+        turn,
+        taken,
         gameStatus,
-        value
+        value: value <= 0 ? '' : value,
     };
 };
 
@@ -137,14 +115,14 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         onClick: (isSelectable) => {
             dispatch(makeMove(ownProps, isSelectable));
-        }
+        },
     };
 };
 
 const mergeProps = (propsFromState, propFromDispatch) => {
     return {
         ...propsFromState,
-        onClick: () => propFromDispatch.onClick(propsFromState.isSelectable)
+        onClick: () => propFromDispatch.onClick(propsFromState.isSelectable),
     };
 };
 
@@ -160,9 +138,9 @@ const CellCont = connect(mapStateToProps, mapDispatchToProps, mergeProps)(CellCo
 CellCont.propTypes = {
     rowIndex: PropTypes.number.isRequired,
     colIndex: PropTypes.number.isRequired,
-    value: PropTypes.number.isRequired
+    value: PropTypes.number.isRequired,
 };
 
 module.exports = {
-    CellCont
+    CellCont,
 };

@@ -1,4 +1,4 @@
-const { randomInteger, updateObjectFromLiteral } = require('./utils.js');
+const { randomInteger, updateObjectFromLiteral } = require('@model/utils');
 
 /**
  * Class representing a token. A token is the element that moves in the
@@ -26,7 +26,7 @@ class Token {
      */
     moveTo(rowIndex, colIndex) {
         if (rowIndex < 0 || colIndex < 0) {
-            throw new Error("Invalid position");
+            throw new Error('Invalid position');
         }
         this.oldRowIndex = this.rowIndex;
         this.oldColIndex = this.colIndex;
@@ -42,7 +42,7 @@ class Token {
      */
     set(rowIndex, colIndex) {
         if (rowIndex < 0 || colIndex < 0) {
-            throw new Error("Invalid position");
+            throw new Error('Invalid position');
         }
         this.rowIndex = rowIndex;
         this.colIndex = colIndex;
@@ -59,7 +59,7 @@ class Token {
             rowIndex: this.rowIndex,
             colIndex: this.colIndex,
             oldRowIndex: this.oldRowIndex,
-            oldColIndex: this.oldColIndex
+            oldColIndex: this.oldColIndex,
         };
     }
     /**
@@ -81,5 +81,5 @@ class Token {
 }
 
 module.exports = {
-    Token
+    Token,
 };
