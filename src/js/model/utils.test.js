@@ -145,7 +145,7 @@ describe('Utils', () => {
         expect(rowIndex).toEqual(0);
     });
 
-    it('shoudl create random integer', () => {
+    it('should create random integer', () => {
         expect(randomInteger(0, 5)).toBeLessThanOrEqual(5);
         expect(randomInteger(0, 5)).toBeGreaterThanOrEqual(0);
     });

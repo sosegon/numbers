@@ -39,7 +39,7 @@ module.exports = {
                 use: [{ loader: 'html-loader', options: { minimize: false } }],
             },
             {
-                test: /\.[jt]sx?$/,
+                test: /\.jsx?$/,
                 exclude: /node_modules/,
                 use: {
                     loader: 'babel-loader',

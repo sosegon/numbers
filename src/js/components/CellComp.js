@@ -65,7 +65,7 @@ CellComp.propTypes = {
     onClick: PropTypes.func.isRequired,
     value: PropTypes.number.isRequired,
     isSelectable: PropTypes.bool.isRequired,
-    turn: PropTypes.string.isRequired,
+    turn: PropTypes.number.isRequired,
     taken: PropTypes.bool.isRequired,
 };
 

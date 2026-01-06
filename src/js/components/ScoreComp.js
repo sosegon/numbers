@@ -36,7 +36,7 @@ const IconContainer = styled.default.div`
  * @param {string} props.name Name to identify the {@link Player}.
  * @param {string} props.style CSS class name for the score {@link Player}.
  */
-const ScoreComp = ({ score, name, direction, style }) => {
+const ScoreComp = ({ score, name, direction }) => {
     const theme = styled.useTheme();
     const isAi = name.toLowerCase() !== 'you';
 
@@ -90,6 +90,7 @@ const ScoreComp = ({ score, name, direction, style }) => {
 ScoreComp.propTypes = {
     score: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
+    direction: PropTypes.string,
 };
 
 module.exports = {

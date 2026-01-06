@@ -148,6 +148,8 @@ const GameComp = ({ board, player1Direction, player2Direction, reset }) => {
 GameComp.propTypes = {
     reset: PropTypes.func.isRequired,
     board: PropTypes.array.isRequired,
+    player1Direction: PropTypes.string,
+    player2Direction: PropTypes.string,
 };
 
 module.exports = {

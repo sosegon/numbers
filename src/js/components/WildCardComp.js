@@ -46,7 +46,8 @@ const WildCardComp = ({ rowIndex, colIndex }) => {
 };
 
 WildCardComp.propTypes = {
-    style: PropTypes.string.isRequired,
+    rowIndex: PropTypes.number.isRequired,
+    colIndex: PropTypes.number.isRequired,
 };
 
 module.exports = {

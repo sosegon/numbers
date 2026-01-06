@@ -65,8 +65,9 @@ const GameEndComp = ({ isOver, message, reset }) => {
 };
 
 GameEndComp.propTypes = {
-    style: PropTypes.string.isRequired,
     message: PropTypes.string.isRequired,
+    isOver: PropTypes.bool.isRequired,
+    reset: PropTypes.func.isRequired,
 };
 
 module.exports = {

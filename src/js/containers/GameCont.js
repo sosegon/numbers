@@ -29,8 +29,6 @@ const GameCont = connect(mapStateToProps, mapDispatchToProps)(GameComp);
 
 GameCont.propTypes = {
     boardSize: PropTypes.number.isRequired,
-    player1Direction: PropTypes.string.isRequired,
-    player2Direction: PropTypes.string.isRequired,
 };
 
 module.exports = {
