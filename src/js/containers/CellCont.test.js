@@ -1,12 +1,12 @@
 const React = require('react');
-const { shallow, mount } = require('enzyme');
+const { mount } = require('enzyme');
 const { Provider } = require('react-redux');
 const thunk = require('redux-thunk').default;
 const configureStore = require('redux-mock-store').default;
-const { CellComp } = require('../components/CellComp.js');
-const { CellCont } = require('./CellCont.js')
-const { moveToken, updateScores } = require('../actions.js');
-const { GAME_STATUSES } = require('../model/flags.js');
+const { CellComp } = require('@components/CellComp');
+const { CellCont } = require('@containers/CellCont');
+const { moveToken } = require('@root/actions');
+const { GAME_STATUSES } = require('@model/flags');
 const {
     initialState,
     verticalPosition,
@@ -14,13 +14,13 @@ const {
     otherPosition,
     verticalPositionHid,
     horizontalPositionHid,
-    otherPositionHid
-} = require('../../test/utilsTests.js');
+    otherPositionHid,
+} = require('@test/utilsTests.js');
 
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
 
-describe("CellCont", () => {
+describe('CellCont', () => {
     let wrapper, store;
     let containerVertical, containerHorizontal, containerOther;
     let componentVertical, componentHorizontal, componentOther;
@@ -37,27 +37,33 @@ describe("CellCont", () => {
                 <CellCont
                     rowIndex={verticalPosition.rowIndex}
                     colIndex={verticalPosition.colIndex}
-                    value={verticalPosition.value}/>
+                    value={verticalPosition.value}
+                />
                 <CellCont
                     rowIndex={horizontalPosition.rowIndex}
                     colIndex={horizontalPosition.colIndex}
-                    value={horizontalPosition.value}/>
+                    value={horizontalPosition.value}
+                />
                 <CellCont
                     rowIndex={otherPosition.rowIndex}
                     colIndex={otherPosition.colIndex}
-                    value={otherPosition.value}/>
+                    value={otherPosition.value}
+                />
                 <CellCont
                     rowIndex={verticalPositionHid.rowIndex}
                     colIndex={verticalPositionHid.colIndex}
-                    value={verticalPositionHid.value}/>
+                    value={verticalPositionHid.value}
+                />
                 <CellCont
                     rowIndex={horizontalPositionHid.rowIndex}
                     colIndex={horizontalPositionHid.colIndex}
-                    value={horizontalPositionHid.value}/>
+                    value={horizontalPositionHid.value}
+                />
                 <CellCont
                     rowIndex={otherPositionHid.rowIndex}
                     colIndex={otherPositionHid.colIndex}
-                    value={otherPositionHid.value}/>
+                    value={otherPositionHid.value}
+                />
             </Provider>
         );
 
@@ -76,7 +82,7 @@ describe("CellCont", () => {
         componentOtherHid = containerOtherHid.find(CellComp).at(0);
     });
 
-    it("should render container and component", () => {
+    it('should render container and component', () => {
         expect(containerVertical.length).toBeTruthy();
         expect(componentVertical.length).toBeTruthy();
 
@@ -96,22 +102,30 @@ describe("CellCont", () => {
         expect(componentOtherHid.length).toBeTruthy();
     });
 
-    it("should map to container props", () => {
-        const expectedPropKeys = [
-            'rowIndex',
-            'colIndex',
-            'value'
-        ];
-        expect(Object.keys(containerVertical.props())).toEqual(expect.arrayContaining(expectedPropKeys));
-        expect(Object.keys(containerHorizontal.props())).toEqual(expect.arrayContaining(expectedPropKeys));
-        expect(Object.keys(containerOther.props())).toEqual(expect.arrayContaining(expectedPropKeys));
+    it('should map to container props', () => {
+        const expectedPropKeys = ['rowIndex', 'colIndex', 'value'];
+        expect(Object.keys(containerVertical.props())).toEqual(
+            expect.arrayContaining(expectedPropKeys)
+        );
+        expect(Object.keys(containerHorizontal.props())).toEqual(
+            expect.arrayContaining(expectedPropKeys)
+        );
+        expect(Object.keys(containerOther.props())).toEqual(
+            expect.arrayContaining(expectedPropKeys)
+        );
 
-        expect(Object.keys(containerVerticalHid.props())).toEqual(expect.arrayContaining(expectedPropKeys));
-        expect(Object.keys(containerHorizontalHid.props())).toEqual(expect.arrayContaining(expectedPropKeys));
-        expect(Object.keys(containerOtherHid.props())).toEqual(expect.arrayContaining(expectedPropKeys));
+        expect(Object.keys(containerVerticalHid.props())).toEqual(
+            expect.arrayContaining(expectedPropKeys)
+        );
+        expect(Object.keys(containerHorizontalHid.props())).toEqual(
+            expect.arrayContaining(expectedPropKeys)
+        );
+        expect(Object.keys(containerOtherHid.props())).toEqual(
+            expect.arrayContaining(expectedPropKeys)
+        );
     });
 
-    it("should map to component props", () => {
+    it('should map to component props', () => {
         const expectedPropKeys = [
             'rowIndex',
             'colIndex',
@@ -119,18 +133,30 @@ describe("CellCont", () => {
             'isSelectable',
             'gameStatus',
             'value',
-            'onClick'
+            'onClick',
         ];
-        expect(Object.keys(componentVertical.props())).toEqual(expect.arrayContaining(expectedPropKeys));
-        expect(Object.keys(componentHorizontal.props())).toEqual(expect.arrayContaining(expectedPropKeys));
-        expect(Object.keys(componentOther.props())).toEqual(expect.arrayContaining(expectedPropKeys));
+        expect(Object.keys(componentVertical.props())).toEqual(
+            expect.arrayContaining(expectedPropKeys)
+        );
+        expect(Object.keys(componentHorizontal.props())).toEqual(
+            expect.arrayContaining(expectedPropKeys)
+        );
+        expect(Object.keys(componentOther.props())).toEqual(
+            expect.arrayContaining(expectedPropKeys)
+        );
 
-        expect(Object.keys(componentVerticalHid.props())).toEqual(expect.arrayContaining(expectedPropKeys));
-        expect(Object.keys(componentHorizontalHid.props())).toEqual(expect.arrayContaining(expectedPropKeys));
-        expect(Object.keys(componentOtherHid.props())).toEqual(expect.arrayContaining(expectedPropKeys));
+        expect(Object.keys(componentVerticalHid.props())).toEqual(
+            expect.arrayContaining(expectedPropKeys)
+        );
+        expect(Object.keys(componentHorizontalHid.props())).toEqual(
+            expect.arrayContaining(expectedPropKeys)
+        );
+        expect(Object.keys(componentOtherHid.props())).toEqual(
+            expect.arrayContaining(expectedPropKeys)
+        );
     });
 
-    it("should have props with correct values", () => {
+    it('should have props with correct values', () => {
         expect(componentVertical.props().rowIndex).toEqual(verticalPosition.rowIndex);
         expect(componentVertical.props().colIndex).toEqual(verticalPosition.colIndex);
         expect(componentVertical.props().style).toEqual('cell selectable cell-value-7');
@@ -174,8 +200,7 @@ describe("CellCont", () => {
         expect(componentOtherHid.props().value).toEqual(otherPositionHid.value);
     });
 
-    it("should dispatch moveToken action when clicked", async () => {
-
+    it('should dispatch moveToken action when clicked', async () => {
         expect(store.getActions()).toEqual([]);
 
         await componentVertical.find('span').at(0).simulate('click');

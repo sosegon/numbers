@@ -1,4 +1,4 @@
-const types = require('./actionTypes.js');
+const types = require('@root/actionTypes');
 
 /**
  * Actions to be dispatched.
@@ -17,7 +17,7 @@ module.exports = {
         return {
             type,
             rowIndex,
-            colIndex
+            colIndex,
         };
     },
     /**
@@ -36,7 +36,7 @@ module.exports = {
         const type = types.GAME_RESET;
         return {
             type,
-            boardSize
+            boardSize,
         };
-    }
+    },
 };

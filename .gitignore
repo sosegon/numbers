@@ -1,6 +1,7 @@
 node_modules/
 package-lock.json
 built/
+.idea/
 src/experiments
 **/__snapshots__/
 **/_*

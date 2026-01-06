@@ -2,17 +2,14 @@ const React = require('react');
 const { Provider } = require('react-redux');
 const { shallow, mount } = require('enzyme');
 const configureStore = require('redux-mock-store').default;
-const { GameComp } = require('./GameComp.js');
+const { GameComp } = require('@components/GameComp');
 
-const {
-    initialState
-} = require('../../test/utilsTests.js');
+const { initialState } = require('@test/utilsTests.js');
 
 const middlewares = [];
 const mockStore = configureStore(middlewares);
 
-describe("GameComp", () => {
-
+describe('GameComp', () => {
     let shallowWrapper, mountWrapper, store;
 
     const props = {
@@ -22,7 +19,7 @@ describe("GameComp", () => {
             [1, -1, 3, -1, 6],
             [2, 7, 6, 4, 1],
             [5, -1, 9, 0, 2],
-            [8, 7, 9, 2, 1]
+            [8, 7, 9, 2, 1],
         ],
     };
 

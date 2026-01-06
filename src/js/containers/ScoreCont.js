@@ -1,26 +1,23 @@
 const PropTypes = require('prop-types');
 const { connect } = require('react-redux');
-const { ScoreComp } = require('../components/ScoreComp.js');
-const { TURNS } = require('../model/flags.js');
+const { ScoreComp } = require('@components/ScoreComp');
+const { TURNS } = require('@model/flags');
 
 const mapStatToProps = (state, ownProps) => {
-    const { playerName } = ownProps;
-    const name = playerName === TURNS.PLAYER1 ? 'You' : 'AI';
-    const style = playerName === TURNS.PLAYER1 ? 'player-1' : 'player-2';
-    let score = playerName === TURNS.PLAYER1 ?
-        state.player1.score :
-        state.player2.score;
+    const { playerName, direction } = ownProps;
+    const name = playerName === TURNS.PLAYER1 ? 'You' : 'AI CORE';
+    let score = playerName === TURNS.PLAYER1 ? state.player1.score : state.player2.score;
 
-    const digits = 3;
-    score = "" + score;
-    while(score.length < digits) {
-        score = "0" + score;
+    const digits = 2;
+    score = '' + score;
+    while (score.length < digits) {
+        score = '0' + score;
     }
 
     return {
         name,
         score,
-        style
+        direction: direction === 0 ? '' : direction === 1 ? 'rows' : 'columns',
     };
 };
 
@@ -32,9 +29,9 @@ const mapStatToProps = (state, ownProps) => {
 const ScoreCont = connect(mapStatToProps)(ScoreComp);
 
 ScoreCont.propTypes = {
-    playerName: PropTypes.number.isRequired
+    playerName: PropTypes.number.isRequired,
 };
 
 module.exports = {
-    ScoreCont
+    ScoreCont,
 };

@@ -1,6 +1,6 @@
-const { Cell } = require('./Cell.js');
-const { randomInteger, updateObjectFromLiteral, vectorToMatrix } = require('./utils.js');
-const { PLAYER_DIRECTIONS } = require('../model/flags.js');
+const { Cell } = require('@model/Cell');
+const { randomInteger, vectorToMatrix } = require('@model/utils');
+const { PLAYER_DIRECTIONS } = require('@model/flags');
 /**
  * Class representing a board. A board has a matrix of {@link Cell}s.
  */
@@ -31,7 +31,7 @@ class Board {
         for (const i in matrix) {
             let row = [];
             for (const j in matrix[i]) {
-                row.push(new Cell(matrix[i][j], i, j))
+                row.push(new Cell(matrix[i][j], i, j));
             }
             this.cells.push(row);
         }
@@ -47,7 +47,7 @@ class Board {
             const matrix = vectorToMatrix(vector);
             this.updateFromMatrix(matrix);
         } catch (err) {
-            throw err
+            throw err;
         }
     }
     /**
@@ -107,9 +107,8 @@ class Board {
      */
     getValueInCellByToken(token) {
         // TODO: token is invalid if it has negative values in rowIndex or colIndex
-        if (token.rowIndex >= this.cells.length ||
-            token.colIndex >= this.cells.length) {
-            throw new Error("Invalid token position");
+        if (token.rowIndex >= this.cells.length || token.colIndex >= this.cells.length) {
+            throw new Error('Invalid token position');
         }
         return this.cells[token.rowIndex][token.colIndex].value;
     }
@@ -167,9 +166,9 @@ class Board {
      * @returns {array} 1 dimensional array of numbers corresponding to {@link Cell}s' values.
      */
     serialize() {
-        let values = []
-        this.cells.forEach(row => {
-            row.forEach(cell => {
+        let values = [];
+        this.cells.forEach((row) => {
+            row.forEach((cell) => {
                 values.push(cell.value);
             });
         });
@@ -185,7 +184,7 @@ class Board {
         let size = this.cells.length;
         let matrix = [];
         for (let i = 0; i < size; i++) {
-            let row = []
+            let row = [];
             for (let j = 0; j < size; j++) {
                 row.push(this.cells[i][j].value);
             }
@@ -196,5 +195,5 @@ class Board {
 }
 
 module.exports = {
-    Board
+    Board,
 };

@@ -1,7 +1,6 @@
-const { Game } = require('./model/Game.js');
-const { GAME_STATUSES } = require('./model/flags.js');
-const { updateObjectFromLiteral } = require('./model/utils.js');
-const types = require('./actionTypes.js');
+const { Game } = require('@model/Game');
+const { GAME_STATUSES } = require('@model/flags');
+const types = require('@root/actionTypes.js');
 
 const game = new Game(9);
 const initialState = game.serialize();
@@ -14,7 +13,7 @@ const doMoveToken = (state, action) => {
     return game.serialize();
 };
 
-const doUpdateScores = state => {
+const doUpdateScores = (state) => {
     game.updateFromObject(state);
     game.updateCurrentPlayerScore();
     game.updateCellsWhereTokenIs();
@@ -54,5 +53,5 @@ const reduce = (state = initialState, action) => {
 
 module.exports = {
     initialState,
-    reduce
+    reduce,
 };

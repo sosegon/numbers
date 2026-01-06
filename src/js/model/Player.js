@@ -1,5 +1,5 @@
-const { updateObjectFromLiteral } = require('./utils.js');
-const { PLAYER_DIRECTIONS } = require('./flags.js');
+const { updateObjectFromLiteral } = require('@model/utils');
+const { PLAYER_DIRECTIONS } = require('@model/flags');
 
 /**
  * Class representing a player. A player has a direction of playing
@@ -30,7 +30,7 @@ class Player {
     serialize() {
         return {
             score: this.score,
-            direction: this.direction
+            direction: this.direction,
         };
     }
     /**
@@ -48,9 +48,9 @@ class Player {
      */
     updateFromObject(player) {
         updateObjectFromLiteral(this, player);
-    };
+    }
 }
 
 module.exports = {
-    Player
+    Player,
 };

@@ -1,19 +1,22 @@
 const PropTypes = require('prop-types');
 const { connect } = require('react-redux');
-const { GameComp } = require('../components/GameComp.js');
-const actions = require('../actions.js');
-const { vectorToMatrix } = require('../model/utils.js');
-
+const { GameComp } = require('@components/GameComp');
+const actions = require('@root/actions');
+const { vectorToMatrix } = require('@model/utils');
 
 const mapStateToProps = (state) => {
     return {
-        board: vectorToMatrix(state.board)
+        board: vectorToMatrix(state.board),
+        player1Direction: state.player1.direction,
+        player2Direction: state.player2.direction,
     };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        reset: () => { dispatch(actions.resetGame(ownProps.boardSize)) }
+        reset: () => {
+            dispatch(actions.resetGame(ownProps.boardSize));
+        },
     };
 };
 
@@ -25,9 +28,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 const GameCont = connect(mapStateToProps, mapDispatchToProps)(GameComp);
 
 GameCont.propTypes = {
-    boardSize: PropTypes.number.isRequired
+    boardSize: PropTypes.number.isRequired,
 };
 
 module.exports = {
-    GameCont
+    GameCont,
 };
