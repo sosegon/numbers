@@ -40,8 +40,8 @@ const WildCardComp = ({ rowIndex, colIndex, 'data-testid': dataTestId = 'wild-ca
 };
 
 WildCardComp.propTypes = {
-    rowIndex: PropTypes.number,
-    colIndex: PropTypes.number,
+    rowIndex: PropTypes.number.isRequired,
+    colIndex: PropTypes.number.isRequired,
     'data-testid': PropTypes.string,
 };
 

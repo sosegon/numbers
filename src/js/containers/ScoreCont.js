@@ -37,7 +37,6 @@ const mapStatToProps = (state, ownProps) => {
 const ScoreCont = connect(mapStatToProps)(ScoreComp);
 
 ScoreCont.propTypes = {
-    score: PropTypes.number,
     playerName: PropTypes.oneOf(Object.values(TURNS)),
     direction: PropTypes.oneOf(Object.values(PLAYER_DIRECTIONS)),
     'data-testid': PropTypes.string,
