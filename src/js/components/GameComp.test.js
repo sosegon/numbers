@@ -1,47 +1,85 @@
 const React = require('react');
-const { Provider } = require('react-redux');
-const { shallow, mount } = require('enzyme');
+const { render, screen, fireEvent } = require('@testing-library/react');
+require('@testing-library/jest-dom');
+const styled = require('styled-components');
+const thunk = require('redux-thunk').default;
 const configureStore = require('redux-mock-store').default;
+const { Provider } = require('react-redux');
 const { GameComp } = require('@components/GameComp');
-
+const { PLAYER_DIRECTIONS } = require('@model/flags');
 const { initialState } = require('@test/utilsTests.js');
+const theme = require('@root/theme');
 
-const middlewares = [];
+const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
 
 describe('GameComp', () => {
-    let shallowWrapper, mountWrapper, store;
-
-    const props = {
-        reset: jest.fn(),
-        board: [
-            [2, 3, 4, 7, 8],
-            [1, -1, 3, -1, 6],
-            [2, 7, 6, 4, 1],
-            [5, -1, 9, 0, 2],
-            [8, 7, 9, 2, 1],
-        ],
-    };
-
+    let store;
     beforeEach(() => {
         jest.resetAllMocks();
-
         store = mockStore(initialState);
-
-        shallowWrapper = shallow(<GameComp {...props} />);
-        mountWrapper = mount(
-            <Provider store={store}>
-                <GameComp {...props} />
-            </Provider>
-        );
     });
 
+    const baseProps = {
+        board: [
+            [0, 1, 2, 3, 4],
+            [5, 6, 7, 8, 9],
+            [10, 11, 12, 13, 14],
+            [15, 16, 17, 18, 19],
+            [20, 21, 22, 23, 24],
+        ],
+        player1Direction: PLAYER_DIRECTIONS.HORIZONTAL,
+        player2Direction: PLAYER_DIRECTIONS.VERTICAL,
+        reset: jest.fn(),
+        'data-testid': 'game-comp',
+    };
+
+    const renderWithTheme = (props = {}) =>
+        render(
+            React.createElement(
+                styled.ThemeProvider || styled.default.ThemeProvider,
+                { theme },
+                React.createElement(
+                    Provider,
+                    { store },
+                    React.createElement(GameComp, { ...baseProps, ...props })
+                )
+            )
+        );
+
     it('should render', () => {
-        expect(shallowWrapper).toMatchSnapshot();
-        expect(mountWrapper.find('img').length).toBeGreaterThan(0);
-        expect(mountWrapper.find('WildCardComp').length).toEqual(1);
-        expect(mountWrapper.find('CellComp').length).toEqual(25);
-        expect(mountWrapper.find('GameEndComp').length).toEqual(1);
-        expect(mountWrapper.find('ScoreComp').length).toEqual(2);
+        renderWithTheme();
+        expect(screen.getByTestId('game-comp')).toBeInTheDocument();
+    });
+
+    it('should render the right number of cells', () => {
+        renderWithTheme();
+        const cells = screen.getAllByTestId('cell-comp');
+        expect(cells.length).toBe(25);
+    });
+
+    it('should render the right number of scores', () => {
+        renderWithTheme();
+        const scores = screen.getAllByTestId('score-comp');
+        expect(scores.length).toBe(2);
+    });
+
+    it('should render game end', () => {
+        renderWithTheme();
+        const gameEndComp = screen.getByTestId('game-end-comp');
+        expect(gameEndComp).toBeInTheDocument();
+    });
+
+    it('should render wildcard', () => {
+        renderWithTheme();
+        const wildCardComp = screen.getByTestId('wild-card-comp');
+        expect(wildCardComp).toBeInTheDocument();
+    });
+
+    it('should call reset function on button click', () => {
+        renderWithTheme();
+        const button = screen.getByText('RESTART');
+        fireEvent.click(button);
+        expect(baseProps.reset).toHaveBeenCalled();
     });
 });

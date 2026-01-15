@@ -32,11 +32,11 @@ const IconContainer = styled.default.div`
  * that renders the score of a {@link Player}.
  *
  * @param {object} props
- * @param {number} props.score Score of a {@link Player}.
+ * @param {string} props.score Score of a {@link Player}.
  * @param {string} props.name Name to identify the {@link Player}.
- * @param {string} props.style CSS class name for the score {@link Player}.
+ * @param {string} props.direction Direction of the {@link Player}.
  */
-const ScoreComp = ({ score, name, direction }) => {
+const ScoreComp = ({ score, name, direction, 'data-testid': dataTestId = 'score-comp' }) => {
     const theme = styled.useTheme();
     const isAi = name.toLowerCase() !== 'you';
 
@@ -50,6 +50,7 @@ const ScoreComp = ({ score, name, direction }) => {
                     ? 'rgb(255, 0, 255) 0px 0px 10px, rgba(255, 0, 255, 0.2) 0px 0px 10px inset'
                     : 'rgb(0, 255, 255) 0px 0px 10px, rgba(0, 255, 255, 0.2) 0px 0px 10px inset',
             }}
+            data-testid={dataTestId}
         >
             <div style={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'row' }}>
                 <div>
@@ -67,6 +68,7 @@ const ScoreComp = ({ score, name, direction }) => {
                                 ? '0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00ffff'
                                 : '0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 0 30px #ff00ff',
                         }}
+                        data-testid={`${dataTestId}-value`}
                     >
                         {score}
                     </div>
@@ -88,9 +90,10 @@ const ScoreComp = ({ score, name, direction }) => {
 };
 
 ScoreComp.propTypes = {
-    score: PropTypes.number.isRequired,
+    score: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     direction: PropTypes.string,
+    'data-testid': PropTypes.string,
 };
 
 module.exports = {

@@ -1,36 +1,41 @@
 const React = require('react');
-const { shallow, mount } = require('enzyme');
+const { render, screen, fireEvent } = require('@testing-library/react');
+require('@testing-library/jest-dom');
 const styled = require('styled-components');
 const { GameEndComp } = require('@components/GameEndComp');
 const theme = require('@root/theme');
-const ThemeProvider = styled.ThemeProvider || styled.default.ThemeProvider;
-
-const setup = () => {
-    const shallowWrapper = shallow(
-        <ThemeProvider theme={theme}>
-            <GameEndComp style={'overlay'} message={'You won'} />
-        </ThemeProvider>
-    );
-    const mountWrapper = mount(
-        <ThemeProvider theme={theme}>
-            <GameEndComp style={'overlay'} message={'You won'} />
-        </ThemeProvider>
-    );
-
-    return {
-        shallowWrapper,
-        mountWrapper,
-    };
-};
 
 describe('GameEndComp', () => {
-    it('should render (game over, you won)', () => {
-        const { shallowWrapper, mountWrapper } = setup();
+    const baseProps = {
+        isOver: true,
+        message: 'Game Over',
+        reset: jest.fn(),
+        'data-testid': 'game-end-comp',
+    };
 
-        expect(shallowWrapper).toMatchSnapshot();
+    const renderWithTheme = (props = {}) =>
+        render(
+            React.createElement(
+                styled.ThemeProvider || styled.default.ThemeProvider,
+                { theme },
+                React.createElement(GameEndComp, { ...baseProps, ...props })
+            )
+        );
 
-        expect(mountWrapper.find('p').length).toEqual(1);
+    it('should render', () => {
+        renderWithTheme();
+        expect(screen.getByTestId('game-end-comp')).toBeInTheDocument();
+    });
 
-        mountWrapper.unmount();
+    it('should render the correct message', () => {
+        renderWithTheme({ message: 'Game Over' });
+        expect(screen.getByText('Game Over')).toBeInTheDocument();
+    });
+
+    it('should call reset function on button click', () => {
+        renderWithTheme();
+        const button = screen.getByText('RESTART GAME');
+        fireEvent.click(button);
+        expect(baseProps.reset).toHaveBeenCalled();
     });
 });

@@ -1,3 +1,4 @@
+const React = require('react');
 const PropTypes = require('prop-types');
 const { connect } = require('react-redux');
 const { CellComp } = require('@components/CellComp');
@@ -94,7 +95,7 @@ const makeMove = (ownProps, isSelectable) => {
 };
 
 const mapStateToProps = (state, ownProps) => {
-    const { rowIndex, colIndex, value } = ownProps;
+    const { rowIndex, colIndex, value, 'data-testid': dataTestId } = ownProps;
     const isSelectable = isCellSelectable(state, ownProps);
     const taken = value <= 0;
     const turn = state.snap.turn;
@@ -107,7 +108,8 @@ const mapStateToProps = (state, ownProps) => {
         turn,
         taken,
         gameStatus,
-        value: value <= 0 ? '' : value,
+        value,
+        'data-testid': dataTestId,
     };
 };
 
@@ -139,6 +141,7 @@ CellCont.propTypes = {
     rowIndex: PropTypes.number.isRequired,
     colIndex: PropTypes.number.isRequired,
     value: PropTypes.number.isRequired,
+    'data-testid': PropTypes.string,
 };
 
 module.exports = {

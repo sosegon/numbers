@@ -1,45 +1,79 @@
 const React = require('react');
+const { render, screen } = require('@testing-library/react');
+require('@testing-library/jest-dom');
 const { Provider } = require('react-redux');
-const { mount } = require('enzyme');
+const thunk = require('redux-thunk').default;
 const configureStore = require('redux-mock-store').default;
+const styled = require('styled-components');
 const { GameEndCont } = require('@containers/GameEndCont');
-const { GameEndComp } = require('@components/GameEndComp');
-
 const { initialState } = require('@test/utilsTests.js');
+const theme = require('@root/theme');
+const { GAME_CONTINUITY } = require('@model/flags');
 
-const middlewares = [];
+const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
 
 describe('GameEndCont', () => {
-    let wrapper, store, container, component1, component2;
-
+    let store;
     beforeEach(() => {
         jest.resetAllMocks();
-
         store = mockStore(initialState);
+    });
 
-        wrapper = mount(
-            <Provider store={store}>
-                <GameEndCont />
-            </Provider>
+    function renderScore() {
+        render(
+            React.createElement(
+                styled.ThemeProvider || styled.default.ThemeProvider,
+                { theme },
+                React.createElement(
+                    Provider,
+                    { store },
+                    React.createElement(React.Fragment, null, React.createElement(GameEndCont))
+                )
+            )
+        );
+    }
+
+    it('should render component', () => {
+        renderScore();
+        expect(screen.getByTestId('game-end-comp')).toBeInTheDocument();
+    });
+
+    it('should update score when store changes', () => {
+        const { rerender } = render(
+            React.createElement(
+                styled.ThemeProvider || styled.default.ThemeProvider,
+                { theme },
+                React.createElement(
+                    Provider,
+                    { store },
+                    React.createElement(React.Fragment, null, React.createElement(GameEndCont))
+                )
+            )
+        );
+        expect(screen.getByTestId('game-end-comp').style.display).toEqual('none');
+
+        // Create a new store
+        const updatedStore = mockStore({
+            ...initialState,
+            snap: {
+                ...initialState.snap,
+                continuity: GAME_CONTINUITY.OVER,
+            },
+        });
+
+        rerender(
+            React.createElement(
+                styled.ThemeProvider || styled.default.ThemeProvider,
+                { theme },
+                React.createElement(
+                    Provider,
+                    { store: updatedStore },
+                    React.createElement(React.Fragment, null, React.createElement(GameEndCont))
+                )
+            )
         );
 
-        container = wrapper.find(GameEndCont).at(0);
-        component = container.find(GameEndComp).at(0);
-    });
-
-    it('should render container and component', () => {
-        expect(container.length).toBeTruthy();
-        expect(component.length).toBeTruthy();
-    });
-
-    it('should map to component props', () => {
-        const expectedPropKeys = ['style', 'message'];
-        expect(Object.keys(component.props())).toEqual(expect.arrayContaining(expectedPropKeys));
-    });
-
-    it('should have props with correct values', () => {
-        expect(component.props().style).toEqual('invisible');
-        expect(component.props().message).toEqual('Draw');
+        expect(screen.getByTestId('game-end-comp').style.display).toEqual('flex');
     });
 });

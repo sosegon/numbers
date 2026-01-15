@@ -25,28 +25,28 @@ class Agent extends Player {
      * The position is either in the column or row of the {@link Token},
      * depending on the agent's direction.
      *
-     * In the following matrix, the token is located at position <code>[3, 3]</code>
+     * In the following matrix, the token is located at position `[3, 3]`
      *
-     * <pre><code>
+     * ```
      * | 2  3  4  7  8 |
      * | 1 -1  3  5  6 |
      * | 2  7  6  4  1 |
      * | 5  2  9  0  2 |
      * | 8  7  9  2  1 |
-     * </code></pre>
+     * ```
      *
      * If the direction of the agent is **HORIZONTAL**, the algorithm determines the
      * highest value in the row where the {@link Token} is located. Only the values greater
-     * than 0 are considered. The highest value is <code>9</code>; therefore, the output of the
-     * will be the position of that value: <code>[3, 2]</code>.
+     * than 0 are considered. The highest value is `9`; therefore, the output of the
+     * will be the position of that value: `[3, 2]`.
      *
      * If the direction of the agent is **VERTICAL**, the algorithm determines the
      * highest value in the column where the {@link Token} is located. Only the values greater
-     * than 0 are considered. The highest value is <code>7</code>; therefore, the output of the
-     * will be the position of that value: <code>[0, 3]</code>.
+     * than 0 are considered. The highest value is `7`; therefore, the output of the
+     * will be the position of that value: `[0, 3]`.
      *
      * If all the values of the row or column are lower than 0, the output will be
-     * <code>[-1, -1]</code>.
+     * `[-1, -1]`.
      *
      * @param {Token} token
      * @param {array} boardMatrix - 2 dimensional array of numbers.
@@ -143,9 +143,9 @@ class Agent extends Player {
      * The position is either in the column or row of the {@link Token},
      * depending on the agent's direction.
      *
-     * In the following matrix, the token is located at position <code>[3, 3]</code>
+     * In the following matrix, the token is located at position `[3, 3]`
      *
-     * <pre><code>
+     * ```
      * | 1  2  3  4  5  6  7|
      * |-1  6  4  7  3 -1  5|
      * | 1  2  3 -1  5  6  7|
@@ -153,26 +153,26 @@ class Agent extends Player {
      * |-1 -1 -1  8 -1 -1 -1|
      * | 4 -1  5  9  9  1  2|
      * |-1  1  2  3 -1  9  3|
-     * </code></pre>
+     * ```
      *
      * If the direction of the agent is **HORIZONTAL**, the algorithm evaluates each
      * row, to find the average value. The evaluation is not performed in the row
      * of the {@link Token} nor in rows which values in the same column of the {@link Token}
-     * is less than <code>0</code>.
-     * In the above matrix, the evaluation is not done in rows <code>2</code>
-     * and <code>3</code>.
+     * is less than `0`.
+     * In the above matrix, the evaluation is not done in rows `2`
+     * and `3`.
      *
      * The evaluation do not consider the values less than 0.
      * The average of a row is the sum of valid values divided by the number of
-     * valid values. In the first row the average is <code>(1 + 2 + 3 + 5 + 6 + 7) / 6</code>,
-     * in the second row, the average is <code>(6 + 4 + 3 + 5) / 4</code>. In the third
-     * column the average is <code>0</code> since there are no valid values.
+     * valid values. In the first row the average is `(1 + 2 + 3 + 5 + 6 + 7) / 6`,
+     * in the second row, the average is `(6 + 4 + 3 + 5) / 4`. In the third
+     * column the average is `0` since there are no valid values.
      *
      * Once each row is evaluated, the average values are subtracted from the main value
      * (the value in the same column of the token). For the above matrix, there are the
      * following results:
 
-     * <pre><code>
+     * ```
      * row      main     average    difference
      *  0         4         4           0
      *  1         7         4.5         2.5
@@ -181,10 +181,10 @@ class Agent extends Player {
      *  4         8         0           8
      *  5         9         4.2         4.8
      *  6         3         3.75       -0.75
-     * </code></pre>
+     * ```
      *
      * The row with the highest difference is selected. The output is the selected row,
-     * and the column of the {@link Token}, in this example <code>[4, 3]</code>.
+     * and the column of the {@link Token}, in this example `[4, 3]`.
      *
      * The process is similar if the direction of the agent is **VERTICAL**.
      *

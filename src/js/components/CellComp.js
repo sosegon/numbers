@@ -26,11 +26,20 @@ const CellSpan = styled.default.span`
  * that renders the value of a {@link Cell}.
  *
  * @param {object} props
- * @param {string} props.style CSS style.
  * @param {function} props.onClick Function to be triggered when component is clicked.
  * @param {number} props.value Value of {@link Cell}.
+ * @param {boolean} props.isSelectable Whether the cell is selectable.
+ * @param {string} props.turn Current turn, one of {@link TURNS}.
+ * @param {boolean} props.taken Whether the cell is taken.
  */
-const CellComp = ({ onClick, value, isSelectable, turn, taken }) => {
+const CellComp = ({
+    onClick,
+    value,
+    isSelectable,
+    turn,
+    taken,
+    'data-testid': dataTestId = 'cell-comp',
+}) => {
     const theme = styled.useTheme();
     let style = {};
     if (isSelectable && turn === TURNS.PLAYER1) {
@@ -55,8 +64,8 @@ const CellComp = ({ onClick, value, isSelectable, turn, taken }) => {
         };
     }
     return (
-        <CellSpan style={style} onClick={onClick}>
-            {value}
+        <CellSpan style={style} onClick={onClick} data-testid={dataTestId}>
+            {value <= 0 ? '' : value}
         </CellSpan>
     );
 };
@@ -65,8 +74,9 @@ CellComp.propTypes = {
     onClick: PropTypes.func.isRequired,
     value: PropTypes.number.isRequired,
     isSelectable: PropTypes.bool.isRequired,
-    turn: PropTypes.number.isRequired,
+    turn: PropTypes.oneOf(Object.values(TURNS)).isRequired,
     taken: PropTypes.bool.isRequired,
+    'data-testid': PropTypes.string,
 };
 
 module.exports = {

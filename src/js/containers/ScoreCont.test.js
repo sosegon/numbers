@@ -1,62 +1,103 @@
 const React = require('react');
+const { render, screen } = require('@testing-library/react');
+require('@testing-library/jest-dom');
 const { Provider } = require('react-redux');
-const { mount } = require('enzyme');
+const thunk = require('redux-thunk').default;
 const configureStore = require('redux-mock-store').default;
-const { ScoreCont } = require('@containers/ScoreCont.js');
-const { ScoreComp } = require('@components/ScoreComp.js');
-const { TURNS } = require('@model/flags.js');
-
+const styled = require('styled-components');
+const { ScoreCont } = require('@containers/ScoreCont');
 const { initialState } = require('@test/utilsTests.js');
-const middlewares = [];
+const theme = require('@root/theme');
+const { PLAYER_DIRECTIONS, TURNS } = require('@model/flags');
+
+const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
 
 describe('ScoreCont', () => {
-    let wrapper, store, container1, container2, component1, component2;
-
+    let store;
     beforeEach(() => {
         jest.resetAllMocks();
-
         store = mockStore(initialState);
+    });
 
-        wrapper = mount(
-            <Provider store={store}>
-                <ScoreCont playerName={TURNS.PLAYER1} />
-                <ScoreCont playerName={TURNS.PLAYER2} />
-            </Provider>
+    function renderScore() {
+        render(
+            React.createElement(
+                styled.ThemeProvider || styled.default.ThemeProvider,
+                { theme },
+                React.createElement(
+                    Provider,
+                    { store },
+                    React.createElement(
+                        React.Fragment,
+                        null,
+                        React.createElement(ScoreCont, {
+                            playerName: TURNS.PLAYER1,
+                            direction: PLAYER_DIRECTIONS.HORIZONTAL,
+                            'data-testid': 'score-card',
+                        })
+                    )
+                )
+            )
+        );
+    }
+
+    it('should render component', () => {
+        renderScore();
+        expect(screen.getByTestId('score-card')).toBeInTheDocument();
+    });
+
+    it('should update score when store changes', () => {
+        const { rerender } = render(
+            React.createElement(
+                styled.ThemeProvider || styled.default.ThemeProvider,
+                { theme },
+                React.createElement(
+                    Provider,
+                    { store },
+                    React.createElement(
+                        React.Fragment,
+                        null,
+                        React.createElement(ScoreCont, {
+                            playerName: TURNS.PLAYER1,
+                            direction: PLAYER_DIRECTIONS.HORIZONTAL,
+                            'data-testid': 'score-card',
+                        })
+                    )
+                )
+            )
+        );
+        expect(screen.getByTestId('score-card-value').textContent).toBe('00');
+
+        // Create a new store with updated score
+        const updatedStore = mockStore({
+            ...initialState,
+            player1: {
+                ...initialState[TURNS.PLAYER1],
+                score: 10,
+            },
+        });
+
+        rerender(
+            React.createElement(
+                styled.ThemeProvider || styled.default.ThemeProvider,
+                { theme },
+                React.createElement(
+                    Provider,
+                    { store: updatedStore },
+                    React.createElement(
+                        React.Fragment,
+                        null,
+                        React.createElement(ScoreCont, {
+                            playerName: TURNS.PLAYER1,
+                            direction: PLAYER_DIRECTIONS.HORIZONTAL,
+                            'data-testid': 'score-card',
+                        })
+                    )
+                )
+            )
         );
 
-        container1 = wrapper.find(ScoreCont).at(0);
-        container2 = wrapper.find(ScoreCont).at(1);
-
-        component1 = container1.find(ScoreComp).at(0);
-        component2 = container2.find(ScoreComp).at(0);
-    });
-
-    it('should render container and component', () => {
-        expect(container1.length).toBeTruthy();
-        expect(container2.length).toBeTruthy();
-
-        expect(component1.length).toBeTruthy();
-        expect(component2.length).toBeTruthy();
-    });
-
-    it('should map to component props', () => {
-        const expectedPropKeys = ['name', 'score'];
-        expect(Object.keys(component1.props())).toEqual(expect.arrayContaining(expectedPropKeys));
-        expect(Object.keys(component2.props())).toEqual(expect.arrayContaining(expectedPropKeys));
-    });
-
-    it('should map to container props', () => {
-        const expectedPropKeys = ['playerName'];
-        expect(Object.keys(container1.props())).toEqual(expect.arrayContaining(expectedPropKeys));
-        expect(Object.keys(container2.props())).toEqual(expect.arrayContaining(expectedPropKeys));
-    });
-
-    it('should have props with correct values', () => {
-        expect(component1.props().name).toEqual('You');
-        expect(component1.props().score).toEqual(0);
-
-        expect(component2.props().name).toEqual('AI');
-        expect(component2.props().score).toEqual(0);
+        expect(screen.getByTestId('score-card-value').textContent).toBe('10');
     });
 });

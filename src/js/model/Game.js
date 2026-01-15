@@ -43,15 +43,15 @@ class Game {
      * Move the {@link Token} to the given position. If the {@link Player}s'
      * directions have not been set yet, the function defines them.
      *
-     * In the following board, the token is located at position <code>[3, 3]</code>
+     * In the following board, the token is located at position `[3, 3]`
      *
-     * <pre><code>
+     * ```
      * | 2  3  4  7  8 |
      * | 1 -1  3  5  6 |
      * | 2  7  6  4  1 |
      * | 5  2  9  0  2 |
      * | 8  7  9  2  1 |
-     * </code></pre>
+     * ```
      *
      * When the directions are not set yet, the {@link Player} that makes the first move
      * can move the {@link Token} along its row or column.

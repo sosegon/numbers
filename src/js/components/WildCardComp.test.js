@@ -1,25 +1,25 @@
 const React = require('react');
-const { shallow, mount } = require('enzyme');
+const { render, screen } = require('@testing-library/react');
+require('@testing-library/jest-dom');
+const styled = require('styled-components');
 const { WildCardComp } = require('@components/WildCardComp');
-
-const setup = () => {
-    const shallowWrapper = shallow(<WildCardComp />);
-    const mountWrapper = mount(<WildCardComp />);
-
-    return {
-        shallowWrapper,
-        mountWrapper,
-    };
-};
+const theme = require('@root/theme');
 
 describe('WildCardComp', () => {
+    const props = {
+        rowIndex: 0,
+        colIndex: 0,
+        'data-testid': 'wildcard-comp',
+    };
+
     it('should render', () => {
-        const { shallowWrapper, mountWrapper } = setup();
-
-        expect(shallowWrapper).toMatchSnapshot();
-
-        expect(mountWrapper.find('span').length).toEqual(1);
-
-        mountWrapper.unmount();
+        render(
+            React.createElement(
+                styled.ThemeProvider || styled.default.ThemeProvider,
+                { theme },
+                React.createElement(WildCardComp, props)
+            )
+        );
+        expect(screen.getByTestId('wildcard-comp')).toBeInTheDocument();
     });
 });

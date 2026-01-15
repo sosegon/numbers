@@ -82,12 +82,12 @@ class Board {
     /**
      * Update the value of the {@link Cell}s based on the current
      * and old positions of the {@link Token}. The value of the {@link Cell} in
-     * the current position of the {@link Token} is set to <code>0</code>.
+     * the current position of the {@link Token} is set to `0`.
      * The value of the {@link Cell} in the old position of the {@link Token}
-     * is set to <code>-1</code>.
+     * is set to `-1`.
      *
      * If the current and old position of the {@link Token} is the same,
-     * the value of the corresponding {@link Cell} is set to <code>0</code>.
+     * the value of the corresponding {@link Cell} is set to `0`.
      *
      * @param {Token} token
      */
@@ -146,7 +146,7 @@ class Board {
      * of the {@link Cell} which value is 0.
      *
      * If no {@link Cell} has value 0, then the returned value is
-     * <code>[-1, -1]</code>
+     * `[-1, -1]`
      *
      * @returns {array} Array with 2 numbers defining the row and column of the {@link Token}.
      */
