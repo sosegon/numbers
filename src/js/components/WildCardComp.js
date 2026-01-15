@@ -9,9 +9,10 @@ const TokenIcon = require('@icons/TokenIcon');
  * that renders the {@link Token} in a {@link Game}.
  *
  * @param {object} props
- * @param {string} props.style CSS style.
+ * @param {number} props.rowIndex Row index of the {@link Token}.
+ * @param {number} props.colIndex Column index of the {@link Token}.
  */
-const WildCardComp = ({ rowIndex, colIndex }) => {
+const WildCardComp = ({ rowIndex, colIndex, 'data-testid': dataTestId = 'wild-card-comp' }) => {
     const theme = styled.useTheme();
     let style = {
         display: 'flex',
@@ -32,7 +33,7 @@ const WildCardComp = ({ rowIndex, colIndex }) => {
             theme.sizes.boardPadding,
     };
     return (
-        <CellSpan style={style}>
+        <CellSpan style={style} data-testid={dataTestId}>
             <TokenIcon width="80%" />
         </CellSpan>
     );
@@ -41,6 +42,7 @@ const WildCardComp = ({ rowIndex, colIndex }) => {
 WildCardComp.propTypes = {
     rowIndex: PropTypes.number.isRequired,
     colIndex: PropTypes.number.isRequired,
+    'data-testid': PropTypes.string,
 };
 
 module.exports = {

@@ -1,25 +1,57 @@
 const React = require('react');
-const { shallow, mount } = require('enzyme');
+const { render, screen } = require('@testing-library/react');
+require('@testing-library/jest-dom');
+const styled = require('styled-components');
 const { ScoreComp } = require('@components/ScoreComp');
-
-const setup = () => {
-    const shallowWrapper = shallow(<ScoreComp name={'you'} score={0} />);
-    const mountWrapper = mount(<ScoreComp name={'agent'} score={0} />);
-
-    return {
-        shallowWrapper,
-        mountWrapper,
-    };
-};
+const theme = require('@root/theme');
 
 describe('ScoreComp', () => {
+    const baseProps = {
+        score: '10',
+        name: 'AI Core',
+        direction: 'rows',
+        'data-testid': 'score-comp',
+    };
+
+    const renderWithTheme = (props = {}) =>
+        render(
+            React.createElement(
+                styled.ThemeProvider || styled.default.ThemeProvider,
+                { theme },
+                React.createElement(ScoreComp, { ...baseProps, ...props })
+            )
+        );
+
     it('should render', () => {
-        const { shallowWrapper, mountWrapper } = setup();
+        renderWithTheme();
+        expect(screen.getByTestId('score-comp')).toBeInTheDocument();
+    });
 
-        expect(shallowWrapper).toMatchSnapshot();
+    it('should render the correct score', () => {
+        renderWithTheme({ score: '10' });
+        expect(screen.getByText('10')).toBeInTheDocument();
+    });
 
-        expect(mountWrapper.find('span').length).toEqual(2);
+    it('should render the correct name', () => {
+        renderWithTheme({ name: 'AI Core' });
+        expect(screen.getByText('// AI Core //')).toBeInTheDocument();
+    });
 
-        mountWrapper.unmount();
+    it('should render the correct direction', () => {
+        renderWithTheme({ direction: 'rows' });
+        expect(screen.getByText('> rows')).toBeInTheDocument();
+    });
+
+    it('should update score when prop changes', () => {
+        const { rerender } = renderWithTheme({ score: '5' });
+        expect(screen.getByText('5')).toBeInTheDocument();
+        rerender(
+            React.createElement(
+                styled.ThemeProvider || styled.default.ThemeProvider,
+                { theme },
+                React.createElement(ScoreComp, { ...baseProps, score: '20' })
+            )
+        );
+        expect(screen.getByText('20')).toBeInTheDocument();
     });
 });

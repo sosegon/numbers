@@ -1,7 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-var HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
@@ -21,12 +20,12 @@ module.exports = {
     },
     resolve: {
         alias: {
-            '@root': path.resolve(__dirname, 'src/js/'),
-            '@components': path.resolve(__dirname, 'src/js/components/'),
             '@containers': path.resolve(__dirname, 'src/js/containers/'),
+            '@components': path.resolve(__dirname, 'src/js/components/'),
             '@data': path.resolve(__dirname, 'src/js/data/'),
-            '@model': path.resolve(__dirname, 'src/js/model/'),
             '@icons': path.resolve(__dirname, 'src/js/icons/'),
+            '@model': path.resolve(__dirname, 'src/js/model/'),
+            '@root': path.resolve(__dirname, 'src/js/'),
             '@style': path.resolve(__dirname, 'src/style/'),
             '@test': path.resolve(__dirname, 'src/js/test/'),
         },
@@ -65,13 +64,6 @@ module.exports = {
                     filename: 'css/[name][ext]',
                 },
             },
-            {
-                test: /\.svg/,
-                use: {
-                    loader: 'svg-url-loader',
-                    options: {},
-                },
-            },
         ],
     },
     plugins: [
@@ -81,7 +73,6 @@ module.exports = {
             template: './src/index.html',
             alwaysWriteToDisk: true,
         }),
-        new HtmlWebpackHarddiskPlugin(),
         new webpack.ProvidePlugin({
             React: 'react',
         }),

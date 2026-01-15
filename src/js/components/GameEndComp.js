@@ -28,10 +28,11 @@ const ResetButton = styled.default.button`
  * that renders an overlay when a {@link Game} ends.
  *
  * @param {object} props
- * @param {string} props.style CSS style.
  * @param {string} props.message Message to be displayed in the overlay.
+ * @param {boolean} props.isOver Whether the game is over.
+ * @param {function} props.reset Function to reset the {@link Game}.
  */
-const GameEndComp = ({ isOver, message, reset }) => {
+const GameEndComp = ({ isOver, message, reset, 'data-testid': dataTestId = 'game-end-comp' }) => {
     const theme = styled.useTheme();
 
     return (
@@ -51,6 +52,7 @@ const GameEndComp = ({ isOver, message, reset }) => {
                 top: 0,
                 borderRadius: `${theme.sizes.boardPadding}px`,
             }}
+            data-testid={dataTestId}
         >
             <p
                 style={{
@@ -60,7 +62,9 @@ const GameEndComp = ({ isOver, message, reset }) => {
             >
                 {message}
             </p>
-            <ResetButton onClick={() => reset()}>RESTART GAME</ResetButton>
+            <ResetButton onClick={reset} data-testid="reset-button">
+                RESTART GAME
+            </ResetButton>
         </div>
     );
 };
@@ -69,6 +73,7 @@ GameEndComp.propTypes = {
     message: PropTypes.string.isRequired,
     isOver: PropTypes.bool.isRequired,
     reset: PropTypes.func.isRequired,
+    'data-testid': PropTypes.string,
 };
 
 module.exports = {

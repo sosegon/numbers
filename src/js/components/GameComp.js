@@ -1,7 +1,7 @@
 const React = require('react');
 const PropTypes = require('prop-types');
 const styled = require('styled-components');
-const { TURNS } = require('@model/flags');
+const { TURNS, PLAYER_DIRECTIONS } = require('@model/flags');
 const { CellCont } = require('@containers/CellCont');
 const { WildCardCont } = require('@containers/WildCardCont');
 const { GameEndCont } = require('@containers/GameEndCont');
@@ -101,19 +101,31 @@ const Board = styled.default.div`
  * @param {function} props.reset Function to reset a {@link Game}.
  * @param {array} props.board 2 dimensional array of numbers representing the
  * values of {@link Cell|Cells} in a {@link Board}.
+ * @param {string} props.player1Direction Direction of player 1, one of {@link PLAYER_DIRECTIONS}.
+ * @param {string} props.player2Direction Direction of player 2, one of {@link PLAYER_DIRECTIONS}.
  */
-const GameComp = ({ board, player1Direction, player2Direction, reset }) => {
-    let boardSize = board.length;
+const GameComp = ({
+    board,
+    player1Direction,
+    player2Direction,
+    reset,
+    'data-testid': dataTestId = 'game-comp',
+}) => {
     let cells = board.map((row, rowIndex) => (
-        <div>
+        <div key={`row-${rowIndex}`}>
             {row.map((col, colIndex) => (
-                <CellCont rowIndex={rowIndex} colIndex={colIndex} value={col} />
+                <CellCont
+                    key={`cell-${rowIndex}-${colIndex}`}
+                    rowIndex={rowIndex}
+                    colIndex={colIndex}
+                    value={col}
+                />
             ))}
         </div>
     ));
 
     return (
-        <Wrapper>
+        <Wrapper data-testid={dataTestId}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
                 <FlexContainer>
                     <TitleContainer>
@@ -126,7 +138,7 @@ const GameComp = ({ board, player1Direction, player2Direction, reset }) => {
                         style={{
                             maxWidth: 'fit-content',
                         }}
-                        onClick={() => reset()}
+                        onClick={reset}
                     >
                         RESTART
                     </ResetButton>
@@ -139,7 +151,7 @@ const GameComp = ({ board, player1Direction, player2Direction, reset }) => {
             <Board>
                 <WildCardCont />
                 {cells}
-                <GameEndCont boardSize={boardSize} />
+                <GameEndCont boardSize={board.length} />
             </Board>
         </Wrapper>
     );
@@ -148,8 +160,9 @@ const GameComp = ({ board, player1Direction, player2Direction, reset }) => {
 GameComp.propTypes = {
     reset: PropTypes.func.isRequired,
     board: PropTypes.array.isRequired,
-    player1Direction: PropTypes.string,
-    player2Direction: PropTypes.string,
+    player1Direction: PropTypes.oneOf(Object.values(PLAYER_DIRECTIONS)).isRequired,
+    player2Direction: PropTypes.oneOf(Object.values(PLAYER_DIRECTIONS)).isRequired,
+    'data-testid': PropTypes.string,
 };
 
 module.exports = {

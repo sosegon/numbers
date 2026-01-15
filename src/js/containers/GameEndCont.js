@@ -1,11 +1,8 @@
+const PropTypes = require('prop-types');
 const { connect } = require('react-redux');
 const { GameEndComp } = require('@components/GameEndComp');
 const { GAME_CONTINUITY } = require('@model/flags');
 const actions = require('@root/actions');
-
-const getStyle = (isOver) => {
-    return isOver ? 'overlay' : 'invisible';
-};
 
 const getMessage = (score1, score2) => {
     if (score1 > score2) {
@@ -19,7 +16,6 @@ const getMessage = (score1, score2) => {
 
 const mapStateToProps = (state) => {
     return {
-        style: getStyle(state.snap.continuity === GAME_CONTINUITY.OVER),
         isOver: state.snap.continuity === GAME_CONTINUITY.OVER,
         message: getMessage(state.player1.score, state.player2.score),
     };
@@ -38,6 +34,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
  */
 const GameEndCont = connect(mapStateToProps, mapDispatchToProps)(GameEndComp);
 
+GameEndCont.propTypes = {
+    boardSize: PropTypes.number.isRequired,
+};
 module.exports = {
     GameEndCont,
 };

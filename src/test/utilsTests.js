@@ -1,4 +1,4 @@
-const { PLAYER_DIRECTIONS, TURNS, GAME_STATUSES } = require('@model/flags.js');
+const { PLAYER_DIRECTIONS, TURNS, GAME_STATUSES, GAME_CONTINUITY } = require('@model/flags.js');
 
 const initialState = {
     token: {
@@ -18,7 +18,7 @@ const initialState = {
     },
     snap: {
         lastValue: 0,
-        isOver: false,
+        continuity: GAME_CONTINUITY.CONTINUE,
         turn: TURNS.PLAYER1,
         status: GAME_STATUSES.RESTING,
     },
@@ -28,36 +28,42 @@ const verticalPosition = {
     rowIndex: 0,
     colIndex: 3,
     value: 7,
+    'data-testid': 'cell-vertical',
 };
 
 const horizontalPosition = {
     rowIndex: 3,
     colIndex: 0,
     value: 5,
+    'data-testid': 'cell-horizontal',
 };
 
 const otherPosition = {
     rowIndex: 2,
     colIndex: 2,
     value: 6,
+    'data-testid': 'cell-other',
 };
 
 const verticalPositionHid = {
     rowIndex: 1,
     colIndex: 3,
     value: -1,
+    'data-testid': 'cell-vertical-hid',
 };
 
 const horizontalPositionHid = {
     rowIndex: 3,
     colIndex: 1,
     value: -1,
+    'data-testid': 'cell-horizontal-hid',
 };
 
 const otherPositionHid = {
     rowIndex: 1,
     colIndex: 1,
     value: -1,
+    'data-testid': 'cell-other-hid',
 };
 
 module.exports = {

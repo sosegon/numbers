@@ -1,3 +1,4 @@
+const React = require('react');
 const PropTypes = require('prop-types');
 const { connect } = require('react-redux');
 const { CellComp } = require('@components/CellComp');
@@ -64,7 +65,10 @@ const execAgent = (object) => {
     token.updateFromObject(getState().token);
 
     return new Promise((resolve) => {
-        const bestPosition = agent.getMaxGainValuePosition(token, boardMatrix);
+        const bestPosition = agent.getMaxGainValuePosition(token, boardMatrix, {
+            agent: getState().player2.score,
+            player: getState().player1.score,
+        });
         if (bestPosition[0] >= 0 && bestPosition[1] >= 0) {
             const position = { rowIndex: bestPosition[0], colIndex: bestPosition[1] };
             setTimeout(() => resolve({ dispatch, getState, position }), delay);
@@ -94,7 +98,7 @@ const makeMove = (ownProps, isSelectable) => {
 };
 
 const mapStateToProps = (state, ownProps) => {
-    const { rowIndex, colIndex, value } = ownProps;
+    const { rowIndex, colIndex, value, 'data-testid': dataTestId } = ownProps;
     const isSelectable = isCellSelectable(state, ownProps);
     const taken = value <= 0;
     const turn = state.snap.turn;
@@ -107,7 +111,8 @@ const mapStateToProps = (state, ownProps) => {
         turn,
         taken,
         gameStatus,
-        value: value <= 0 ? '' : value,
+        value,
+        'data-testid': dataTestId,
     };
 };
 
@@ -139,6 +144,7 @@ CellCont.propTypes = {
     rowIndex: PropTypes.number.isRequired,
     colIndex: PropTypes.number.isRequired,
     value: PropTypes.number.isRequired,
+    'data-testid': PropTypes.string,
 };
 
 module.exports = {
