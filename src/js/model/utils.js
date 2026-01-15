@@ -155,6 +155,65 @@ const self = (module.exports = {
 
         return [size - colIndex - 1, rowIndex];
     },
+
+    /**
+     * Get the readiness to end game of each row in a matrix given a
+     * column. A row is ready to end game when all its elements (except
+     * the one in the column passed as argument) are less than `0`.
+     * Also, a row is available when the element in the column passed as
+     * argument is greater than `0`.
+     *
+     * In the following matrix, the token is located in the position `[3, 3]`
+     *
+     * ```
+     * | -1 -1 -1  7 -1 |
+     * | -1 -1 -1 -1 -1 |
+     * |  2  7  6 -1  1 |
+     * |  5  2  9  0  2 |
+     * |  8  7  9  5  1 |
+     * ```
+     *
+     * The output will be the following array:
+     *
+     * ```
+     * [
+     *   [true, true],
+     *   [true, false],
+     *   [false, false],
+     *   [false, false],
+     *   [false, true]
+     * ]
+     * ```
+     * Where the first element of each sub-array indicates if the row is
+     * ready to end game, and the second element indicates if the row is
+     * available.
+     *
+     * @param {array} boardMatrix - 2 dimensional array of numbers
+     * representing a square matrix.
+     * @param {number} tokenColIndex - Index of the column where the
+     * token is located.
+     * @returns {array} Array of arrays, each containing two boolean
+     * values indicating readiness and availability of each row.
+     */
+    getRowsReadinessToEndGame(boardMatrix, tokenColIndex) {
+        let rows = [];
+        let size = boardMatrix.length;
+
+        for (let i = 0; i < size; i++) {
+            let isRowReadyToEndGame = true;
+            let isRowAvailable = true;
+            for (let j = 0; j < size; j++) {
+                if (j === tokenColIndex) {
+                    isRowAvailable = boardMatrix[i][j] > 0;
+                } else if (boardMatrix[i][j] > 0) {
+                    isRowReadyToEndGame = false;
+                }
+            }
+            rows.push([isRowReadyToEndGame, isRowAvailable]);
+        }
+
+        return rows;
+    },
     /**
      * Get the horizontal gains of a matrix given a column.
      * The gains are calculated by subtracting the values of each column
@@ -226,19 +285,31 @@ const self = (module.exports = {
      *
      * Where the token is at position `[3, 3]`. The objective is to
      * select the element in the same column of the token, which value
-     * gives the overall best gain. For each row, the best gain is the
-     * element with the lowest value, except the element in the same
-     * column of the token:
+     * gives the overall best gain. It assumes that the best move for
+     * the opponent is to select the highest value in the row that may
+     * be selected by the current player:
+     * ```
+     * Possible rows to select:
+     * row 0: possible opponent's selections: 2, 3, 4, x, 8  => best: 8
+     * row 1: possible opponent's selections: 1, x, 3, x, 5  => best: 5
+     * row 2: possible opponent's selections: 2, 7, 6, x, 1  => best: 7
+     * row 3: not possible, the token is here.
+     * row 4: possible opponent's selections: 8, 7, 9, x, 1  => best: 9
+     * ```
+     * For each row, the best gain is the element which difference is
+     * the lowest when subtracting the best opponent's selection:
      *
      * ```
-     * row: 0, lowest value: -1, column: 4
-     * row: 1, lowest value:  0, column: 4
-     * row: 2, lowest value: -3, column: 1
+     * lowest value = (player's selection) - (opponent's best selection)
+     *
+     * row: 0, lowest value: -1, column: 4 (7 - 8 = -1)
+     * row: 1, lowest value:  0, column: 4 (5 - 5 = 0)
+     * row: 2, lowest value: -3, column: 1 (4 - 7 = -3)
      * row: 3, this is the column of the token, it is not considered.
-     * row: 4, lowest value: -7, column: 2
+     * row: 4, lowest value: -7, column: 2 (2 - 9 = -7)
      * ```
      *
-     * Notice in row `2`, the lowest values are at columns `1`
+     * Notice in row `1`, the lowest values are at columns `1`
      * and `4`.
      * Generally, the lowest column is selected. But in this case,
      * the value at `[1, 1]` in the game matrix is less than `0`. Thus,
@@ -255,8 +326,6 @@ const self = (module.exports = {
      *
      * The chosen value is the highest one: `0`. Therefore, the row of that
      * value is selected: row `1`.
-     * In case, there are more than one highest value, the first one
-     * is selected.
      *
      * The output will be the selected row and the column of the token:
      * row `1`, column `3`.
@@ -265,16 +334,21 @@ const self = (module.exports = {
      * @param {number} tokenColIndex
      * @param {array} gainsMatrix - 2 dimensional array of numbers representing a square gains matrix.
      * @param {array} boardMatrix - 2 dimensional array of numbers representing a square board matrix.
+     * @param {array} rowsReadinessToEndGame - Array of arrays, each containing two boolean
+     * values indicating readiness and availability of each row to end game.
      * @returns {array} Array with two numbers defining the row and column of the element
      * with the best gain.
      */
-    getBestGain(tokenRowIndex, tokenColIndex, gainsMatrix, boardMatrix) {
-        // assume the direction is vertical
+    getRowsIndicesByOrderedGain(tokenRowIndex, tokenColIndex, gainsMatrix, rowsReadinessToEndGame) {
         let size = gainsMatrix.length;
         let minGains = [];
 
         // get the min gains in every row
         for (let i = 0; i < size; i++) {
+            if (i === tokenRowIndex) {
+                // avoid the row of the token
+                continue;
+            }
             let minGain = null;
             for (let j = 0; j < size; j++) {
                 if (j === tokenColIndex) {
@@ -285,26 +359,20 @@ const self = (module.exports = {
                     minGain = gainsMatrix[i][j];
                 }
             }
-            minGains.push(minGain);
+
+            minGains.push({
+                gain: minGain,
+                rowIndex: i,
+                isRowReadyToEndGame: rowsReadinessToEndGame[i][0],
+                isRowAvailable: rowsReadinessToEndGame[i][1],
+            });
         }
 
-        // obtain the index of the max gain
-        let rowIndex = -1;
-        let maxGain = null;
-        for (let i = 0; i < size; i++) {
-            // The token has to move to other position: tokenRowIndex !== i
-            // Also, a cell has to be in the position: boardMatrix[i][tokenColIndex] > 0
-            if (
-                (maxGain === null || maxGain < minGains[i]) &&
-                tokenRowIndex !== i &&
-                boardMatrix[i][tokenColIndex] > 0
-            ) {
-                maxGain = minGains[i];
-                rowIndex = i;
-            }
-        }
-
-        return rowIndex;
+        // sort by gain descending
+        return minGains.sort((a, b) => {
+            // sort descending by gain
+            return b.gain - a.gain;
+        });
     },
     /**
      * Generate a random integer between two limits.

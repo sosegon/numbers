@@ -1,3 +1,4 @@
+const PropTypes = require('prop-types');
 const { connect } = require('react-redux');
 const { GameEndComp } = require('@components/GameEndComp');
 const { GAME_CONTINUITY } = require('@model/flags');
@@ -33,6 +34,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
  */
 const GameEndCont = connect(mapStateToProps, mapDispatchToProps)(GameEndComp);
 
+GameEndCont.propTypes = {
+    boardSize: PropTypes.number.isRequired,
+};
 module.exports = {
     GameEndCont,
 };

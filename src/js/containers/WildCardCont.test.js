@@ -19,7 +19,7 @@ describe('WildCardCont', () => {
         store = mockStore(initialState);
     });
 
-    function renderCell() {
+    function renderWildCard() {
         render(
             React.createElement(
                 styled.ThemeProvider || styled.default.ThemeProvider,
@@ -40,7 +40,7 @@ describe('WildCardCont', () => {
     }
 
     it('should render component', () => {
-        renderCell();
+        renderWildCard();
         expect(screen.getByTestId('wild-card')).toBeInTheDocument();
     });
 

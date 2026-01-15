@@ -11,9 +11,6 @@
     "docs": "documentation build src/js -f html -o docs"
   },
   "jest": {
-    "setupFiles": [
-      "./src/test/setupTests.js"
-    ],
     "moduleNameMapper": {
       "^@containers/(.*)$": "<rootDir>/src/js/containers/$1",
       "^@components/(.*)$": "<rootDir>/src/js/components/$1",

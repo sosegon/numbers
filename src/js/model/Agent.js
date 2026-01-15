@@ -5,7 +5,8 @@ const {
     rotateIndicesClockwise,
     rotateIndicesCounterClockwise,
     getGainsMatrix,
-    getBestGain,
+    getRowsIndicesByOrderedGain,
+    getRowsReadinessToEndGame,
 } = require('@model/utils');
 
 /**
@@ -92,22 +93,82 @@ class Agent extends Player {
         return [-1, -1];
     }
     /**
+     * Get the position to end the game with victory when possible.
+     * The position is either in the column or row of the {@link Token},
+     * depending on the agent's direction.
+     *
+     * The algorithm relies on the {@link utils.getRowsReadinessToEndGame} function.
+     *
+     * @param {Token} token
+     * @param {array} boardMatrix
+     * @param {object} scores
+     * @returns
+     */
+    getPositionToEndGameWithVictory(token, boardMatrix, scores) {
+        let nBoardMatrix = boardMatrix;
+        let nTokenColIndex = token.colIndex;
+        let nTokenRowIndex = token.rowIndex;
+        let { player: playerScore, agent: agentScore } = scores;
+
+        if (this.direction === PLAYER_DIRECTIONS.HORIZONTAL) {
+            nBoardMatrix = rotateClockwise(nBoardMatrix);
+            let indices = rotateIndicesClockwise(
+                token.rowIndex,
+                token.colIndex,
+                nBoardMatrix.length
+            );
+            nTokenRowIndex = indices[0];
+            nTokenColIndex = indices[1];
+        }
+
+        let rowsReadiness = getRowsReadinessToEndGame(nBoardMatrix, nTokenColIndex);
+        const rowsIndices = [];
+        for (let i = 0; i < rowsReadiness.length; i++) {
+            if (i !== nTokenRowIndex && rowsReadiness[i][0] && rowsReadiness[i][1]) {
+                rowsIndices.push(i);
+            }
+        }
+
+        // Check if there are rows that can lead to end game
+        let position = [-1, -1];
+        for (let i = 0; i < rowsIndices.length; i++) {
+            const rowIndex = rowsIndices[i];
+            const cellValue = nBoardMatrix[rowIndex][nTokenColIndex];
+            if (cellValue + agentScore > playerScore) {
+                if (this.direction === PLAYER_DIRECTIONS.HORIZONTAL) {
+                    position = rotateIndicesCounterClockwise(
+                        rowIndex,
+                        nTokenColIndex,
+                        nBoardMatrix.length
+                    );
+                } else {
+                    position = [rowIndex, nTokenColIndex];
+                }
+                break;
+            }
+        }
+
+        return position;
+    }
+    /**
      * Get the position of the value with the best gain in a matrix.
      * The position is either in the column or row of the {@link Token},
      * depending on the agent's direction.
      *
-     * The algorithm relies on the {@link utils.getBestGain} function.
+     * The algorithm relies on the {@link utils.getRowsIndicesByOrderedGain} function.
      *
      * @param {Token} token
      * @param {array} boardMatrix
+     * @param {object} scores - Object with the scores of the agent and the player.
      * @returns {array} Array with 2 numbers defining the row and column of the value
      * with best gain.
      */
-    getMaxGainValuePosition(token, boardMatrix) {
+    getMaxGainValuePosition(token, boardMatrix, scores = { agent: 0, player: 0 }) {
         // Get the cell with highest gain with respect to next turn
         let nBoardMatrix = boardMatrix;
         let nTokenColIndex = token.colIndex;
         let nTokenRowIndex = token.rowIndex;
+        const { agent: agentScore, player: playerScore } = scores;
 
         if (this.direction === PLAYER_DIRECTIONS.HORIZONTAL) {
             nBoardMatrix = rotateClockwise(nBoardMatrix);
@@ -121,9 +182,50 @@ class Agent extends Player {
         }
 
         let gainsMatrix = getGainsMatrix(nTokenColIndex, nBoardMatrix);
-        let indexBestGain = getBestGain(nTokenRowIndex, nTokenColIndex, gainsMatrix, nBoardMatrix);
+        let rowsReadinessToEndGame = getRowsReadinessToEndGame(nBoardMatrix, nTokenColIndex);
+        let indicesByGain = getRowsIndicesByOrderedGain(
+            nTokenRowIndex,
+            nTokenColIndex,
+            gainsMatrix,
+            rowsReadinessToEndGame
+        );
+
+        // Selecting the index with best gain follows these criteria:
+        // 1. The row that can lead to end game with victory
+        // 2. The row with the highest gain that make the game continue
 
         let position = [-1, -1];
+
+        const indexToEndGame = indicesByGain
+            .filter((item) => item.isRowReadyToEndGame && item.isRowAvailable)
+            .find((item) => {
+                const valueInCell = nBoardMatrix[item.rowIndex][nTokenColIndex];
+                return valueInCell + agentScore > playerScore;
+            });
+
+        if (indexToEndGame) {
+            if (this.direction === PLAYER_DIRECTIONS.HORIZONTAL) {
+                position = rotateIndicesCounterClockwise(
+                    indexToEndGame.rowIndex,
+                    nTokenColIndex,
+                    nBoardMatrix.length
+                );
+            } else {
+                position = [indexToEndGame.rowIndex, nTokenColIndex];
+            }
+            return position;
+        }
+
+        let indexBestGain =
+            indicesByGain.filter((item) => item.isRowAvailable && !item.isRowReadyToEndGame)?.[0]
+                ?.rowIndex ?? -1;
+
+        if (indexBestGain < 0) {
+            // No available rows that keep the game going
+            indexBestGain =
+                indicesByGain.filter((item) => item.isRowAvailable)?.[0]?.rowIndex ?? -1;
+        }
+
         if (indexBestGain >= 0) {
             if (this.direction === PLAYER_DIRECTIONS.HORIZONTAL) {
                 position = rotateIndicesCounterClockwise(

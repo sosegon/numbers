@@ -62,7 +62,9 @@ const GameEndComp = ({ isOver, message, reset, 'data-testid': dataTestId = 'game
             >
                 {message}
             </p>
-            <ResetButton onClick={() => reset()}>RESTART GAME</ResetButton>
+            <ResetButton onClick={reset} data-testid="reset-button">
+                RESTART GAME
+            </ResetButton>
         </div>
     );
 };

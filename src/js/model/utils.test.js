@@ -3,8 +3,9 @@ const {
     rotateCounterClockwise,
     rotateIndicesClockwise,
     rotateIndicesCounterClockwise,
+    getRowsReadinessToEndGame,
     getGainsMatrix,
-    getBestGain,
+    getRowsIndicesByOrderedGain,
     randomInteger,
     updateObjectFromJsonString,
     updateObjectFromLiteral,
@@ -125,6 +126,106 @@ describe('Utils', () => {
         expect(rotateIndicesCounterClockwise(4, 0, 5)).toEqual([4, 4]);
     });
 
+    it('should get the rows readiness to end game', () => {
+        const boardMatrix = [
+            [2, 3, 4, 7, 8],
+            [-1, -1, -1, -1, -1],
+            [2, 7, 6, -1, 1],
+            [5, 2, 1, 0, 2],
+            [-1, -1, -1, 2, -1],
+        ];
+        const tokenColIndex = 3;
+
+        const rowsReadiness = getRowsReadinessToEndGame(boardMatrix, tokenColIndex);
+        expect(rowsReadiness).toEqual([
+            [false, true],
+            [true, false],
+            [false, false],
+            [false, false], // token row
+            [true, true],
+        ]);
+    });
+
+    it('should get the rows readiness to end game, token at top-left', () => {
+        const boardMatrix = [
+            [0, 3, 4, 7, 8],
+            [-1, -1, -1, -1, -1],
+            [2, 7, 6, -1, 1],
+            [5, 2, 1, 1, 2],
+            [2, -1, -1, -1, -1],
+        ];
+        const tokenColIndex = 0;
+
+        const rowsReadiness = getRowsReadinessToEndGame(boardMatrix, tokenColIndex);
+        expect(rowsReadiness).toEqual([
+            [false, false], // token row
+            [true, false],
+            [false, true],
+            [false, true],
+            [true, true],
+        ]);
+    });
+
+    it('should get the rows readiness to end game, token at top-right', () => {
+        const boardMatrix = [
+            [2, 3, 4, 7, 0],
+            [-1, -1, -1, -1, -1],
+            [2, 7, 6, -1, 1],
+            [5, 2, 1, 1, 2],
+            [-1, -1, -1, -1, 2],
+        ];
+        const tokenColIndex = 4;
+
+        const rowsReadiness = getRowsReadinessToEndGame(boardMatrix, tokenColIndex);
+        expect(rowsReadiness).toEqual([
+            [false, false], // token row
+            [true, false],
+            [false, true],
+            [false, true],
+            [true, true],
+        ]);
+    });
+
+    it('should get the rows readiness to end game, token at bottom-right', () => {
+        const boardMatrix = [
+            [2, 3, 4, 7, 8],
+            [-1, -1, -1, -1, -1],
+            [2, 7, 6, -1, 1],
+            [5, 2, 1, 1, 2],
+            [-1, -1, -1, -1, 0],
+        ];
+        const tokenColIndex = 4;
+
+        const rowsReadiness = getRowsReadinessToEndGame(boardMatrix, tokenColIndex);
+        expect(rowsReadiness).toEqual([
+            [false, true],
+            [true, false],
+            [false, true],
+            [false, true],
+            [true, false], // token row
+        ]);
+    });
+
+    it('should get the rows readiness to end game, token at bottom-left', () => {
+        const boardMatrix = [
+            [2, 3, 4, 7, 8],
+            [-1, -1, -1, -1, -1],
+            [2, 7, 6, -1, 1],
+            [5, 2, 1, 1, 2],
+            [0, -1, -1, -1, -1],
+        ];
+        const tokenColIndex = 0;
+
+        const rowsReadiness = getRowsReadinessToEndGame(boardMatrix, tokenColIndex);
+        expect(rowsReadiness).toEqual([
+            [false, true],
+            [true, false],
+            [false, true],
+            [false, true],
+            [true, false], // token row
+        ]);
+    });
+
     it('should get the gains matrix', () => {
         const { matrix, tokenColIndex } = setup();
         const gains = getGainsMatrix(tokenColIndex, matrix);
@@ -137,12 +238,31 @@ describe('Utils', () => {
         ]);
     });
 
-    it('should get the best gain', () => {
-        const { matrix, tokenColIndex, tokenRowIndex } = setup();
+    it('should get the rows ordered by gain', () => {
+        const matrix = [
+            [2, 3, 4, 2, 8], // min gain -6
+            [-1, -1, -1, -1, -1], // min gain 0
+            [-1, 7, 6, 5, 1], // min gain -2
+            [5, 2, 9, 0, 2], // token row
+            [-1, -1, -1, 3, -1], // min gain 4
+        ];
+        const tokenColIndex = 3;
+        const tokenRowIndex = 3;
         const gains = getGainsMatrix(tokenColIndex, matrix);
-        const rowIndex = getBestGain(tokenRowIndex, tokenColIndex, gains, matrix);
+        const rowsReadiness = getRowsReadinessToEndGame(matrix, tokenColIndex);
+        const rowIndices = getRowsIndicesByOrderedGain(
+            tokenRowIndex,
+            tokenColIndex,
+            gains,
+            rowsReadiness
+        );
 
-        expect(rowIndex).toEqual(0);
+        expect(rowIndices).toEqual([
+            { gain: 4, rowIndex: 4, isRowReadyToEndGame: true, isRowAvailable: true },
+            { gain: 0, rowIndex: 1, isRowReadyToEndGame: true, isRowAvailable: false },
+            { gain: -2, rowIndex: 2, isRowReadyToEndGame: false, isRowAvailable: true },
+            { gain: -6, rowIndex: 0, isRowReadyToEndGame: false, isRowAvailable: true },
+        ]);
     });
 
     it('should create random integer', () => {

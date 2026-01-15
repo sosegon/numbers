@@ -65,7 +65,10 @@ const execAgent = (object) => {
     token.updateFromObject(getState().token);
 
     return new Promise((resolve) => {
-        const bestPosition = agent.getMaxGainValuePosition(token, boardMatrix);
+        const bestPosition = agent.getMaxGainValuePosition(token, boardMatrix, {
+            agent: getState().player2.score,
+            player: getState().player1.score,
+        });
         if (bestPosition[0] >= 0 && bestPosition[1] >= 0) {
             const position = { rowIndex: bestPosition[0], colIndex: bestPosition[1] };
             setTimeout(() => resolve({ dispatch, getState, position }), delay);

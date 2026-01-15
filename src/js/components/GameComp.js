@@ -151,7 +151,7 @@ const GameComp = ({
             <Board>
                 <WildCardCont />
                 {cells}
-                <GameEndCont />
+                <GameEndCont boardSize={board.length} />
             </Board>
         </Wrapper>
     );
