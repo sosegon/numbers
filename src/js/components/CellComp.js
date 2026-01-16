@@ -51,6 +51,7 @@ const CellComp = ({
         };
     } else if (isSelectable && turn === TURNS.PLAYER2) {
         style = {
+            pointerEvents: 'none',
             borderColor: theme.colors.secondaryLight,
             color: theme.colors.secondary,
             boxShadow: 'rgb(255, 0, 255) 0px 0px 10px, rgba(255, 0, 255, 0.2) 0px 0px 10px inset',
