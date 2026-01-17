@@ -32,8 +32,6 @@ const getGame = () => {
     return game.serialize();
 };
 
-console.log(settingsInitialState, gameInitialState);
-
 const store = createStore(
     rootReducer,
     { game: getGame(), settings: settingsInitialState },

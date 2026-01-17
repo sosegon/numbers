@@ -33,6 +33,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
 /**
  * Container to connect a {@link GameEndComp}.
+ * @param {object} props
+ * @param {number} props.boardSize Size of a {@link Board}.
  */
 const GameEndCont = connect(mapStateToProps, mapDispatchToProps)(GameEndComp);
 

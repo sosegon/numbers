@@ -99,7 +99,6 @@ const Board = styled.default.div`
  * that renders a {@link Game}.
  *
  * @param {object} props
- * @param {function} props.reset Function to reset a {@link Game}.
  * @param {array} props.board 2 dimensional array of numbers representing the
  * values of {@link Cell|Cells} in a {@link Board}.
  * @param {string} props.player1Direction Direction of player 1, one of {@link PLAYER_DIRECTIONS}.

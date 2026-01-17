@@ -30,7 +30,6 @@ const mapStatToProps = (state, ownProps) => {
 /**
  * Container to connect a {@link ScoreComp}.
  * @param {object} props
- * @param {number} props.score Score of a {@link Player}.
  * @param {number} props.playerName Flag to identify a {@link Player}. See {@link flags.TURNS}.
  * @param {number} props.direction Flag to identify a {@link Player}'s direction. See {@link flags.PLAYER_DIRECTIONS}.
  */
