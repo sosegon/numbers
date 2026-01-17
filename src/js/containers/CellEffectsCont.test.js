@@ -1,26 +1,25 @@
 const React = require('react');
-const { render, screen, waitFor } = require('@testing-library/react');
+const { render, screen } = require('@testing-library/react');
 require('@testing-library/jest-dom');
 const { Provider } = require('react-redux');
 const thunk = require('redux-thunk').default;
 const configureStore = require('redux-mock-store').default;
 const styled = require('styled-components');
-const { ScoreCont } = require('@containers/ScoreCont');
+const { CellEffectsCont } = require('@containers/CellEffectsCont');
 const { initialState } = require('@test/utilsTests.js');
 const theme = require('@root/theme');
-const { PLAYER_DIRECTIONS, TURNS } = require('@model/flags');
 
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
 
-describe('ScoreCont', () => {
+describe('CellEffectsCont', () => {
     let store;
     beforeEach(() => {
         jest.resetAllMocks();
         store = mockStore(initialState);
     });
 
-    function renderScore() {
+    function renderCellEffects() {
         render(
             React.createElement(
                 styled.ThemeProvider || styled.default.ThemeProvider,
@@ -31,10 +30,8 @@ describe('ScoreCont', () => {
                     React.createElement(
                         React.Fragment,
                         null,
-                        React.createElement(ScoreCont, {
-                            playerName: TURNS.PLAYER1,
-                            direction: PLAYER_DIRECTIONS.HORIZONTAL,
-                            'data-testid': 'score-card',
+                        React.createElement(CellEffectsCont, {
+                            'data-testid': 'cell-effects',
                         })
                     )
                 )
@@ -43,11 +40,11 @@ describe('ScoreCont', () => {
     }
 
     it('should render component', () => {
-        renderScore();
-        expect(screen.getByTestId('score-card')).toBeInTheDocument();
+        renderCellEffects();
+        expect(screen.getByTestId('cell-effects')).toBeInTheDocument();
     });
 
-    it('should update score when store changes', async () => {
+    it('should render in new position', () => {
         const { rerender } = render(
             React.createElement(
                 styled.ThemeProvider || styled.default.ThemeProvider,
@@ -58,28 +55,34 @@ describe('ScoreCont', () => {
                     React.createElement(
                         React.Fragment,
                         null,
-                        React.createElement(ScoreCont, {
-                            playerName: TURNS.PLAYER1,
-                            direction: PLAYER_DIRECTIONS.HORIZONTAL,
-                            'data-testid': 'score-card',
+                        React.createElement(CellEffectsCont, {
+                            'data-testid': 'cell-effects',
                         })
                     )
                 )
             )
         );
-        await waitFor(() => {
-            expect(screen.getByTestId('score-card-value').textContent).toBe('00 +0');
-        });
+        const cellEffects = screen.getByTestId('cell-effects');
+        let top =
+            store.getState().game.token.rowIndex *
+                (theme.sizes.cellSize + 3 * theme.sizes.cellMargin) +
+            theme.sizes.boardPadding;
+        let left =
+            store.getState().game.token.colIndex *
+                (theme.sizes.cellSize + 3 * theme.sizes.cellMargin) +
+            theme.sizes.boardPadding;
+        expect(cellEffects.style.top).toEqual(`${top}px`);
+        expect(cellEffects.style.left).toEqual(`${left}px`);
 
-        // Create a new store with updated score
+        // Update store with new position
         const updatedStore = mockStore({
             ...initialState,
             game: {
                 ...initialState.game,
-
-                player1: {
-                    ...initialState.game[TURNS.PLAYER1],
-                    score: 10,
+                token: {
+                    ...initialState.game.token,
+                    rowIndex: 4,
+                    colIndex: 1,
                 },
             },
         });
@@ -94,18 +97,23 @@ describe('ScoreCont', () => {
                     React.createElement(
                         React.Fragment,
                         null,
-                        React.createElement(ScoreCont, {
-                            playerName: TURNS.PLAYER1,
-                            direction: PLAYER_DIRECTIONS.HORIZONTAL,
-                            'data-testid': 'score-card',
+                        React.createElement(CellEffectsCont, {
+                            'data-testid': 'cell-effects',
                         })
                     )
                 )
             )
         );
 
-        await waitFor(() =>
-            expect(screen.getByTestId('score-card-value').textContent).toBe('10 +10')
-        );
+        top =
+            updatedStore.getState().game.token.rowIndex *
+                (theme.sizes.cellSize + 3 * theme.sizes.cellMargin) +
+            theme.sizes.boardPadding;
+        left =
+            updatedStore.getState().game.token.colIndex *
+                (theme.sizes.cellSize + 3 * theme.sizes.cellMargin) +
+            theme.sizes.boardPadding;
+        expect(cellEffects.style.top).toEqual(`${top}px`);
+        expect(cellEffects.style.left).toEqual(`${left}px`);
     });
 });

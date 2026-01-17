@@ -3,12 +3,15 @@ const { render, screen, fireEvent } = require('@testing-library/react');
 require('@testing-library/jest-dom');
 const styled = require('styled-components');
 const { GameEndComp } = require('@components/GameEndComp');
+const { GAME_RESULT } = require('@model/flags');
 const theme = require('@root/theme');
 
 describe('GameEndComp', () => {
     const baseProps = {
         isOver: true,
-        message: 'Game Over',
+        result: GAME_RESULT.WON,
+        soundEnabled: true,
+        soundLocked: false,
         reset: jest.fn(),
         'data-testid': 'game-end-comp',
     };
@@ -28,8 +31,8 @@ describe('GameEndComp', () => {
     });
 
     it('should render the correct message', () => {
-        renderWithTheme({ message: 'Game Over' });
-        expect(screen.getByText('Game Over')).toBeInTheDocument();
+        renderWithTheme({ result: GAME_RESULT.WON });
+        expect(screen.getByText('You Won!')).toBeInTheDocument();
     });
 
     it('should call reset function on button click', () => {

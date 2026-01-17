@@ -1,6 +1,6 @@
 const { Game } = require('@model/Game');
 const { GAME_STATUSES } = require('@model/flags');
-const types = require('@root/actionTypes');
+const { TOKEN_MOVED, SCORES_UPDATED, GAME_RESET } = require('@reducers/gameActionTypes');
 
 const game = new Game(9);
 const initialState = game.serialize();
@@ -30,20 +30,21 @@ const doResetGame = (state, action) => {
 
 /**
  * Update the state of the game based
- * on the received {@link actions}
- * @param {object} state - State of the application.
+ * on the received {@link gameActions}
+ * @param {object} state - Game state of the application.
  * @param {object} action - Action with relevant data to update the state
  * of the application.
+ * @returns {Object} New game state after applying the action.
  */
 const reduce = (state = initialState, action) => {
     switch (action.type) {
-        case types.TOKEN_MOVED:
+        case TOKEN_MOVED:
             return doMoveToken(state, action);
 
-        case types.SCORES_UPDATED:
+        case SCORES_UPDATED:
             return doUpdateScores(state);
 
-        case types.GAME_RESET:
+        case GAME_RESET:
             return doResetGame(state, action);
 
         default:

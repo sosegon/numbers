@@ -9,7 +9,7 @@ const { GameEndCont } = require('@containers/GameEndCont');
 const { initialState } = require('@test/utilsTests.js');
 const theme = require('@root/theme');
 const { GAME_CONTINUITY } = require('@model/flags');
-const types = require('@root/actionTypes');
+const { GAME_RESET } = require('@reducers/gameActionTypes');
 
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
@@ -65,9 +65,13 @@ describe('GameEndCont', () => {
         // Create a new store
         const updatedStore = mockStore({
             ...initialState,
-            snap: {
-                ...initialState.snap,
-                continuity: GAME_CONTINUITY.OVER,
+            game: {
+                ...initialState.game,
+
+                snap: {
+                    ...initialState.game.snap,
+                    continuity: GAME_CONTINUITY.OVER,
+                },
             },
         });
 
@@ -95,6 +99,6 @@ describe('GameEndCont', () => {
         const resetButton = screen.getByTestId('reset-button');
         await resetButton.click();
         const actions = store.getActions();
-        expect(actions).toEqual([{ type: types.GAME_RESET, boardSize: 5 }]);
+        expect(actions).toEqual([{ type: GAME_RESET, boardSize: 5 }]);
     });
 });

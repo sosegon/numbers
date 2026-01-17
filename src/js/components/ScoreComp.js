@@ -1,8 +1,7 @@
 const React = require('react');
 const PropTypes = require('prop-types');
 const styled = require('styled-components');
-const HumanIcon = require('@icons/HumanIcon');
-const AiIcon = require('@icons/AiIcon');
+const { Bot, User } = require('lucide-react');
 
 const ScoreWrapper = styled.default.div`
     flex: 1 1 auto;
@@ -32,13 +31,37 @@ const IconContainer = styled.default.div`
  * that renders the score of a {@link Player}.
  *
  * @param {object} props
- * @param {string} props.score Score of a {@link Player}.
+ * @param {number} props.score Score of a {@link Player}.
  * @param {string} props.name Name to identify the {@link Player}.
  * @param {string} props.direction Direction of the {@link Player}.
  */
 const ScoreComp = ({ score, name, direction, 'data-testid': dataTestId = 'score-comp' }) => {
     const theme = styled.useTheme();
     const isAi = name.toLowerCase() !== 'you';
+
+    const [displayedScore, setDisplayedScore] = React.useState(score);
+    const [scoreIncrement, setScoreIncrement] = React.useState(0);
+    const [displayedScoreIncrement, setDisplayedScoreIncrement] = React.useState(0);
+
+    React.useEffect(() => {
+        if (displayedScore < score) {
+            const timeout = setTimeout(() => {
+                setDisplayedScore(displayedScore + 1);
+                setScoreIncrement((prev) => prev + 1);
+            }, 50);
+            return () => clearTimeout(timeout);
+        } else if (displayedScore === score) {
+            setDisplayedScoreIncrement(scoreIncrement);
+            setScoreIncrement(0);
+            const incrementTimeout = setTimeout(() => {
+                setDisplayedScoreIncrement(0);
+            }, 900);
+            return () => clearTimeout(incrementTimeout);
+        } else if (displayedScore > score) {
+            setDisplayedScore(score); // In case score decreases, sync immediately
+            setScoreIncrement(0);
+        }
+    }, [score, displayedScore]);
 
     return (
         <ScoreWrapper
@@ -63,6 +86,7 @@ const ScoreComp = ({ score, name, direction, 'data-testid': dataTestId = 'score-
                     </div>
                     <div
                         style={{
+                            position: 'relative',
                             fontSize: '32px',
                             textShadow: !isAi
                                 ? '0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00ffff'
@@ -70,7 +94,19 @@ const ScoreComp = ({ score, name, direction, 'data-testid': dataTestId = 'score-
                         }}
                         data-testid={`${dataTestId}-value`}
                     >
-                        {score}
+                        {`${displayedScore}`.length < 2 ? `0${displayedScore}` : displayedScore}
+                        <span
+                            style={{
+                                color: isAi ? theme.colors.secondary : theme.colors.primary,
+                                position: 'absolute',
+                                left: '0',
+                                opacity: displayedScoreIncrement > 0 ? 1 : 0,
+                                top: displayedScoreIncrement > 0 ? '-50px' : '0px',
+                                transition: displayedScoreIncrement ? 'all 0.9s ease-out' : 'none',
+                            }}
+                        >
+                            {` +${displayedScoreIncrement}`}
+                        </span>
                     </div>
                 </div>
                 <IconContainer
@@ -81,7 +117,7 @@ const ScoreComp = ({ score, name, direction, 'data-testid': dataTestId = 'score-
                             : 'rgb(0, 255, 255) 0px 0px 10px, rgba(0, 255, 255, 0.2) 0px 0px 10px inset',
                     }}
                 >
-                    {isAi ? <AiIcon width="70%" /> : <HumanIcon width="70%" />}
+                    {isAi ? <Bot size={28} /> : <User size={28} />}
                 </IconContainer>
             </div>
             <div style={{ textTransform: 'uppercase' }}> {`> ${direction}`}</div>
@@ -90,7 +126,7 @@ const ScoreComp = ({ score, name, direction, 'data-testid': dataTestId = 'score-
 };
 
 ScoreComp.propTypes = {
-    score: PropTypes.string.isRequired,
+    score: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     direction: PropTypes.string,
     'data-testid': PropTypes.string,

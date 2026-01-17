@@ -6,7 +6,7 @@ const { PLAYER_DIRECTIONS, TURNS } = require('@model/flags');
 const mapStatToProps = (state, ownProps) => {
     const { playerName, direction } = ownProps;
     const name = playerName === TURNS.PLAYER1 ? 'You' : 'AI CORE';
-    let score = playerName === TURNS.PLAYER1 ? state.player1.score : state.player2.score;
+    let score = playerName === TURNS.PLAYER1 ? state.game.player1.score : state.game.player2.score;
 
     const digits = 2;
     let scoreStr = `${score}`;
@@ -16,7 +16,7 @@ const mapStatToProps = (state, ownProps) => {
 
     return {
         name,
-        score: scoreStr,
+        score,
         direction:
             direction === PLAYER_DIRECTIONS.NONE
                 ? ''
@@ -30,7 +30,6 @@ const mapStatToProps = (state, ownProps) => {
 /**
  * Container to connect a {@link ScoreComp}.
  * @param {object} props
- * @param {number} props.score Score of a {@link Player}.
  * @param {number} props.playerName Flag to identify a {@link Player}. See {@link flags.TURNS}.
  * @param {number} props.direction Flag to identify a {@link Player}'s direction. See {@link flags.PLAYER_DIRECTIONS}.
  */

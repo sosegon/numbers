@@ -6,7 +6,8 @@ const thunk = require('redux-thunk').default;
 const configureStore = require('redux-mock-store').default;
 const styled = require('styled-components');
 const { CellCont } = require('@containers/CellCont');
-const { moveToken } = require('@root/actions');
+const { moveToken } = require('@reducers/gameActions');
+const { unlockSound, lockControls } = require('@reducers/settingsActions');
 const {
     initialState,
     verticalPosition,
@@ -75,18 +76,18 @@ describe('CellCont', () => {
         expect(screen.getByTestId('cell-other-hid')).toHaveTextContent('');
     });
 
-    it('should dispatch moveToken action when clicked', async () => {
+    it('should dispatch unlockSound, lockControls and moveToken actions when clicked', async () => {
         renderCells();
         await act(async () => {
             fireEvent.click(screen.getByTestId('cell-vertical'));
         });
-        expect(store.getActions()).toEqual([moveToken(0, 3)]);
+        expect(store.getActions()).toEqual([unlockSound(), lockControls(), moveToken(0, 3)]);
         store.clearActions();
 
         await act(async () => {
             fireEvent.click(screen.getByTestId('cell-horizontal'));
         });
-        expect(store.getActions()).toEqual([moveToken(3, 0)]);
+        expect(store.getActions()).toEqual([unlockSound(), lockControls(), moveToken(3, 0)]);
         store.clearActions();
 
         await act(async () => {

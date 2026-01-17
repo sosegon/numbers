@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
+    mode: process.env.NODE_ENV || 'development',
     entry: {
         index: path.join(__dirname, './src/js/index.js'),
     },
@@ -25,7 +26,9 @@ module.exports = {
             '@data': path.resolve(__dirname, 'src/js/data/'),
             '@icons': path.resolve(__dirname, 'src/js/icons/'),
             '@model': path.resolve(__dirname, 'src/js/model/'),
+            '@reducers': path.resolve(__dirname, 'src/js/reducers/'),
             '@root': path.resolve(__dirname, 'src/js/'),
+            '@sound': path.resolve(__dirname, 'src/sound/'),
             '@style': path.resolve(__dirname, 'src/style/'),
             '@test': path.resolve(__dirname, 'src/js/test/'),
         },
@@ -62,6 +65,13 @@ module.exports = {
                 type: 'asset/resource',
                 generator: {
                     filename: 'css/[name][ext]',
+                },
+            },
+            {
+                test: /\.(mp3|wav)$/i,
+                type: 'asset/resource',
+                generator: {
+                    filename: 'sound/[name][ext]',
                 },
             },
         ],

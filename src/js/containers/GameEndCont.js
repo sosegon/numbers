@@ -1,36 +1,40 @@
 const PropTypes = require('prop-types');
 const { connect } = require('react-redux');
 const { GameEndComp } = require('@components/GameEndComp');
-const { GAME_CONTINUITY } = require('@model/flags');
-const actions = require('@root/actions');
+const { GAME_CONTINUITY, GAME_RESULT } = require('@model/flags');
+const { resetGame } = require('@reducers/gameActions');
 
-const getMessage = (score1, score2) => {
+const getResult = (score1, score2) => {
     if (score1 > score2) {
-        return 'You won';
+        return GAME_RESULT.WON;
     } else if (score1 < score2) {
-        return 'You lose';
+        return GAME_RESULT.LOST;
     } else {
-        return 'Draw';
+        return GAME_RESULT.DRAW;
     }
 };
 
 const mapStateToProps = (state) => {
     return {
-        isOver: state.snap.continuity === GAME_CONTINUITY.OVER,
-        message: getMessage(state.player1.score, state.player2.score),
+        isOver: state.game.snap.continuity === GAME_CONTINUITY.OVER,
+        result: getResult(state.game.player1.score, state.game.player2.score),
+        soundEnabled: state.settings.soundEnabled,
+        soundLocked: state.settings.soundLocked,
     };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         reset: () => {
-            dispatch(actions.resetGame(ownProps.boardSize));
+            dispatch(resetGame(ownProps.boardSize));
         },
     };
 };
 
 /**
  * Container to connect a {@link GameEndComp}.
+ * @param {object} props
+ * @param {number} props.boardSize Size of a {@link Board}.
  */
 const GameEndCont = connect(mapStateToProps, mapDispatchToProps)(GameEndComp);
 

@@ -2,11 +2,12 @@ const React = require('react');
 const PropTypes = require('prop-types');
 const styled = require('styled-components');
 const { TURNS, PLAYER_DIRECTIONS } = require('@model/flags');
+const { ControlsCont } = require('@containers/ControlsCont');
 const { CellCont } = require('@containers/CellCont');
 const { WildCardCont } = require('@containers/WildCardCont');
+const { CellEffectsCont } = require('@containers/CellEffectsCont');
 const { GameEndCont } = require('@containers/GameEndCont');
 const { ScoreCont } = require('@containers/ScoreCont');
-const { ResetButton } = require('@components/GameEndComp');
 
 const scan = styled.keyframes`
     0% {
@@ -57,7 +58,7 @@ const FlexContainer = styled.default.div`
     margin: 0 auto;
     width: 400px;
     align-items: end;
-    justify-content: center;
+    justify-content: space-between;
 `;
 
 const ScoresContainer = styled.default.div`
@@ -98,7 +99,6 @@ const Board = styled.default.div`
  * that renders a {@link Game}.
  *
  * @param {object} props
- * @param {function} props.reset Function to reset a {@link Game}.
  * @param {array} props.board 2 dimensional array of numbers representing the
  * values of {@link Cell|Cells} in a {@link Board}.
  * @param {string} props.player1Direction Direction of player 1, one of {@link PLAYER_DIRECTIONS}.
@@ -108,7 +108,6 @@ const GameComp = ({
     board,
     player1Direction,
     player2Direction,
-    reset,
     'data-testid': dataTestId = 'game-comp',
 }) => {
     let cells = board.map((row, rowIndex) => (
@@ -134,14 +133,7 @@ const GameComp = ({
                             {'// MAXIMIZE YOUR SCORE IN THE GRID //'}
                         </p>
                     </TitleContainer>
-                    <ResetButton
-                        style={{
-                            maxWidth: 'fit-content',
-                        }}
-                        onClick={reset}
-                    >
-                        RESTART
-                    </ResetButton>
+                    <ControlsCont boardSize={board.length} />
                 </FlexContainer>
                 <ScoresContainer>
                     <ScoreCont playerName={TURNS.PLAYER1} direction={player1Direction} />
@@ -149,6 +141,7 @@ const GameComp = ({
                 </ScoresContainer>
             </div>
             <Board>
+                <CellEffectsCont />
                 <WildCardCont />
                 {cells}
                 <GameEndCont boardSize={board.length} />
@@ -158,7 +151,6 @@ const GameComp = ({
 };
 
 GameComp.propTypes = {
-    reset: PropTypes.func.isRequired,
     board: PropTypes.array.isRequired,
     player1Direction: PropTypes.oneOf(Object.values(PLAYER_DIRECTIONS)).isRequired,
     player2Direction: PropTypes.oneOf(Object.values(PLAYER_DIRECTIONS)).isRequired,
@@ -167,5 +159,4 @@ GameComp.propTypes = {
 
 module.exports = {
     GameComp,
-    ResetButton,
 };

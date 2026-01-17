@@ -64,10 +64,12 @@ describe('WildCardCont', () => {
         );
         const wildCard = screen.getByTestId('wild-card');
         let top =
-            store.getState().token.rowIndex * (theme.sizes.cellSize + 3 * theme.sizes.cellMargin) +
+            store.getState().game.token.rowIndex *
+                (theme.sizes.cellSize + 3 * theme.sizes.cellMargin) +
             theme.sizes.boardPadding;
         let left =
-            store.getState().token.colIndex * (theme.sizes.cellSize + 3 * theme.sizes.cellMargin) +
+            store.getState().game.token.colIndex *
+                (theme.sizes.cellSize + 3 * theme.sizes.cellMargin) +
             theme.sizes.boardPadding;
         expect(wildCard.style.top).toEqual(`${top}px`);
         expect(wildCard.style.left).toEqual(`${left}px`);
@@ -101,11 +103,11 @@ describe('WildCardCont', () => {
         );
 
         top =
-            updatedStore.getState().token.rowIndex *
+            updatedStore.getState().game.token.rowIndex *
                 (theme.sizes.cellSize + 3 * theme.sizes.cellMargin) +
             theme.sizes.boardPadding;
         left =
-            updatedStore.getState().token.colIndex *
+            updatedStore.getState().game.token.colIndex *
                 (theme.sizes.cellSize + 3 * theme.sizes.cellMargin) +
             theme.sizes.boardPadding;
         expect(wildCard.style.top).toEqual(`${top}px`);

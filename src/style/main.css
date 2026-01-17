@@ -28,3 +28,85 @@ body {
   height: 100%;
   position: relative;
 }
+
+/* Firework effect styles */
+/* from https://www.webtutoriales.com/articulos/2025/04/25/fuegos-artificiales-css/ */
+.firework {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 8px;
+}
+
+.particle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background-color: #000;
+  border-radius: 50%;
+  animation: explode 0.5s ease-out forwards;
+}
+
+.particle:nth-child(1) {
+  --x: -40px;
+  --y: -40px;
+}
+.particle:nth-child(2) {
+  --x: 0px;
+  --y: -50px;
+}
+.particle:nth-child(3) {
+  --x: 40px;
+  --y: -40px;
+}
+.particle:nth-child(4) {
+  --x: 50px;
+  --y: 0px;
+}
+.particle:nth-child(5) {
+  --x: 40px;
+  --y: 40px;
+}
+.particle:nth-child(6) {
+  --x: 0px;
+  --y: 50px;
+}
+.particle:nth-child(7) {
+  --x: -40px;
+  --y: 40px;
+}
+.particle:nth-child(8) {
+  --x: -50px;
+  --y: 0px;
+}
+
+@keyframes explode {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--x), var(--y)) scale(0);
+    opacity: 0;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}

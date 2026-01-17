@@ -1,6 +1,6 @@
 const { PLAYER_DIRECTIONS, TURNS, GAME_STATUSES, GAME_CONTINUITY } = require('@model/flags.js');
 
-const initialState = {
+const initialGameState = {
     token: {
         rowIndex: 3,
         colIndex: 3,
@@ -67,7 +67,10 @@ const otherPositionHid = {
 };
 
 module.exports = {
-    initialState,
+    initialState: {
+        game: initialGameState,
+        settings: { soundEnabled: true, soundLocked: true, controlsLocked: false },
+    },
     verticalPosition,
     horizontalPosition,
     otherPosition,
