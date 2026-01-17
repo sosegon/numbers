@@ -26,6 +26,7 @@ module.exports = {
             '@data': path.resolve(__dirname, 'src/js/data/'),
             '@icons': path.resolve(__dirname, 'src/js/icons/'),
             '@model': path.resolve(__dirname, 'src/js/model/'),
+            '@reducers': path.resolve(__dirname, 'src/js/reducers/'),
             '@root': path.resolve(__dirname, 'src/js/'),
             '@sound': path.resolve(__dirname, 'src/sound/'),
             '@style': path.resolve(__dirname, 'src/style/'),

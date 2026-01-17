@@ -9,7 +9,7 @@ const { GameEndCont } = require('@containers/GameEndCont');
 const { initialState } = require('@test/utilsTests.js');
 const theme = require('@root/theme');
 const { GAME_CONTINUITY } = require('@model/flags');
-const types = require('@root/actionTypes');
+const types = require('@reducers/actionTypes');
 
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);

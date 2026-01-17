@@ -1,6 +1,6 @@
 const { Game } = require('@model/Game');
 const { GAME_STATUSES } = require('@model/flags');
-const types = require('@root/actionTypes');
+const types = require('@reducers/actionTypes');
 
 const game = new Game(9);
 const initialState = game.serialize();

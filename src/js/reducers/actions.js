@@ -1,4 +1,4 @@
-const types = require('@root/actionTypes');
+const types = require('@reducers/actionTypes');
 
 /**
  * Actions to be dispatched.

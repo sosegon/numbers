@@ -6,7 +6,7 @@ const thunk = require('redux-thunk').default;
 const configureStore = require('redux-mock-store').default;
 const styled = require('styled-components');
 const { CellCont } = require('@containers/CellCont');
-const { moveToken } = require('@root/actions');
+const { moveToken } = require('@reducers/actions');
 const {
     initialState,
     verticalPosition,

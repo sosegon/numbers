@@ -1,7 +1,7 @@
 const PropTypes = require('prop-types');
 const { connect } = require('react-redux');
 const { GameComp } = require('@components/GameComp');
-const actions = require('@root/actions');
+const actions = require('@reducers/actions');
 const { vectorToMatrix } = require('@model/utils');
 
 const mapStateToProps = (state) => {

@@ -2,7 +2,7 @@ const PropTypes = require('prop-types');
 const { connect } = require('react-redux');
 const { GameEndComp } = require('@components/GameEndComp');
 const { GAME_CONTINUITY } = require('@model/flags');
-const actions = require('@root/actions');
+const actions = require('@reducers/actions');
 
 const getMessage = (score1, score2) => {
     if (score1 > score2) {

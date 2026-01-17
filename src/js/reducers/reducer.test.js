@@ -1,7 +1,7 @@
 const deepFreeze = require('deep-freeze');
-const { reduce } = require('@root/reducer');
+const { reduce } = require('@reducers/reducer');
 const { PLAYER_DIRECTIONS, TURNS, GAME_STATUSES, GAME_CONTINUITY } = require('@model/flags');
-const actions = require('@root/actions');
+const actions = require('@reducers/actions');
 const redux = require('redux');
 
 describe('reducer', () => {
