@@ -19,7 +19,7 @@ describe('CellEffectsCont', () => {
         store = mockStore(initialState);
     });
 
-    function rendercellEffects() {
+    function renderCellEffects() {
         render(
             React.createElement(
                 styled.ThemeProvider || styled.default.ThemeProvider,
@@ -40,7 +40,7 @@ describe('CellEffectsCont', () => {
     }
 
     it('should render component', () => {
-        rendercellEffects();
+        renderCellEffects();
         expect(screen.getByTestId('cell-effects')).toBeInTheDocument();
     });
 
@@ -77,10 +77,13 @@ describe('CellEffectsCont', () => {
         // Update store with new position
         const updatedStore = mockStore({
             ...initialState,
-            token: {
-                ...initialState.token,
-                rowIndex: 4,
-                colIndex: 1,
+            game: {
+                ...initialState.game,
+                token: {
+                    ...initialState.game.token,
+                    rowIndex: 4,
+                    colIndex: 1,
+                },
             },
         });
 

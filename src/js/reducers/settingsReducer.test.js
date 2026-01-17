@@ -97,7 +97,7 @@ describe('settings reducer', () => {
         expect(newState).toEqual(expectedState);
     });
 
-    it('should unlock sound setting', () => {
+    it('should unlock controls setting', () => {
         const store = redux.createStore(reduce, {
             ...initialState,
             controlsLocked: true,

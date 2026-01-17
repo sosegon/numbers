@@ -48,11 +48,7 @@ const CellEffectsComp = ({
     };
 
     React.useEffect(() => {
-        if (turn === TURNS.PLAYER1) {
-            var wildcardSound = playerSound;
-        } else {
-            var wildcardSound = agentSound;
-        }
+        const wildcardSound = turn === TURNS.PLAYER1 ? playerSound : agentSound;
         if (soundEnabled && !soundLocked) {
             const audio = new window.Audio(wildcardSound);
             audio.play();
