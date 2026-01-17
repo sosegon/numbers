@@ -1,5 +1,5 @@
 const React = require('react');
-const { render, screen } = require('@testing-library/react');
+const { render, screen, waitFor } = require('@testing-library/react');
 require('@testing-library/jest-dom');
 const { Provider } = require('react-redux');
 const thunk = require('redux-thunk').default;
@@ -47,7 +47,7 @@ describe('ScoreCont', () => {
         expect(screen.getByTestId('score-card')).toBeInTheDocument();
     });
 
-    it('should update score when store changes', () => {
+    it('should update score when store changes', async () => {
         const { rerender } = render(
             React.createElement(
                 styled.ThemeProvider || styled.default.ThemeProvider,
@@ -98,6 +98,6 @@ describe('ScoreCont', () => {
             )
         );
 
-        expect(screen.getByTestId('score-card-value').textContent).toBe('10');
+        await waitFor(() => expect(screen.getByTestId('score-card-value').textContent).toBe('10'));
     });
 });

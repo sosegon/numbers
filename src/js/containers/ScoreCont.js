@@ -16,7 +16,7 @@ const mapStatToProps = (state, ownProps) => {
 
     return {
         name,
-        score: scoreStr,
+        score,
         direction:
             direction === PLAYER_DIRECTIONS.NONE
                 ? ''

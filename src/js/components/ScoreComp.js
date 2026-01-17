@@ -32,13 +32,26 @@ const IconContainer = styled.default.div`
  * that renders the score of a {@link Player}.
  *
  * @param {object} props
- * @param {string} props.score Score of a {@link Player}.
+ * @param {number} props.score Score of a {@link Player}.
  * @param {string} props.name Name to identify the {@link Player}.
  * @param {string} props.direction Direction of the {@link Player}.
  */
 const ScoreComp = ({ score, name, direction, 'data-testid': dataTestId = 'score-comp' }) => {
     const theme = styled.useTheme();
     const isAi = name.toLowerCase() !== 'you';
+
+    const [displayedScore, setDisplayedScore] = React.useState(score);
+
+    React.useEffect(() => {
+        if (displayedScore < score) {
+            const timeout = setTimeout(() => {
+                setDisplayedScore(displayedScore + 1);
+            }, 50);
+            return () => clearTimeout(timeout);
+        } else if (displayedScore > score) {
+            setDisplayedScore(score); // In case score decreases, sync immediately
+        }
+    }, [score, displayedScore]);
 
     return (
         <ScoreWrapper
@@ -70,7 +83,7 @@ const ScoreComp = ({ score, name, direction, 'data-testid': dataTestId = 'score-
                         }}
                         data-testid={`${dataTestId}-value`}
                     >
-                        {score}
+                        {`${displayedScore}`.length < 2 ? `0${displayedScore}` : displayedScore}
                     </div>
                 </div>
                 <IconContainer
@@ -90,7 +103,7 @@ const ScoreComp = ({ score, name, direction, 'data-testid': dataTestId = 'score-
 };
 
 ScoreComp.propTypes = {
-    score: PropTypes.string.isRequired,
+    score: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     direction: PropTypes.string,
     'data-testid': PropTypes.string,

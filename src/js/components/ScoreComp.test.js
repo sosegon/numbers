@@ -1,5 +1,5 @@
 const React = require('react');
-const { render, screen } = require('@testing-library/react');
+const { render, screen, waitFor } = require('@testing-library/react');
 require('@testing-library/jest-dom');
 const styled = require('styled-components');
 const { ScoreComp } = require('@components/ScoreComp');
@@ -7,7 +7,7 @@ const theme = require('@root/theme');
 
 describe('ScoreComp', () => {
     const baseProps = {
-        score: '10',
+        score: 10,
         name: 'AI Core',
         direction: 'rows',
         'data-testid': 'score-comp',
@@ -28,7 +28,7 @@ describe('ScoreComp', () => {
     });
 
     it('should render the correct score', () => {
-        renderWithTheme({ score: '10' });
+        renderWithTheme({ score: 10 });
         expect(screen.getByText('10')).toBeInTheDocument();
     });
 
@@ -42,16 +42,16 @@ describe('ScoreComp', () => {
         expect(screen.getByText('> rows')).toBeInTheDocument();
     });
 
-    it('should update score when prop changes', () => {
-        const { rerender } = renderWithTheme({ score: '5' });
-        expect(screen.getByText('5')).toBeInTheDocument();
+    it('should update score when prop changes', async () => {
+        const { rerender } = renderWithTheme({ score: 5 });
+        expect(screen.getByText('05')).toBeInTheDocument();
         rerender(
             React.createElement(
                 styled.ThemeProvider || styled.default.ThemeProvider,
                 { theme },
-                React.createElement(ScoreComp, { ...baseProps, score: '20' })
+                React.createElement(ScoreComp, { ...baseProps, score: 20 })
             )
         );
-        expect(screen.getByText('20')).toBeInTheDocument();
+        await waitFor(() => expect(screen.getByText('20')).toBeInTheDocument());
     });
 });

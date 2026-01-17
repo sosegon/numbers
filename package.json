@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "NODE_ENV=development rm -rf built && webpack-dev-server --config webpack.config.js",
     "build": "NODE_ENV=production rm -rf built && webpack && cp -r docs built/docs",
-    "test": "jest",
+    "test": "jest --env=jest-environment-jsdom-sixteen",
     "format": "prettier --write \"src/**/*.{js,jsx,scss}\"",
     "docs": "documentation build src/js -f html -o docs"
   },
@@ -52,6 +52,7 @@
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^5.6.5",
     "jest": "^23.6.0",
+    "jest-environment-jsdom-sixteen": "^1.0.3",
     "mini-css-extract-plugin": "^2.9.4",
     "prettier": "^3.7.4",
     "redux-mock-store": "^1.5.3",
