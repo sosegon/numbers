@@ -1,8 +1,7 @@
 const React = require('react');
 const PropTypes = require('prop-types');
 const styled = require('styled-components');
-const HumanIcon = require('@icons/HumanIcon');
-const AiIcon = require('@icons/AiIcon');
+const { Bot, User } = require('lucide-react');
 
 const ScoreWrapper = styled.default.div`
     flex: 1 1 auto;
@@ -118,7 +117,7 @@ const ScoreComp = ({ score, name, direction, 'data-testid': dataTestId = 'score-
                             : 'rgb(0, 255, 255) 0px 0px 10px, rgba(0, 255, 255, 0.2) 0px 0px 10px inset',
                     }}
                 >
-                    {isAi ? <AiIcon width="70%" /> : <HumanIcon width="70%" />}
+                    {isAi ? <Bot size={28} /> : <User size={28} />}
                 </IconContainer>
             </div>
             <div style={{ textTransform: 'uppercase' }}> {`> ${direction}`}</div>
