@@ -8,7 +8,7 @@ const { Agent } = require('@model/Agent');
 const { vectorToMatrix } = require('@model/utils');
 const { TURNS, PLAYER_DIRECTIONS, GAME_CONTINUITY } = require('@model/flags');
 
-const delay = 200;
+const delay = 300;
 
 const isCellSelectable = (state, ownProps) => {
     const { rowIndex, colIndex, value } = ownProps;

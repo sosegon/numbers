@@ -4,6 +4,7 @@ const styled = require('styled-components');
 const { TURNS, PLAYER_DIRECTIONS } = require('@model/flags');
 const { CellCont } = require('@containers/CellCont');
 const { WildCardCont } = require('@containers/WildCardCont');
+const { CellEffectsCont } = require('@containers/CellEffectsCont');
 const { GameEndCont } = require('@containers/GameEndCont');
 const { ScoreCont } = require('@containers/ScoreCont');
 const { ResetButton } = require('@components/GameEndComp');
@@ -149,6 +150,7 @@ const GameComp = ({
                 </ScoresContainer>
             </div>
             <Board>
+                <CellEffectsCont />
                 <WildCardCont />
                 {cells}
                 <GameEndCont boardSize={board.length} />
