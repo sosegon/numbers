@@ -1,19 +1,19 @@
-const types = require('@reducers/actionTypes');
+const { TOKEN_MOVED, SCORES_UPDATED, GAME_RESET } = require('@reducers/gameActionTypes');
 
 /**
- * Actions to be dispatched.
- * @module actions
+ * Game actions to be dispatched.
+ * @module gameActions
  */
 module.exports = {
     /**
-     * Dispatch {@link actionTypes.TOKEN_MOVED}.
+     * Dispatch {@link gameActionTypes.TOKEN_MOVED}.
      * @param {number} rowIndex - Row index of the {@link Cell}
      * to move the {@link Token}.
      * @param {number} colIndex - Column index of the {@link Cell}
      * to move the {@link Token}.
      */
     moveToken(rowIndex, colIndex) {
-        const type = types.TOKEN_MOVED;
+        const type = TOKEN_MOVED;
         return {
             type,
             rowIndex,
@@ -21,19 +21,19 @@ module.exports = {
         };
     },
     /**
-     * Dispatch {@link actionTypes.SCORES_UPDATED}.
+     * Dispatch {@link gameActionTypes.SCORES_UPDATED}.
      */
     updateScores() {
-        const type = types.SCORES_UPDATED;
+        const type = SCORES_UPDATED;
         return { type };
     },
     /**
-     * Dispatch {@link actionTypes.GAME_RESET}.
+     * Dispatch {@link gameActionTypes.GAME_RESET}.
      * @param {number} boardSize - Size of the {@link Board}
      * for the new {@link Game}.
      */
     resetGame(boardSize) {
-        const type = types.GAME_RESET;
+        const type = GAME_RESET;
         return {
             type,
             boardSize,

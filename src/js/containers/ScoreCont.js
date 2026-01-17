@@ -6,7 +6,7 @@ const { PLAYER_DIRECTIONS, TURNS } = require('@model/flags');
 const mapStatToProps = (state, ownProps) => {
     const { playerName, direction } = ownProps;
     const name = playerName === TURNS.PLAYER1 ? 'You' : 'AI CORE';
-    let score = playerName === TURNS.PLAYER1 ? state.player1.score : state.player2.score;
+    let score = playerName === TURNS.PLAYER1 ? state.game.player1.score : state.game.player2.score;
 
     const digits = 2;
     let scoreStr = `${score}`;

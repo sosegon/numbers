@@ -4,8 +4,8 @@ const { WildCardComp } = require('@components/WildCardComp');
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        rowIndex: state.token.rowIndex,
-        colIndex: state.token.colIndex,
+        rowIndex: state.game.token.rowIndex,
+        colIndex: state.game.token.colIndex,
         'data-testid': ownProps['data-testid'],
     };
 };

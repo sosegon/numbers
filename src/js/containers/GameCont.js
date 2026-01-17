@@ -1,21 +1,21 @@
 const PropTypes = require('prop-types');
 const { connect } = require('react-redux');
 const { GameComp } = require('@components/GameComp');
-const actions = require('@reducers/actions');
+const { resetGame } = require('@reducers/gameActions');
 const { vectorToMatrix } = require('@model/utils');
 
 const mapStateToProps = (state) => {
     return {
-        board: vectorToMatrix(state.board),
-        player1Direction: state.player1.direction,
-        player2Direction: state.player2.direction,
+        board: vectorToMatrix(state.game.board),
+        player1Direction: state.game.player1.direction,
+        player2Direction: state.game.player2.direction,
     };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         reset: () => {
-            dispatch(actions.resetGame(ownProps.boardSize));
+            dispatch(resetGame(ownProps.boardSize));
         },
     };
 };

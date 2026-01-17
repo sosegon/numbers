@@ -72,9 +72,13 @@ describe('ScoreCont', () => {
         // Create a new store with updated score
         const updatedStore = mockStore({
             ...initialState,
-            player1: {
-                ...initialState[TURNS.PLAYER1],
-                score: 10,
+            game: {
+                ...initialState.game,
+
+                player1: {
+                    ...initialState.game[TURNS.PLAYER1],
+                    score: 10,
+                },
             },
         });
 

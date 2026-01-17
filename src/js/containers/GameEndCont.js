@@ -2,7 +2,7 @@ const PropTypes = require('prop-types');
 const { connect } = require('react-redux');
 const { GameEndComp } = require('@components/GameEndComp');
 const { GAME_CONTINUITY } = require('@model/flags');
-const actions = require('@reducers/actions');
+const { resetGame } = require('@reducers/gameActions');
 
 const getMessage = (score1, score2) => {
     if (score1 > score2) {
@@ -16,15 +16,15 @@ const getMessage = (score1, score2) => {
 
 const mapStateToProps = (state) => {
     return {
-        isOver: state.snap.continuity === GAME_CONTINUITY.OVER,
-        message: getMessage(state.player1.score, state.player2.score),
+        isOver: state.game.snap.continuity === GAME_CONTINUITY.OVER,
+        message: getMessage(state.game.player1.score, state.game.player2.score),
     };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         reset: () => {
-            dispatch(actions.resetGame(ownProps.boardSize));
+            dispatch(resetGame(ownProps.boardSize));
         },
     };
 };

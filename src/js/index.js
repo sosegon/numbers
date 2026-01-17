@@ -6,7 +6,7 @@ const { Provider } = require('react-redux');
 const styled = require('styled-components');
 const { LocalStorageManager } = require('@data/LocalStorageManager');
 const { GameCont } = require('@containers/GameCont');
-const { initialState, reduce } = require('@reducers/reducer');
+const { gameInitialState, settingsInitialState, rootReducer } = require('@reducers');
 const { PLAYER_DIRECTIONS, TURNS, GAME_CONTINUITY } = require('@model/flags');
 const { Game } = require('@model/Game');
 const theme = require('@root/theme');
@@ -25,17 +25,23 @@ const getGame = () => {
     if (previousState !== null) {
         game.updateFromObject(previousState);
     } else {
-        game.updateFromObject(initialState);
+        game.updateFromObject(gameInitialState);
         localStorageManager.setGameState(game.serialize());
     }
 
     return game.serialize();
 };
 
-const store = createStore(reduce, getGame(), applyMiddleware(thunk));
+console.log(settingsInitialState, gameInitialState);
+
+const store = createStore(
+    rootReducer,
+    { game: getGame(), settings: settingsInitialState },
+    applyMiddleware(thunk)
+);
 
 const saveGame = () => {
-    const game = store.getState();
+    const game = store.getState().game;
     if (
         game.snap.turn === TURNS.PLAYER1 || // Player is human
         game.snap.continuity === GAME_CONTINUITY.OVER || // Game is over

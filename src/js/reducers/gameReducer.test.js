@@ -1,10 +1,10 @@
 const deepFreeze = require('deep-freeze');
-const { reduce } = require('@reducers/reducer');
+const { reduce } = require('@reducers/gameReducer');
 const { PLAYER_DIRECTIONS, TURNS, GAME_STATUSES, GAME_CONTINUITY } = require('@model/flags');
-const actions = require('@reducers/actions');
+const { moveToken, updateScores, resetGame } = require('@reducers/gameActions');
 const redux = require('redux');
 
-describe('reducer', () => {
+describe('game reducer', () => {
     let initialState;
 
     beforeEach(() => {
@@ -35,7 +35,7 @@ describe('reducer', () => {
 
     it('should move token (start game horizontal)', () => {
         const store = redux.createStore(reduce, initialState);
-        const action = actions.moveToken(3, 1);
+        const action = moveToken(3, 1);
 
         deepFreeze(initialState);
         deepFreeze(action);
@@ -70,7 +70,7 @@ describe('reducer', () => {
 
     it('should move token (start game vertical)', () => {
         const store = redux.createStore(reduce, initialState);
-        const action = actions.moveToken(1, 3);
+        const action = moveToken(1, 3);
 
         deepFreeze(initialState);
         deepFreeze(action);
@@ -105,9 +105,9 @@ describe('reducer', () => {
 
     it('should update scores', () => {
         const store = redux.createStore(reduce, initialState);
-        store.dispatch(actions.moveToken(3, 1)); // First, move token
+        store.dispatch(moveToken(3, 1)); // First, move token
 
-        const action = actions.updateScores();
+        const action = updateScores();
 
         deepFreeze(initialState);
         deepFreeze(action);
@@ -145,7 +145,7 @@ describe('reducer', () => {
     it('should reset the game', () => {
         const boardSize = 9;
         const store = redux.createStore(reduce, initialState);
-        const action = actions.resetGame(boardSize);
+        const action = resetGame(boardSize);
 
         deepFreeze(initialState);
         deepFreeze(action);

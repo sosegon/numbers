@@ -1,6 +1,6 @@
 /**
- * Type of actions to be dispatched.
- * @module actionTypes
+ * Type of game actions to be dispatched.
+ * @module gameActionTypes
  */
 module.exports = {
     /**
@@ -21,5 +21,5 @@ module.exports = {
      * This action is dispatched when a {@link Player}
      * resets the {@link Game}.
      */
-    GAME_RESET: 'game.GAME_RESET'
+    GAME_RESET: 'game.GAME_RESET',
 };

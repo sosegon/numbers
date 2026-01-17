@@ -4,9 +4,9 @@ const { CellEffectsComp } = require('@components/CellEffectsComp');
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        rowIndex: state.token.rowIndex,
-        colIndex: state.token.colIndex,
-        turn: state.snap.turn,
+        rowIndex: state.game.token.rowIndex,
+        colIndex: state.game.token.colIndex,
+        turn: state.game.snap.turn,
         'data-testid': ownProps['data-testid'],
     };
 };

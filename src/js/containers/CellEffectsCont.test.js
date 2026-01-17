@@ -64,10 +64,12 @@ describe('CellEffectsCont', () => {
         );
         const cellEffects = screen.getByTestId('cell-effects');
         let top =
-            store.getState().token.rowIndex * (theme.sizes.cellSize + 3 * theme.sizes.cellMargin) +
+            store.getState().game.token.rowIndex *
+                (theme.sizes.cellSize + 3 * theme.sizes.cellMargin) +
             theme.sizes.boardPadding;
         let left =
-            store.getState().token.colIndex * (theme.sizes.cellSize + 3 * theme.sizes.cellMargin) +
+            store.getState().game.token.colIndex *
+                (theme.sizes.cellSize + 3 * theme.sizes.cellMargin) +
             theme.sizes.boardPadding;
         expect(cellEffects.style.top).toEqual(`${top}px`);
         expect(cellEffects.style.left).toEqual(`${left}px`);
@@ -101,11 +103,11 @@ describe('CellEffectsCont', () => {
         );
 
         top =
-            updatedStore.getState().token.rowIndex *
+            updatedStore.getState().game.token.rowIndex *
                 (theme.sizes.cellSize + 3 * theme.sizes.cellMargin) +
             theme.sizes.boardPadding;
         left =
-            updatedStore.getState().token.colIndex *
+            updatedStore.getState().game.token.colIndex *
                 (theme.sizes.cellSize + 3 * theme.sizes.cellMargin) +
             theme.sizes.boardPadding;
         expect(cellEffects.style.top).toEqual(`${top}px`);
