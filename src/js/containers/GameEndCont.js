@@ -1,23 +1,25 @@
 const PropTypes = require('prop-types');
 const { connect } = require('react-redux');
 const { GameEndComp } = require('@components/GameEndComp');
-const { GAME_CONTINUITY } = require('@model/flags');
+const { GAME_CONTINUITY, GAME_RESULT } = require('@model/flags');
 const { resetGame } = require('@reducers/gameActions');
 
-const getMessage = (score1, score2) => {
+const getResult = (score1, score2) => {
     if (score1 > score2) {
-        return 'You won';
+        return GAME_RESULT.WON;
     } else if (score1 < score2) {
-        return 'You lose';
+        return GAME_RESULT.LOST;
     } else {
-        return 'Draw';
+        return GAME_RESULT.DRAW;
     }
 };
 
 const mapStateToProps = (state) => {
     return {
         isOver: state.game.snap.continuity === GAME_CONTINUITY.OVER,
-        message: getMessage(state.game.player1.score, state.game.player2.score),
+        result: getResult(state.game.player1.score, state.game.player2.score),
+        soundEnabled: state.settings.soundEnabled,
+        soundLocked: state.settings.soundLocked,
     };
 };
 

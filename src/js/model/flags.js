@@ -1,22 +1,28 @@
 const GAME_STATUSES = {
     RESTING: 0,
-    MOVING_TOKEN: 1
+    MOVING_TOKEN: 1,
 };
 
 const TURNS = {
     PLAYER1: 0,
-    PLAYER2: 1
+    PLAYER2: 1,
 };
 
 const PLAYER_DIRECTIONS = {
     NONE: 0,
     HORIZONTAL: 1,
-    VERTICAL: 2
+    VERTICAL: 2,
 };
 
 const GAME_CONTINUITY = {
     CONTINUE: 0,
-    OVER: 1
+    OVER: 1,
+};
+
+const GAME_RESULT = {
+    WON: 0,
+    LOST: 1,
+    DRAW: 2,
 };
 
 /**
@@ -58,5 +64,15 @@ module.exports = {
      * **OVER**: The game has finished. When the board has no more numbers,
      * or the current player is not able to select a number.
      */
-    GAME_CONTINUITY
+    GAME_CONTINUITY,
+    /**
+     * Define the result of the game.
+     *
+     * **WON**: The player has won.
+     *
+     * **LOST**: The player has lost.
+     *
+     * **DRAW**: The game ended in a draw.
+     */
+    GAME_RESULT,
 };

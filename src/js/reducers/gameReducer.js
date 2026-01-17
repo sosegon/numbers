@@ -31,9 +31,10 @@ const doResetGame = (state, action) => {
 /**
  * Update the state of the game based
  * on the received {@link gameActions}
- * @param {object} state - State of the application.
+ * @param {object} state - Game state of the application.
  * @param {object} action - Action with relevant data to update the state
  * of the application.
+ * @returns {Object} New game state after applying the action.
  */
 const reduce = (state = initialState, action) => {
     switch (action.type) {

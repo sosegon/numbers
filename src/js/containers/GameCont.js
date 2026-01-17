@@ -1,7 +1,7 @@
 const PropTypes = require('prop-types');
 const { connect } = require('react-redux');
 const { GameComp } = require('@components/GameComp');
-const { resetGame } = require('@reducers/gameActions');
+
 const { vectorToMatrix } = require('@model/utils');
 
 const mapStateToProps = (state) => {
@@ -12,20 +12,12 @@ const mapStateToProps = (state) => {
     };
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-    return {
-        reset: () => {
-            dispatch(resetGame(ownProps.boardSize));
-        },
-    };
-};
-
 /**
  * Container to connect a {@link GameComp}.
  * @param {object} props
  * @param {number} props.boardSize Size of a {@link Board}.
  */
-const GameCont = connect(mapStateToProps, mapDispatchToProps)(GameComp);
+const GameCont = connect(mapStateToProps)(GameComp);
 
 GameCont.propTypes = {
     boardSize: PropTypes.number.isRequired,

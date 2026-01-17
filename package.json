@@ -17,6 +17,7 @@
       "^@icons/(.*)$": "<rootDir>/src/js/icons/$1",
       "^@model/(.*)$": "<rootDir>/src/js/model/$1",
       "^@reducers/(.*)$": "<rootDir>/src/js/reducers/$1",
+      "\\.(mp3|wav|ogg)$": "<rootDir>/src/__mocks__/fileMock.js",
       "^@root/(.*)$": "<rootDir>/src/js/$1",
       "^@test/(.*)$": "<rootDir>/src/test/$1"
     }

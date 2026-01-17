@@ -2,8 +2,10 @@ const React = require('react');
 const PropTypes = require('prop-types');
 const styled = require('styled-components');
 const { CellSpan } = require('@components/CellComp');
-const TokenIcon = require('@icons/TokenIcon');
 const { TURNS } = require('@model/flags');
+
+const playerSound = require('@sound/player-tick.mp3');
+const agentSound = require('@sound/agent-tick.mp3');
 
 /**
  * Functional {@link https://reactjs.org/docs/react-component.html|Component}
@@ -12,11 +14,16 @@ const { TURNS } = require('@model/flags');
  * @param {object} props
  * @param {number} props.rowIndex Row index of the {@link Token}.
  * @param {number} props.colIndex Column index of the {@link Token}.
+ * @param {number} props.turn Current turn, one of {@link TURNS}.
+ * @param {boolean} props.soundEnabled Whether sound is enabled.
+ * @param {boolean} props.soundLocked Whether sound is locked.
  */
 const CellEffectsComp = ({
     rowIndex,
     colIndex,
     turn,
+    soundEnabled,
+    soundLocked,
     'data-testid': dataTestId = 'cell-effects-comp',
 }) => {
     const theme = styled.useTheme();
@@ -40,6 +47,17 @@ const CellEffectsComp = ({
         backgroundColor: turn === TURNS.PLAYER1 ? theme.colors.primary : theme.colors.secondary,
     };
 
+    React.useEffect(() => {
+        if (turn === TURNS.PLAYER1) {
+            var wildcardSound = playerSound;
+        } else {
+            var wildcardSound = agentSound;
+        }
+        if (soundEnabled && !soundLocked) {
+            const audio = new window.Audio(wildcardSound);
+            audio.play();
+        }
+    }, [rowIndex, colIndex, soundEnabled]);
     return (
         <CellSpan style={style} data-testid={dataTestId}>
             <div className="firework" key={`${rowIndex}-${colIndex}`}>
@@ -60,6 +78,8 @@ CellEffectsComp.propTypes = {
     rowIndex: PropTypes.number.isRequired,
     colIndex: PropTypes.number.isRequired,
     turn: PropTypes.oneOf(Object.values(TURNS)).isRequired,
+    soundEnabled: PropTypes.bool.isRequired,
+    soundLocked: PropTypes.bool.isRequired,
     'data-testid': PropTypes.string,
 };
 

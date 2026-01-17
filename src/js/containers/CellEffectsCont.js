@@ -7,6 +7,8 @@ const mapStateToProps = (state, ownProps) => {
         rowIndex: state.game.token.rowIndex,
         colIndex: state.game.token.colIndex,
         turn: state.game.snap.turn,
+        soundEnabled: state.settings.soundEnabled,
+        soundLocked: state.settings.soundLocked,
         'data-testid': ownProps['data-testid'],
     };
 };

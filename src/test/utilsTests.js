@@ -67,7 +67,10 @@ const otherPositionHid = {
 };
 
 module.exports = {
-    initialState: { game: initialGameState, settings: { soundEnabled: true } },
+    initialState: {
+        game: initialGameState,
+        settings: { soundEnabled: true, soundLocked: true, controlsLocked: false },
+    },
     verticalPosition,
     horizontalPosition,
     otherPosition,

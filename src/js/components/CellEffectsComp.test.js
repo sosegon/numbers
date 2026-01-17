@@ -11,6 +11,8 @@ describe('CellEffectsComp', () => {
         rowIndex: 0,
         colIndex: 0,
         turn: TURNS.PLAYER1,
+        soundEnabled: false,
+        soundLocked: false,
         'data-testid': 'cell-effects-comp',
     };
 

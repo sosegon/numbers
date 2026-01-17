@@ -3,6 +3,7 @@ const PropTypes = require('prop-types');
 const { connect } = require('react-redux');
 const { CellComp } = require('@components/CellComp');
 const gameActions = require('@reducers/gameActions');
+const settingsActions = require('@reducers/settingsActions');
 const { Token } = require('@model/Token');
 const { Agent } = require('@model/Agent');
 const { vectorToMatrix } = require('@model/utils');
@@ -34,6 +35,24 @@ const isCellSelectable = (state, ownProps) => {
     }
 };
 
+const doPreMoves = (object) => {
+    const { dispatch, getState, position } = object;
+    dispatch(settingsActions.unlockSound());
+    dispatch(settingsActions.lockControls());
+    return new Promise((resolve) => {
+        resolve({ dispatch, getState, position });
+    });
+};
+
+const doPostMoves = (object) => {
+    const { dispatch, getState, position } = object;
+    dispatch(settingsActions.lockSound());
+    dispatch(settingsActions.unlockControls());
+    return new Promise((resolve) => {
+        resolve({ dispatch, getState, position });
+    });
+};
+
 const moveToken = (object) => {
     const { dispatch, getState, position } = object;
 
@@ -50,8 +69,10 @@ const updateScores = (object) => {
         if (getState().game.snap.continuity === GAME_CONTINUITY.CONTINUE) {
             setTimeout(() => resolve({ dispatch, getState }), delay);
         } else {
-            // TODO: This is still unclear
-            console.log('TODO: This is still unclear');
+            // Game over, lock sound and unlock controls
+            dispatch(settingsActions.unlockControls());
+            // Allow end game sound to play before locking sound
+            setTimeout(() => dispatch(settingsActions.lockSound()), 0);
         }
     });
 };
@@ -90,11 +111,13 @@ const makeMove = (ownProps, isSelectable) => {
         new Promise((resolve) => {
             resolve({ dispatch, getState, position });
         })
+            .then((object) => doPreMoves(object))
             .then((object) => moveToken(object))
             .then((object) => updateScores(object))
             .then((object) => execAgent(object))
             .then((object) => moveToken(object))
-            .then((object) => updateScores(object));
+            .then((object) => updateScores(object))
+            .then((object) => doPostMoves(object));
     };
 };
 

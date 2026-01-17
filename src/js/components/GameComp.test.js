@@ -75,11 +75,4 @@ describe('GameComp', () => {
         const wildCardComp = screen.getByTestId('wild-card-comp');
         expect(wildCardComp).toBeInTheDocument();
     });
-
-    it('should call reset function on button click', () => {
-        renderWithTheme();
-        const button = screen.getByText('RESTART');
-        fireEvent.click(button);
-        expect(baseProps.reset).toHaveBeenCalled();
-    });
 });
