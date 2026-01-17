@@ -41,15 +41,26 @@ const ScoreComp = ({ score, name, direction, 'data-testid': dataTestId = 'score-
     const isAi = name.toLowerCase() !== 'you';
 
     const [displayedScore, setDisplayedScore] = React.useState(score);
+    const [scoreIncrement, setScoreIncrement] = React.useState(0);
+    const [displayedScoreIncrement, setDisplayedScoreIncrement] = React.useState(0);
 
     React.useEffect(() => {
         if (displayedScore < score) {
             const timeout = setTimeout(() => {
                 setDisplayedScore(displayedScore + 1);
+                setScoreIncrement((prev) => prev + 1);
             }, 50);
             return () => clearTimeout(timeout);
+        } else if (displayedScore === score) {
+            setDisplayedScoreIncrement(scoreIncrement);
+            setScoreIncrement(0);
+            const incrementTimeout = setTimeout(() => {
+                setDisplayedScoreIncrement(0);
+            }, 900);
+            return () => clearTimeout(incrementTimeout);
         } else if (displayedScore > score) {
             setDisplayedScore(score); // In case score decreases, sync immediately
+            setScoreIncrement(0);
         }
     }, [score, displayedScore]);
 
@@ -76,6 +87,7 @@ const ScoreComp = ({ score, name, direction, 'data-testid': dataTestId = 'score-
                     </div>
                     <div
                         style={{
+                            position: 'relative',
                             fontSize: '32px',
                             textShadow: !isAi
                                 ? '0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00ffff'
@@ -84,6 +96,18 @@ const ScoreComp = ({ score, name, direction, 'data-testid': dataTestId = 'score-
                         data-testid={`${dataTestId}-value`}
                     >
                         {`${displayedScore}`.length < 2 ? `0${displayedScore}` : displayedScore}
+                        <span
+                            style={{
+                                color: isAi ? theme.colors.secondary : theme.colors.primary,
+                                position: 'absolute',
+                                left: '0',
+                                opacity: displayedScoreIncrement > 0 ? 1 : 0,
+                                top: displayedScoreIncrement > 0 ? '-50px' : '0px',
+                                transition: displayedScoreIncrement ? 'all 0.9s ease-out' : 'none',
+                            }}
+                        >
+                            {` +${displayedScoreIncrement}`}
+                        </span>
                     </div>
                 </div>
                 <IconContainer

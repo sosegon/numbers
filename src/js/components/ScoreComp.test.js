@@ -52,6 +52,9 @@ describe('ScoreComp', () => {
                 React.createElement(ScoreComp, { ...baseProps, score: 20 })
             )
         );
-        await waitFor(() => expect(screen.getByText('20')).toBeInTheDocument());
+        await waitFor(() => {
+            expect(screen.getByText('20')).toBeInTheDocument();
+            expect(screen.getByText('+15')).toBeInTheDocument();
+        });
     });
 });

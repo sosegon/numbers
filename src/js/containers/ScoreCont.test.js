@@ -67,7 +67,9 @@ describe('ScoreCont', () => {
                 )
             )
         );
-        expect(screen.getByTestId('score-card-value').textContent).toBe('00');
+        await waitFor(() => {
+            expect(screen.getByTestId('score-card-value').textContent).toBe('00 +0');
+        });
 
         // Create a new store with updated score
         const updatedStore = mockStore({
@@ -102,6 +104,8 @@ describe('ScoreCont', () => {
             )
         );
 
-        await waitFor(() => expect(screen.getByTestId('score-card-value').textContent).toBe('10'));
+        await waitFor(() =>
+            expect(screen.getByTestId('score-card-value').textContent).toBe('10 +10')
+        );
     });
 });
