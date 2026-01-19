@@ -186,7 +186,7 @@ describe('Agent', () => {
         expect(position).toEqual([0, 3]);
     });
 
-    it('should select max gain value position for vertical to force player lose in next turn (no)', () => {
+    it('should select max gain value position for vertical when cannot force player lose in next turn', () => {
         const { token, agent } = setup();
         const matrix = [
             [2, -1, -1, 1, 3],
@@ -287,7 +287,7 @@ describe('Agent', () => {
         expect(position).toEqual([3, 0]);
     });
 
-    it('should select max gain value position for horizontal to force player lose in next turn (no)', () => {
+    it('should select max gain value position for horizontal when cannot force player lose in next turn', () => {
         const { token, agent } = setup();
         agent.direction = PLAYER_DIRECTIONS.HORIZONTAL;
         const matrix = [

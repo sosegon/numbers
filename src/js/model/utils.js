@@ -402,11 +402,11 @@ const self = (module.exports = {
      *
      * ```
      * [
-     *   [0,1,4],    // column 0
-     *   [0,2,4],    // column 1
-     *   [0,1,4],  // column 2
-     *   [],       // column 3 (token column)
-     *   [1,2,4] // column 4
+     *   [0, 1, 4], // column 0
+     *   [0, 2, 4], // column 1
+     *   [0, 1, 4], // column 2
+     *   [],        // column 3 (token column)
+     *   [1, 2, 4]  // column 4
      * ]
      * ```
      *

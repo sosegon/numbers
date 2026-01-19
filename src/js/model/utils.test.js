@@ -291,7 +291,7 @@ describe('Utils', () => {
         ]);
     });
 
-    it('should ge the available cells per column', () => {
+    it('should get the available cells per column', () => {
         const matrix = [
             [2, 3, 4, 2, -1], // min gain -6
             [-1, 5, -1, -1, -1], // min gain 0
