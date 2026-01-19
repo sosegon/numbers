@@ -332,14 +332,20 @@ const self = (module.exports = {
      *
      * @param {number} tokenRowIndex
      * @param {number} tokenColIndex
-     * @param {array} gainsMatrix - 2 dimensional array of numbers representing a square gains matrix.
      * @param {array} boardMatrix - 2 dimensional array of numbers representing a square board matrix.
+     * @param {array} gainsMatrix - 2 dimensional array of numbers representing a square gains matrix.
      * @param {array} rowsReadinessToEndGame - Array of arrays, each containing two boolean
      * values indicating readiness and availability of each row to end game.
-     * @returns {array} Array with two numbers defining the row and column of the element
-     * with the best gain.
+     * @returns {array} Array objects containing gain, rowIndex, isRowReadyToEndGame,
+     * isRowAvailable, and availableColumns, sorted by gain descending.
      */
-    getRowsIndicesByOrderedGain(tokenRowIndex, tokenColIndex, gainsMatrix, rowsReadinessToEndGame) {
+    getRowsIndicesByOrderedGain(
+        tokenRowIndex,
+        tokenColIndex,
+        boardMatrix,
+        gainsMatrix,
+        rowsReadinessToEndGame
+    ) {
         let size = gainsMatrix.length;
         let minGains = [];
 
@@ -365,6 +371,11 @@ const self = (module.exports = {
                 rowIndex: i,
                 isRowReadyToEndGame: rowsReadinessToEndGame[i][0],
                 isRowAvailable: rowsReadinessToEndGame[i][1],
+                availableColumns: boardMatrix[i]
+                    .map((value, colIndex) =>
+                        value > 0 && colIndex !== tokenColIndex ? colIndex : -1
+                    )
+                    .filter((value) => value >= 0),
             });
         }
 
@@ -374,6 +385,55 @@ const self = (module.exports = {
             return b.gain - a.gain;
         });
     },
+    /**
+     * Get the available cells per column in a board matrix,
+     * avoiding the row and column of the token.
+     *
+     * In the following matrix, the token is located in the position `[3, 3]`
+     * ```
+     * |  2   3   4  -1  -1 |
+     * |  1  -1   3   5   6 |
+     * | -1   7  -1   4   1 |
+     * |  5  -1   9   0   2 |
+     * |  8   7   9   2   1 |
+     * ```
+     *
+     * The output will be the following array:
+     *
+     * ```
+     * [
+     *   [0,1,4],    // column 0
+     *   [0,2,4],    // column 1
+     *   [0,1,4],  // column 2
+     *   [],       // column 3 (token column)
+     *   [1,2,4] // column 4
+     * ]
+     * ```
+     *
+     * @param {
+     * number} tokenRowIndex - Index of the row where the token is located.
+     * @param {number} tokenColIndex - Index of the column where the token is located.
+     * @param {array} boardMatrix - 2 dimensional array of numbers representing a square matrix.
+     * @returns {array} Array of arrays, each containing the row indices of available cells per column.
+     */
+    getAvailableCellsPerColumn(tokenRowIndex, tokenColIndex, boardMatrix) {
+        let cellsPerColumn = Array.from({ length: boardMatrix.length }, () => []);
+
+        for (let i = 0; i < boardMatrix.length; i++) {
+            for (let j = 0; j < boardMatrix.length; j++) {
+                if (i === tokenRowIndex) {
+                    // avoid the row of the token
+                    continue;
+                }
+                if (boardMatrix[i][j] > 0 && j !== tokenColIndex) {
+                    cellsPerColumn[j].push(i);
+                }
+            }
+        }
+
+        return cellsPerColumn;
+    },
+
     /**
      * Generate a random integer between two limits.
      * @param {number} min

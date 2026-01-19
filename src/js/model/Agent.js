@@ -7,6 +7,7 @@ const {
     getGainsMatrix,
     getRowsIndicesByOrderedGain,
     getRowsReadinessToEndGame,
+    getAvailableCellsPerColumn,
 } = require('@model/utils');
 
 /**
@@ -186,42 +187,82 @@ class Agent extends Player {
         let indicesByGain = getRowsIndicesByOrderedGain(
             nTokenRowIndex,
             nTokenColIndex,
+            nBoardMatrix,
             gainsMatrix,
             rowsReadinessToEndGame
         );
 
         // Selecting the index with best gain follows these criteria:
         // 1. The row that can lead to end game with victory
-        // 2. The row with the highest gain that make the game continue
-
         let position = [-1, -1];
 
-        const indexToEndGame = indicesByGain
-            .filter((item) => item.isRowReadyToEndGame && item.isRowAvailable)
+        const indexToEndGameWithVictory = indicesByGain
+            .filter((item) => item.isRowAvailable && item.isRowReadyToEndGame)
             .find((item) => {
                 const valueInCell = nBoardMatrix[item.rowIndex][nTokenColIndex];
                 return valueInCell + agentScore > playerScore;
             });
 
-        if (indexToEndGame) {
+        if (indexToEndGameWithVictory) {
             if (this.direction === PLAYER_DIRECTIONS.HORIZONTAL) {
                 position = rotateIndicesCounterClockwise(
-                    indexToEndGame.rowIndex,
+                    indexToEndGameWithVictory.rowIndex,
                     nTokenColIndex,
                     nBoardMatrix.length
                 );
             } else {
-                position = [indexToEndGame.rowIndex, nTokenColIndex];
+                position = [indexToEndGameWithVictory.rowIndex, nTokenColIndex];
             }
             return position;
         }
 
+        // 2. A row that makes the player select a cell that ends the
+        // game i.e. no more valid selections for the agent in next turn
+        // and still the agent wins
+        let availableCellsPerColumn = getAvailableCellsPerColumn(
+            nTokenRowIndex,
+            nTokenColIndex,
+            nBoardMatrix
+        );
+        let indexToForcePlayerSelectionToLose = indicesByGain
+            .filter(
+                (item) =>
+                    item.isRowAvailable &&
+                    !item.isRowReadyToEndGame &&
+                    item.availableColumns.length > 0 &&
+                    item.availableColumns.some(
+                        (columnIndex) =>
+                            availableCellsPerColumn[columnIndex].length === 1 &&
+                            availableCellsPerColumn[columnIndex][0] === item.rowIndex
+                    )
+            )
+            .find((item) => {
+                const valueInCell = nBoardMatrix[item.rowIndex][nTokenColIndex];
+                const gainInCell = gainsMatrix[item.rowIndex][nTokenColIndex];
+                const valueForPlayer = valueInCell - gainInCell;
+                return agentScore + valueInCell > playerScore + valueForPlayer;
+            });
+
+        if (indexToForcePlayerSelectionToLose) {
+            if (this.direction === PLAYER_DIRECTIONS.HORIZONTAL) {
+                position = rotateIndicesCounterClockwise(
+                    indexToForcePlayerSelectionToLose.rowIndex,
+                    nTokenColIndex,
+                    nBoardMatrix.length
+                );
+            } else {
+                position = [indexToForcePlayerSelectionToLose.rowIndex, nTokenColIndex];
+            }
+            return position;
+        }
+
+        // 3. The rows that make the game continue
         let indexBestGain =
             indicesByGain.filter((item) => item.isRowAvailable && !item.isRowReadyToEndGame)?.[0]
                 ?.rowIndex ?? -1;
 
+        // No available rows that keep the game going
         if (indexBestGain < 0) {
-            // No available rows that keep the game going
             indexBestGain =
                 indicesByGain.filter((item) => item.isRowAvailable)?.[0]?.rowIndex ?? -1;
         }
