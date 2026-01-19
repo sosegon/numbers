@@ -6,6 +6,7 @@ const {
     getRowsReadinessToEndGame,
     getGainsMatrix,
     getRowsIndicesByOrderedGain,
+    getAvailableCellsPerColumn,
     randomInteger,
     updateObjectFromJsonString,
     updateObjectFromLiteral,
@@ -253,15 +254,59 @@ describe('Utils', () => {
         const rowIndices = getRowsIndicesByOrderedGain(
             tokenRowIndex,
             tokenColIndex,
+            matrix,
             gains,
             rowsReadiness
         );
 
         expect(rowIndices).toEqual([
-            { gain: 4, rowIndex: 4, isRowReadyToEndGame: true, isRowAvailable: true },
-            { gain: 0, rowIndex: 1, isRowReadyToEndGame: true, isRowAvailable: false },
-            { gain: -2, rowIndex: 2, isRowReadyToEndGame: false, isRowAvailable: true },
-            { gain: -6, rowIndex: 0, isRowReadyToEndGame: false, isRowAvailable: true },
+            {
+                gain: 4,
+                rowIndex: 4,
+                isRowReadyToEndGame: true,
+                isRowAvailable: true,
+                availableColumns: [],
+            },
+            {
+                gain: 0,
+                rowIndex: 1,
+                isRowReadyToEndGame: true,
+                isRowAvailable: false,
+                availableColumns: [],
+            },
+            {
+                gain: -2,
+                rowIndex: 2,
+                isRowReadyToEndGame: false,
+                isRowAvailable: true,
+                availableColumns: [1, 2, 4],
+            },
+            {
+                gain: -6,
+                rowIndex: 0,
+                isRowReadyToEndGame: false,
+                isRowAvailable: true,
+                availableColumns: [0, 1, 2, 4],
+            },
+        ]);
+    });
+
+    it('should get the available cells per column', () => {
+        const matrix = [
+            [2, 3, 4, 2, -1], // min gain -6
+            [-1, 5, -1, -1, -1], // min gain 0
+            [-1, 7, 6, 5, -1], // min gain -2
+            [5, -1, -1, 0, 2], // token row
+            [-1, 1, -1, 3, -1], // min gain 4
+        ];
+        const tokenColIndex = 3;
+        const tokenRowIndex = 3;
+        expect(getAvailableCellsPerColumn(tokenRowIndex, tokenColIndex, matrix)).toEqual([
+            [0],
+            [0, 1, 2, 4],
+            [0, 2],
+            [],
+            [],
         ]);
     });
 
